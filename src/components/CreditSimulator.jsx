@@ -15,24 +15,6 @@ const CreditSimulator = () => {
 
         const rate = interestRates[term] || 0.10;
         const total = principal * (1 + rate);
-        ```javascript
-import { useState, useEffect } from 'react';
-import { trackEvent } from '../utils/analytics';
-import './CreditSimulator.css';
-
-const CreditSimulator = () => {
-    const [amount, setAmount] = useState(2500);
-    const [months, setMonths] = useState(6);
-
-    const calculatePayment = (principal, term) => {
-        const interestRates = {
-            3: 0.05,
-            6: 0.10,
-            12: 0.16
-        };
-
-        const rate = interestRates[term] || 0.10;
-        const total = principal * (1 + rate);
         const monthly = total / term;
 
         return {
@@ -91,7 +73,7 @@ const CreditSimulator = () => {
                             {[3, 6, 12].map((m) => (
                                 <button
                                     key={m}
-                                    className={`month - btn ${ months === m ? 'active' : '' } `}
+                                    className={`month-btn ${months === m ? 'active' : ''}`}
                                     onClick={() => setMonths(m)}
                                 >
                                     {m} cuotas
@@ -132,4 +114,3 @@ const CreditSimulator = () => {
 };
 
 export default CreditSimulator;
-```

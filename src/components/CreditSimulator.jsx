@@ -1,4 +1,23 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { trackEvent } from '../utils/analytics';
+import './CreditSimulator.css';
+
+const CreditSimulator = () => {
+    const [amount, setAmount] = useState(2500);
+    const [months, setMonths] = useState(6);
+
+    const calculatePayment = (principal, term) => {
+        const interestRates = {
+            3: 0.05,
+            6: 0.10,
+            12: 0.16
+        };
+
+        const rate = interestRates[term] || 0.10;
+        const total = principal * (1 + rate);
+        ```javascript
+import { useState, useEffect } from 'react';
+import { trackEvent } from '../utils/analytics';
 import './CreditSimulator.css';
 
 const CreditSimulator = () => {
@@ -25,6 +44,19 @@ const CreditSimulator = () => {
     };
 
     const payment = calculatePayment(amount, months);
+
+    // Track when user interacts with simulator (Debounced)
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            trackEvent('CustomizeProduct', {
+                content_name: 'Credit Simulation',
+                value: amount,
+                currency: 'USD',
+                period: months
+            });
+        }, 2000); // Track after 2 seconds of inactivity
+        return () => clearTimeout(timer);
+    }, [amount, months]);
 
     return (
         <div className="credit-simulator" id="simulador">
@@ -59,7 +91,7 @@ const CreditSimulator = () => {
                             {[3, 6, 12].map((m) => (
                                 <button
                                     key={m}
-                                    className={`month-btn ${months === m ? 'active' : ''}`}
+                                    className={`month - btn ${ months === m ? 'active' : '' } `}
                                     onClick={() => setMonths(m)}
                                 >
                                     {m} cuotas
@@ -100,3 +132,4 @@ const CreditSimulator = () => {
 };
 
 export default CreditSimulator;
+```

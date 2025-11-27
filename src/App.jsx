@@ -4,6 +4,7 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import WhatsAppButton from './components/WhatsAppButton';
 import ScrollToTop from './components/ScrollToTop';
+import { initAnalytics, trackPageView } from './utils/analytics';
 
 // Pages
 import HomePage from './pages/HomePage';
@@ -15,9 +16,14 @@ import CreditPage from './pages/CreditPage';
 import CasesPage from './pages/CasesPage';
 
 function App() {
+  useEffect(() => {
+    initAnalytics();
+  }, []);
+
   return (
     <Router>
       <ScrollToTop />
+      <AnalyticsTracker />
       <div className="App">
         <div className="bg-grid"></div>
         <Navbar />
@@ -36,5 +42,14 @@ function App() {
     </Router>
   );
 }
+
+// Helper component to track page views on route change
+const AnalyticsTracker = () => {
+  const location = useLocation();
+  useEffect(() => {
+    trackPageView();
+  }, [location]);
+  return null;
+};
 
 export default App;

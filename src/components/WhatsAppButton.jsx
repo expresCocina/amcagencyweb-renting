@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { trackEvent } from '../utils/analytics';
 import './WhatsAppButton.css';
 
 const WhatsAppButton = () => {
@@ -17,6 +18,7 @@ const WhatsAppButton = () => {
 
     return (
         <a
+            onClick={() => trackEvent('Contact', { method: 'WhatsApp', location: 'Floating Button' })}
             href={`https://wa.me/${whatsappNumber}?text=${message}`}
             className={`whatsapp-button ${visible ? 'visible' : ''}`}
             target="_blank"

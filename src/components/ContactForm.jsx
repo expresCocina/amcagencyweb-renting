@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { trackEvent } from '../utils/analytics';
 import './ContactForm.css';
 
 const ContactForm = () => {
@@ -35,6 +36,16 @@ Mensaje: ${formData.message}`;
 
         // Abrir WhatsApp
         window.open(whatsappUrl, '_blank');
+
+        // Track Lead Event
+        trackEvent('Lead', {
+            content_name: formData.service,
+            currency: 'USD',
+            value: 0 // Or estimated value
+        }, {
+            email: formData.email,
+            phone: formData.phone
+        });
 
         setSubmitted(true);
 

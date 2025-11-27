@@ -1,0 +1,48 @@
+.testimonials {
+    background: linear-gradient(180deg, transparent 0%, rgba(160, 32, 240, 0.03) 50%, transparent 100%);
+}
+
+.testimonial-card {
+    position: relative;
+    padding-top: 40px;
+}
+
+.testimonial-flag {
+    position: absolute;
+    top: -15px;
+    left: 20px;
+    font-size: 32px;
+    filter: drop-shadow(0 0 10px rgba(0, 240, 255, 0.5));
+}
+
+.testimonial-quote {
+    color: var(--accent-cyan);
+    font-size: 20px;
+    line-height: 1.4;
+}
+
+.testimonial-text {
+    color: var(--text-secondary);
+    font-size: 16px;
+}
+
+.testimonial-author {
+    border-top: 1px solid rgba(0, 240, 255, 0.1);
+    padding-top: 16px;
+}
+
+.author-role {
+    color: var(--text-secondary);
+    font-size: 14px;
+    margin-top: 4px;
+}
+
+.verified-badge {
+    display: inline-block;
+    background: rgba(31, 255, 157, 0.1);
+    color: var(--accent-green);
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+}

@@ -1,0 +1,38 @@
+.cta-section {
+  background: linear-gradient(135deg, rgba(0, 240, 255, 0.1) 0%, rgba(160, 32, 240, 0.1) 100%);
+}
+
+.cta-box {
+  text-align: center;
+  padding: 60px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.cta-buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.trust-note {
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+@media (max-width: 768px) {
+  .cta-box {
+    padding: 40px 32px;
+  }
+
+  .cta-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .cta-buttons .btn {
+    width: 100%;
+    max-width: 300px;
+  }
+}

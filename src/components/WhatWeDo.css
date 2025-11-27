@@ -1,0 +1,27 @@
+.what-we-do {
+    background: linear-gradient(180deg, transparent 0%, rgba(0, 240, 255, 0.02) 50%, transparent 100%);
+}
+
+.section-header {
+    max-width: 800px;
+    margin: 0 auto;
+    margin-bottom: 60px;
+}
+
+.section-header h2 {
+    margin-bottom: 16px;
+}
+
+.pillar-card {
+    text-align: center;
+}
+
+.pillar-icon {
+    font-size: 48px;
+    margin-bottom: 20px;
+    filter: drop-shadow(0 0 10px rgba(0, 240, 255, 0.5));
+}
+
+.pillar-card h3 {
+    margin-bottom: 12px;
+}

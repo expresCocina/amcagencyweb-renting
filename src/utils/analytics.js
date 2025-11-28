@@ -25,9 +25,25 @@ export const initAnalytics = () => {
     }
 };
 
+// Helper function to get Facebook cookies for deduplication
+const getFacebookCookies = () => {
+    const getCookie = (name) => {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+        return null;
+    };
+
+    return {
+        fbp: getCookie('_fbp'),
+        fbc: getCookie('_fbc')
+    };
+};
+
 export const trackEvent = async (eventName, params = {}, userData = {}) => {
     const eventId = uuidv4();
     const eventSourceUrl = window.location.href;
+    const fbCookies = getFacebookCookies();
 
     // 1. Google Analytics 4
     if (import.meta.env.VITE_GA_MEASUREMENT_ID) {
@@ -39,13 +55,12 @@ export const trackEvent = async (eventName, params = {}, userData = {}) => {
         });
     }
 
-    // 2. Facebook Pixel (Browser)
+    // 2. Facebook Pixel (Browser) - with eventID for deduplication
     if (import.meta.env.VITE_FACEBOOK_PIXEL_ID) {
         ReactPixel.track(eventName, { ...params, eventID: eventId });
     }
 
-    // 3. Facebook CAPI (Server)
-    // Only send to CAPI if we have a backend to talk to
+    // 3. Facebook CAPI (Server) - with same eventID for deduplication
     try {
         await fetch(CAPI_ENDPOINT, {
             method: 'POST',
@@ -54,16 +69,19 @@ export const trackEvent = async (eventName, params = {}, userData = {}) => {
             },
             body: JSON.stringify({
                 eventName,
-                eventId,
+                eventId, // Same ID as browser pixel for deduplication
                 eventSourceUrl,
-                userData, // { email, phone, fbp, fbc }
+                userData: {
+                    ...userData,
+                    fbp: fbCookies.fbp, // Facebook browser cookie
+                    fbc: fbCookies.fbc  // Facebook click cookie
+                },
                 customData: params,
             }),
         });
-        console.log(`Event ${eventName} sent to CAPI`);
+        console.log(`✅ Event "${eventName}" sent with ID: ${eventId}`);
     } catch (error) {
-        // Silent fail in dev if server not running
-        console.warn('CAPI Send Error (Server might be down):', error);
+        console.warn('⚠️ CAPI Error:', error.message);
     }
 };
 

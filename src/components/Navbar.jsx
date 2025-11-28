@@ -24,7 +24,13 @@ const Navbar = () => {
             <div className="container">
                 <div className="navbar-content">
                     <Link to="/" className="logo">
-                        <span className="gradient-text">AMC</span> Agency Web
+                        <img src="/logo.svg" alt="AMC Agency Web" className="logo-img" onError={(e) => {
+                            e.target.style.display = 'none';
+                            e.target.nextSibling.style.display = 'block';
+                        }} />
+                        <span className="logo-text" style={{ display: 'none' }}>
+                            <span className="gradient-text">AMC</span> Agency Web
+                        </span>
                     </Link>
 
                     <button

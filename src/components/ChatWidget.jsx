@@ -25,7 +25,7 @@ const ChatWidget = () => {
         'costo': 'Los costos varían según el servicio. Visita /calculadora para calcular tu presupuesto personalizado.',
         'cita': 'Perfecto! Puedes agendar una consultoría gratuita aquí: /calculadora o contactarnos directamente.',
         'agendar': 'Perfecto! Puedes agendar una consultoría gratuita aquí: /calculadora o contactarnos directamente.',
-        'contacto': 'Puedes contactarnos:\n📞 +57 300 123 4567\n📧 contacto@amcagencyweb.com\nO usa el formulario en nuestro sitio.',
+        'contacto': 'Puedes contactarnos:\\n📞 +57 313 853 7261\\n📧 info@amcagencyweb.com\\n📍 Neiva, Huila, Colombia\\nO usa el formulario en nuestro sitio.',
         'cursos': 'Tenemos cursos de SEO, Marketing Digital y más. Visita /cursos para ver toda la oferta de AMC Academy.',
         'seo': 'Nuestro servicio de SEO incluye auditoría, optimización, contenido y linkbuilding desde $800,000 COP/mes.',
         'web': 'Desarrollo web profesional desde $1,500,000 COP. Responsive, rápido y con CMS para que actualices fácil.',

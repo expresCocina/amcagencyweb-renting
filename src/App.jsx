@@ -1,10 +1,8 @@
-import { useEffect, Suspense, lazy } from 'react';
+import { useEffect, Suspense, lazy, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import './App.css';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
-import WhatsAppButton from './components/WhatsAppButton';
-import ChatWidget from './components/ChatWidget';
 import ScrollToTop from './components/ScrollToTop';
 import LoadingSpinner from './components/LoadingSpinner';
 import { initAnalytics, trackPageView } from './utils/analytics';
@@ -12,6 +10,10 @@ import { initAnalytics, trackPageView } from './utils/analytics';
 // Contexts
 import { LanguageProvider } from './contexts/LanguageContext';
 import { CurrencyProvider } from './contexts/CurrencyContext';
+
+// Lazy Load Non-Critical Components
+const WhatsAppButton = lazy(() => import('./components/WhatsAppButton'));
+const ChatWidget = lazy(() => import('./components/ChatWidget'));
 
 // Lazy Load Pages
 const HomePage = lazy(() => import('./pages/HomePage'));
@@ -42,8 +44,17 @@ const BoutiqueDemo = lazy(() => import('./pages/demos/BoutiqueDemo'));
 const ConsultoraDemo = lazy(() => import('./pages/demos/ConsultoraDemo'));
 
 function App() {
+  const [isDelayedLoaded, setIsDelayedLoaded] = useState(false);
+
   useEffect(() => {
     initAnalytics();
+
+    // Defer loading of heavy non-critical components
+    const timer = setTimeout(() => {
+      setIsDelayedLoaded(true);
+    }, 4000); // Load chat/whatsapp after 4 seconds
+
+    return () => clearTimeout(timer);
   }, []);
 
   return (
@@ -89,8 +100,14 @@ function App() {
               </Routes>
             </Suspense>
             <Footer />
-            <WhatsAppButton />
-            <ChatWidget />
+
+            {/* Deferred Components */}
+            {isDelayedLoaded && (
+              <Suspense fallback={null}>
+                <WhatsAppButton />
+                <ChatWidget />
+              </Suspense>
+            )}
           </div>
         </Router>
       </CurrencyProvider>

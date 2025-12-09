@@ -9,6 +9,9 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'logo.svg'],
+      devOptions: {
+        enabled: true // Enable PWA in dev to test offline behavior
+      },
       manifest: {
         name: 'AMC Agency Web',
         short_name: 'AMC Agency',
@@ -18,6 +21,7 @@ export default defineConfig({
         display: 'standalone',
         scope: '/',
         start_url: '/',
+        orientation: 'portrait',
         icons: [
           {
             src: '/pwa-192x192.png',
@@ -28,20 +32,29 @@ export default defineConfig({
             src: '/pwa-512x512.png',
             sizes: '512x512',
             type: 'image/png'
+          },
+          {
+            src: '/pwa-512x512.png',
+            sizes: '512x512',
+            type: 'image/png',
+            purpose: 'any maskable'
           }
         ]
       },
       workbox: {
-        globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
+        globPatterns: ['**/*.{js,css,html,ico,png,svg,webp}'],
+        clientsClaim: true, // Forces SW to take control immediately
+        skipWaiting: true, // Activates new SW versions immediately
+        cleanupOutdatedCaches: true,
         runtimeCaching: [
           {
             urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
-            handler: 'CacheFirst',
+            handler: 'StaleWhileRevalidate', // Better for fonts than CacheFirst if they change
             options: {
               cacheName: 'google-fonts-cache',
               expiration: {
                 maxEntries: 10,
-                maxAgeSeconds: 60 * 60 * 24 * 365 // <== 365 days
+                maxAgeSeconds: 60 * 60 * 24 * 365
               },
               cacheableResponse: {
                 statuses: [0, 200]
@@ -55,10 +68,22 @@ export default defineConfig({
               cacheName: 'gstatic-fonts-cache',
               expiration: {
                 maxEntries: 10,
-                maxAgeSeconds: 60 * 60 * 24 * 365 // <== 365 days
+                maxAgeSeconds: 60 * 60 * 24 * 365
               },
               cacheableResponse: {
                 statuses: [0, 200]
+              }
+            }
+          },
+          // Cache images from any source
+          {
+            urlPattern: /\.(?:png|jpg|jpeg|svg|gif|webp)$/,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'images-cache',
+              expiration: {
+                maxEntries: 50,
+                maxAgeSeconds: 30 * 24 * 60 * 60 // 30 Days
               }
             }
           }
@@ -72,10 +97,10 @@ export default defineConfig({
         manualChunks: {
           vendor: ['react', 'react-dom', 'react-router-dom'],
           utils: ['./src/utils/analytics.js'],
-          ui: ['./src/components/Navbar.jsx', './src/components/Footer.jsx']
+          ui: ['./src/components/Navbar.jsx', './src/components/Footer.jsx', './src/components/LoadingSpinner.jsx']
         }
       }
     },
-    chunkSizeWarningLimit: 1000
+    chunkSizeWarningLimit: 800
   }
 });

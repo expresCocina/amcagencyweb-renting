@@ -5,6 +5,7 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
 import LoadingSpinner from './components/LoadingSpinner';
+import AnalyticsTracker from './components/AnalyticsTracker';
 import { initAnalytics, trackPageView } from './utils/analytics';
 
 // Contexts

@@ -48,6 +48,7 @@ const Navbar = () => {
                         <li><Link to="/seo">SEO</Link></li>
                         <li><Link to="/desarrollo-web">Desarrollo Web</Link></li>
                         <li><Link to="/embudos">Automatización</Link></li>
+                        <li><Link to="/generador-demos" className="featured-link">🎨 Demos</Link></li>
                         <li><Link to="/blog">Blog</Link></li>
                         <li><Link to="/casos">Casos</Link></li>
                         <li><Link to="/sobre-nosotros">Nosotros</Link></li>

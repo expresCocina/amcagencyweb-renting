@@ -18,6 +18,28 @@
     color: var(--primary) !important;
 }
 
+.featured-link {
+    font-weight: 600;
+    color: var(--accent-cyan) !important;
+    background: rgba(0, 240, 255, 0.1);
+    padding: 8px 16px !important;
+    border-radius: 8px;
+    border: 1px solid rgba(0, 240, 255, 0.3);
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.featured-link:hover {
+    background: rgba(0, 240, 255, 0.2);
+    border-color: var(--accent-cyan);
+    box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+
 @media (min-width: 768px) {
     .navbar {
         padding: 20px 0;

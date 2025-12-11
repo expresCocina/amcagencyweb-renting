@@ -42,6 +42,7 @@ const RestauranteDemo = lazy(() => import('./pages/demos/RestauranteDemo'));
 const AcademiaDemo = lazy(() => import('./pages/demos/AcademiaDemo'));
 const BoutiqueDemo = lazy(() => import('./pages/demos/BoutiqueDemo'));
 const ConsultoraDemo = lazy(() => import('./pages/demos/ConsultoraDemo'));
+const DemoGeneratorPage = lazy(() => import('./pages/DemoGeneratorPage'));
 
 function App() {
   const [isDelayedLoaded, setIsDelayedLoaded] = useState(false);
@@ -79,6 +80,7 @@ function App() {
                 <Route path="/blog" element={<BlogPage />} />
                 <Route path="/recursos" element={<ResourcesPage />} />
                 <Route path="/calculadora" element={<BudgetCalculatorPage />} />
+                <Route path="/generador-demos" element={<DemoGeneratorPage />} />
                 <Route path="/privacidad" element={<PrivacyPolicyPage />} />
                 <Route path="/terminos" element={<TermsPage />} />
                 <Route path="/agendar" element={<BookingPage />} />

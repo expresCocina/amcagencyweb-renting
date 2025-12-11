@@ -49,15 +49,15 @@ const LeadMagnetPopup = () => {
             if (daysSinceDismissed < 7) return;
         }
 
-        // Trigger popup after 30 seconds
+        // Trigger popup after 5 seconds
         const timer = setTimeout(() => {
             setIsVisible(true);
             trackEvent('PopupView', {
                 category: 'Lead Generation',
                 label: 'Lead Magnet Popup',
-                trigger: 'time_30s'
+                trigger: 'time_5s'
             });
-        }, 30000);
+        }, 5000);
 
         // Exit intent trigger
         const handleMouseLeave = (e) => {

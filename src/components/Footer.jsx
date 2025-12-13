@@ -38,8 +38,8 @@ const Footer = () => {
                         <ul>
                             <li><Link to="/casos">Casos de Estudio</Link></li>
                             <li><Link to="/credito">Pago a Crédito</Link></li>
-                            <li><Link to="/#sobre-nosotros">Sobre AMC</Link></li>
-                            <li><a href="#contacto">Contacto</a></li>
+                            <li><Link to="/sobre-nosotros">Sobre AMC</Link></li>
+                            <li><Link to="/agendar">Contacto</Link></li>
                         </ul>
                     </div>
 

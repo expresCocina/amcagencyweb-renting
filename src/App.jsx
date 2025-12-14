@@ -18,6 +18,7 @@ const ChatWidget = lazy(() => import('./components/ChatWidget'));
 const LeadMagnetPopup = lazy(() => import('./components/LeadMagnetPopup'));
 
 // Lazy Load Pages
+const PromoLandingPage = lazy(() => import('./pages/PromoLandingPage'));
 const HomePage = lazy(() => import('./pages/HomePage'));
 const SEOPage = lazy(() => import('./pages/SEOPage'));
 const WebDevPage = lazy(() => import('./pages/WebDevPage'));
@@ -54,6 +55,14 @@ const TemplateOptimizacionPage = lazy(() => import('./pages/recursos/TemplateOpt
 function App() {
   const [isDelayedLoaded, setIsDelayedLoaded] = useState(false);
 
+  // Check if promotional period is active
+  const isPromoActive = () => {
+    const now = new Date();
+    const promoStart = new Date('2025-12-14T00:00:00');
+    const promoEnd = new Date('2026-02-28T23:59:59');
+    return now >= promoStart && now <= promoEnd;
+  };
+
   useEffect(() => {
     initAnalytics();
 
@@ -76,7 +85,9 @@ function App() {
             <Navbar />
             <Suspense fallback={<LoadingSpinner />}>
               <Routes>
-                <Route path="/" element={<HomePage />} />
+                {/* Promotional Landing Page - Active during Dec 14, 2025 - Feb 28, 2026 */}
+                <Route path="/" element={isPromoActive() ? <PromoLandingPage /> : <HomePage />} />
+                <Route path="/home" element={<HomePage />} />
                 <Route path="/seo" element={<SEOPage />} />
                 <Route path="/desarrollo-web" element={<WebDevPage />} />
                 <Route path="/embudos" element={<FunnelsPage />} />

@@ -35,6 +35,16 @@ const PromoLandingPage = () => {
     }, []);
 
     const handlePromoClick = () => {
+        // Track Facebook Lead event
+        if (window.fbq) {
+            window.fbq('track', 'Lead', {
+                content_name: 'Oferta Navideña WhatsApp',
+                content_category: 'Promoción',
+                value: 380000,
+                currency: 'COP'
+            });
+        }
+
         const message = '🎄 ¡Hola! Quiero aprovechar la OFERTA NAVIDEÑA de páginas web en 72 horas por $380,000 COP. ¿Podemos hablar?';
         const whatsappUrl = `https://wa.me/573138537261?text=${encodeURIComponent(message)}`;
         window.open(whatsappUrl, '_blank');

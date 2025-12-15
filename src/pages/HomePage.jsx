@@ -1,6 +1,6 @@
 import Hero from '../components/Hero';
 import WhatWeDo from '../components/WhatWeDo';
-import Services from '../components/Services';
+import Services3D from '../components/Services3D';
 import Stats from '../components/Stats';
 import ClientLogos from '../components/ClientLogos';
 import Certifications from '../components/Certifications';
@@ -21,7 +21,7 @@ const HomePage = () => {
             <Hero />
             <Stats />
             <WhatWeDo />
-            <Services />
+            <Services3D />
             <ClientLogos />
             <WorkProcess />
             <Certifications />

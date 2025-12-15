@@ -12,7 +12,18 @@ const Services3D = () => {
             title: 'SEO Profesional',
             description: 'Posicionamiento en Google para keywords de alta conversión. Auditoría técnica + estrategia de contenido + reportes mensuales con KPIs reales.',
             benefit: 'Aumenta tu tráfico orgánico hasta 300% en 6 meses',
-            icon: '🎯',
+            icon: (
+                <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="32" cy="32" r="28" fill="url(#grad1)" />
+                    <path d="M32 12L36 24L48 24L38 32L42 44L32 36L22 44L26 32L16 24L28 24L32 12Z" fill="white" />
+                    <defs>
+                        <linearGradient id="grad1" x1="0" y1="0" x2="64" y2="64">
+                            <stop offset="0%" stopColor="#8b5cf6" />
+                            <stop offset="100%" stopColor="#a855f7" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+            ),
             link: '/seo',
             color: '#8b5cf6'
         },
@@ -20,7 +31,22 @@ const Services3D = () => {
             title: 'Desarrollo Web',
             description: 'Sitios optimizados para ventas. Integración con pasarelas LATAM (Wompi, MercadoPago, Stripe). Responsive + rápido + SEO-ready.',
             benefit: 'Sitios que cargan en <2 segundos y convierten 40% más',
-            icon: '💻',
+            icon: (
+                <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="8" y="12" width="48" height="36" rx="4" fill="url(#grad2)" />
+                    <rect x="12" y="16" width="40" height="24" fill="#1e1b4b" />
+                    <path d="M20 24L24 28L20 32" stroke="#ec4899" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    <line x1="28" y1="24" x2="32" y2="32" stroke="#ec4899" strokeWidth="2" strokeLinecap="round" />
+                    <path d="M36 32L40 28L36 24" stroke="#ec4899" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    <rect x="8" y="48" width="48" height="4" rx="2" fill="url(#grad2)" />
+                    <defs>
+                        <linearGradient id="grad2" x1="0" y1="0" x2="64" y2="64">
+                            <stop offset="0%" stopColor="#ec4899" />
+                            <stop offset="100%" stopColor="#f472b6" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+            ),
             link: '/desarrollo-web',
             featured: true,
             color: '#ec4899'
@@ -29,7 +55,19 @@ const Services3D = () => {
             title: 'Embudos + Automatización',
             description: 'Sistemas de ventas automatizados. Integración WhatsApp + email + CRM. Seguimiento inteligente de leads.',
             benefit: 'Automatiza hasta el 80% de tu proceso de ventas',
-            icon: '🚀',
+            icon: (
+                <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="32" cy="32" r="28" fill="url(#grad3)" />
+                    <path d="M32 16L40 24L48 20L44 32L52 40L40 36L32 48L24 36L12 40L20 32L16 20L24 24L32 16Z" fill="white" />
+                    <circle cx="32" cy="32" r="8" fill="#f59e0b" />
+                    <defs>
+                        <linearGradient id="grad3" x1="0" y1="0" x2="64" y2="64">
+                            <stop offset="0%" stopColor="#f59e0b" />
+                            <stop offset="100%" stopColor="#fbbf24" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+            ),
             link: '/embudos',
             color: '#f59e0b'
         }

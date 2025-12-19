@@ -4,38 +4,14 @@ import './LeadMagnetPopup.css';
 
 const LeadMagnetPopup = () => {
     const [isVisible, setIsVisible] = useState(false);
-    const [isSubmitted, setIsSubmitted] = useState(false);
+    const [showExitOffer, setShowExitOffer] = useState(false);
     const [formData, setFormData] = useState({
-        email: '',
         name: '',
-        selectedResources: []
+        phone: '',
+        email: ''
     });
     const [errors, setErrors] = useState({});
     const [isLoading, setIsLoading] = useState(false);
-
-    const resources = [
-        {
-            id: 'seo-guide',
-            title: 'Guía Completa de SEO 2024',
-            description: 'Estrategias probadas para dominar Google',
-            icon: '📈',
-            pageUrl: '/recursos/guia-seo-2024'
-        },
-        {
-            id: 'marketing-checklist',
-            title: 'Checklist de Marketing Digital',
-            description: '50+ tácticas para aumentar conversiones',
-            icon: '✅',
-            pageUrl: '/recursos/checklist-marketing'
-        },
-        {
-            id: 'web-optimization',
-            title: 'Template de Optimización Web',
-            description: 'Plantilla para auditar y mejorar tu sitio',
-            icon: '🚀',
-            pageUrl: '/recursos/template-optimizacion'
-        }
-    ];
 
     useEffect(() => {
         // Check if user has already subscribed or dismissed
@@ -54,61 +30,61 @@ const LeadMagnetPopup = () => {
             setIsVisible(true);
             trackEvent('PopupView', {
                 category: 'Lead Generation',
-                label: 'Lead Magnet Popup',
+                label: 'Subscription Popup',
                 trigger: 'time_5s'
             });
         }, 5000);
 
-        // Exit intent trigger
-        const handleMouseLeave = (e) => {
-            if (e.clientY <= 0 && !isVisible) {
-                setIsVisible(true);
-                trackEvent('PopupView', {
-                    category: 'Lead Generation',
-                    label: 'Lead Magnet Popup',
-                    trigger: 'exit_intent'
-                });
-            }
-        };
-
-        document.addEventListener('mouseleave', handleMouseLeave);
-
-        return () => {
-            clearTimeout(timer);
-            document.removeEventListener('mouseleave', handleMouseLeave);
-        };
-    }, [isVisible]);
+        return () => clearTimeout(timer);
+    }, []);
 
     const handleClose = () => {
-        setIsVisible(false);
-        localStorage.setItem('leadmagnet_dismissed', Date.now().toString());
-        trackEvent('PopupClose', {
-            category: 'Lead Generation',
-            label: 'Lead Magnet Popup',
-            reason: 'user_dismissed'
-        });
+        if (!showExitOffer) {
+            // Show exit offer instead of closing
+            setShowExitOffer(true);
+            trackEvent('ExitIntentOffer', {
+                category: 'Lead Generation',
+                label: 'Exit Offer Shown',
+                discount: '50%'
+            });
+        } else {
+            // Actually close the popup
+            setIsVisible(false);
+            localStorage.setItem('leadmagnet_dismissed', Date.now().toString());
+            trackEvent('PopupClose', {
+                category: 'Lead Generation',
+                label: 'Subscription Popup',
+                reason: 'user_dismissed_after_offer'
+            });
+        }
     };
 
-    const handleResourceToggle = (resourceId) => {
-        setFormData(prev => ({
-            ...prev,
-            selectedResources: prev.selectedResources.includes(resourceId)
-                ? prev.selectedResources.filter(id => id !== resourceId)
-                : [...prev.selectedResources, resourceId]
-        }));
+    const handleBackToForm = () => {
+        setShowExitOffer(false);
+        trackEvent('ExitOfferAccepted', {
+            category: 'Lead Generation',
+            label: 'User Returned to Form',
+            discount: '50%'
+        });
     };
 
     const validateForm = () => {
         const newErrors = {};
 
-        if (!formData.email) {
+        if (!formData.name.trim()) {
+            newErrors.name = 'El nombre es requerido';
+        }
+
+        if (!formData.phone.trim()) {
+            newErrors.phone = 'El teléfono es requerido';
+        } else if (!/^\d{10}$/.test(formData.phone.replace(/\s/g, ''))) {
+            newErrors.phone = 'Teléfono inválido (10 dígitos)';
+        }
+
+        if (!formData.email.trim()) {
             newErrors.email = 'El email es requerido';
         } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
             newErrors.email = 'Email inválido';
-        }
-
-        if (formData.selectedResources.length === 0) {
-            newErrors.resources = 'Selecciona al menos un recurso';
         }
 
         setErrors(newErrors);
@@ -123,43 +99,61 @@ const LeadMagnetPopup = () => {
         setIsLoading(true);
 
         try {
-            // Track as Lead (for Facebook/GA4 Lead conversion)
+            // Track as Lead (Facebook/GA4)
             trackEvent('Lead', {
                 category: 'Lead Generation',
-                label: 'Lead Magnet Subscribe',
-                resources: formData.selectedResources.join(','),
-                resource_count: formData.selectedResources.length,
-                email: formData.email,
-                name: formData.name || 'Not provided'
+                label: 'Subscription Form',
+                source: 'popup',
+                value: 0,
+                currency: 'COP',
+                discount_claimed: showExitOffer ? '50%' : 'none'
             }, {
-                email: formData.email
-            });
-
-            // Track as Contact (for general contact tracking)
-            trackEvent('Contact', {
-                category: 'Lead Generation',
-                label: 'Lead Magnet Contact',
-                source: 'lead_magnet_popup',
                 email: formData.email,
-                name: formData.name || 'Not provided',
-                resources: formData.selectedResources.join(',')
+                phone: formData.phone
             });
 
-            // Track as Subscribe (for email list tracking)
+            // Track as Subscribe
             trackEvent('Subscribe', {
                 category: 'Email Marketing',
-                label: 'Lead Magnet Subscription',
+                label: 'Popup Subscription',
                 email: formData.email,
-                name: formData.name || 'Not provided',
-                resources: formData.selectedResources.join(',')
+                phone: formData.phone,
+                name: formData.name,
+                discount: showExitOffer ? '50%' : 'none'
             });
-
-            // Simulate API call (replace with actual backend call)
-            await new Promise(resolve => setTimeout(resolve, 1000));
 
             // Mark as subscribed
             localStorage.setItem('leadmagnet_subscribed', 'true');
-            setIsSubmitted(true);
+
+            // Create WhatsApp message
+            const discountText = showExitOffer ? '\n\n🎁 *¡Quiero mi 50% de descuento en mi primer proyecto!*' : '';
+
+            const message = `Hola! Me gustaría suscribirme a sus servicios.
+
+📝 *Mis datos:*
+• Nombre: ${formData.name}
+• Teléfono: ${formData.phone}
+• Email: ${formData.email}${discountText}
+
+Quiero recibir más información sobre sus servicios.`;
+
+            const whatsappUrl = `https://wa.me/573138537261?text=${encodeURIComponent(message)}`;
+
+            // Track WhatsApp redirect
+            trackEvent('Contact', {
+                method: 'whatsapp',
+                source: 'subscription_popup',
+                button_text: 'Suscribirse',
+                discount: showExitOffer ? '50%' : 'none'
+            });
+
+            // Redirect to WhatsApp
+            window.open(whatsappUrl, '_blank');
+
+            // Close popup
+            setTimeout(() => {
+                setIsVisible(false);
+            }, 500);
 
         } catch (error) {
             console.error('Error submitting form:', error);
@@ -167,18 +161,6 @@ const LeadMagnetPopup = () => {
         } finally {
             setIsLoading(false);
         }
-    };
-
-    const handleViewResource = (resource) => {
-        trackEvent('ViewContent', {
-            category: 'Engagement',
-            label: 'Lead Magnet Resource View',
-            resource_id: resource.id,
-            resource_name: resource.title
-        });
-
-        // Redirect to resource page
-        window.location.href = resource.pageUrl;
     };
 
     if (!isVisible) return null;
@@ -190,17 +172,78 @@ const LeadMagnetPopup = () => {
                     ✕
                 </button>
 
-                {!isSubmitted ? (
+                {showExitOffer ? (
+                    // Exit Offer Screen
+                    <div className="exit-offer">
+                        <div className="exit-offer-icon">🎁</div>
+                        <h2 className="gradient-text">¡No te vayas!</h2>
+                        <p className="exit-offer-text">
+                            Llena el formulario ahora y obtén un
+                        </p>
+                        <div className="discount-badge">
+                            50% DE DESCUENTO
+                        </div>
+                        <p className="exit-offer-subtext">
+                            en tu primer proyecto con nosotros
+                        </p>
+
+                        <div className="exit-offer-buttons">
+                            <button
+                                className="btn btn-primary btn-large"
+                                onClick={handleBackToForm}
+                            >
+                                ✅ Sí, quiero mi descuento
+                            </button>
+                            <button
+                                className="btn btn-outline"
+                                onClick={handleClose}
+                            >
+                                No, gracias
+                            </button>
+                        </div>
+
+                        <p className="exit-offer-disclaimer">
+                            ⏰ Oferta válida solo por hoy
+                        </p>
+                    </div>
+                ) : (
+                    // Main Form
                     <>
                         <div className="popup-header">
-                            <div className="popup-icon">🎁</div>
-                            <h2 className="gradient-text">Recursos Gratuitos Premium</h2>
+                            <div className="popup-icon">🎯</div>
+                            <h2 className="gradient-text">¡Únete a Nuestra Comunidad!</h2>
                             <p className="popup-subtitle">
-                                Descarga las herramientas que usan las empresas líderes para crecer online
+                                Recibe tips exclusivos, ofertas especiales y contenido premium directo en WhatsApp
                             </p>
                         </div>
 
                         <form onSubmit={handleSubmit} className="popup-form">
+                            <div className="form-group">
+                                <label htmlFor="name">Nombre completo *</label>
+                                <input
+                                    type="text"
+                                    id="name"
+                                    value={formData.name}
+                                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                                    placeholder="Juan Pérez"
+                                    className={errors.name ? 'error' : ''}
+                                />
+                                {errors.name && <span className="error-message">{errors.name}</span>}
+                            </div>
+
+                            <div className="form-group">
+                                <label htmlFor="phone">Teléfono (WhatsApp) *</label>
+                                <input
+                                    type="tel"
+                                    id="phone"
+                                    value={formData.phone}
+                                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                                    placeholder="3001234567"
+                                    className={errors.phone ? 'error' : ''}
+                                />
+                                {errors.phone && <span className="error-message">{errors.phone}</span>}
+                            </div>
+
                             <div className="form-group">
                                 <label htmlFor="email">Email *</label>
                                 <input
@@ -214,38 +257,6 @@ const LeadMagnetPopup = () => {
                                 {errors.email && <span className="error-message">{errors.email}</span>}
                             </div>
 
-                            <div className="form-group">
-                                <label htmlFor="name">Nombre (opcional)</label>
-                                <input
-                                    type="text"
-                                    id="name"
-                                    value={formData.name}
-                                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                    placeholder="Tu nombre"
-                                />
-                            </div>
-
-                            <div className="resources-section">
-                                <label>Selecciona tus recursos: *</label>
-                                <div className="resources-grid">
-                                    {resources.map(resource => (
-                                        <div
-                                            key={resource.id}
-                                            className={`resource-card ${formData.selectedResources.includes(resource.id) ? 'selected' : ''}`}
-                                            onClick={() => handleResourceToggle(resource.id)}
-                                        >
-                                            <div className="resource-icon">{resource.icon}</div>
-                                            <h4>{resource.title}</h4>
-                                            <p>{resource.description}</p>
-                                            <div className="resource-checkbox">
-                                                {formData.selectedResources.includes(resource.id) ? '✓' : '○'}
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-                                {errors.resources && <span className="error-message">{errors.resources}</span>}
-                            </div>
-
                             {errors.submit && (
                                 <div className="error-message submit-error">{errors.submit}</div>
                             )}
@@ -255,46 +266,14 @@ const LeadMagnetPopup = () => {
                                 className="btn btn-primary btn-large"
                                 disabled={isLoading}
                             >
-                                {isLoading ? 'Procesando...' : 'Descargar Recursos Gratis →'}
+                                {isLoading ? 'Procesando...' : '📱 Suscribirme por WhatsApp →'}
                             </button>
 
                             <p className="popup-disclaimer">
-                                🔒 No spam. Cancela cuando quieras. Tus datos están seguros.
+                                🔒 Tus datos están seguros. Te contactaremos por WhatsApp.
                             </p>
                         </form>
                     </>
-                ) : (
-                    <div className="popup-success">
-                        <div className="success-icon">🎉</div>
-                        <h2 className="gradient-text">¡Gracias por Suscribirte!</h2>
-                        <p>Tus recursos están listos. Haz clic para verlos:</p>
-
-                        <div className="download-links">
-                            {resources
-                                .filter(r => formData.selectedResources.includes(r.id))
-                                .map(resource => (
-                                    <button
-                                        key={resource.id}
-                                        onClick={() => handleViewResource(resource)}
-                                        className="download-btn"
-                                    >
-                                        <span className="download-icon">{resource.icon}</span>
-                                        <span className="download-text">
-                                            <strong>{resource.title}</strong>
-                                            <small>Haz clic para ver el recurso</small>
-                                        </span>
-                                        <span className="download-arrow">→</span>
-                                    </button>
-                                ))}
-                        </div>
-
-                        <div className="success-cta">
-                            <p>¿Necesitas ayuda implementando estas estrategias?</p>
-                            <a href="#contacto" className="btn btn-secondary" onClick={handleClose}>
-                                Hablar con un Experto
-                            </a>
-                        </div>
-                    </div>
                 )}
             </div>
         </div>

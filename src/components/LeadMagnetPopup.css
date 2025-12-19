@@ -357,6 +357,76 @@
     font-size: 15px;
 }
 
+/* Exit Offer Styles */
+.exit-offer {
+    text-align: center;
+    padding: 20px 0;
+}
+
+.exit-offer-icon {
+    font-size: 80px;
+    margin-bottom: 20px;
+    animation: bounce 1s infinite;
+}
+
+.exit-offer h2 {
+    font-size: 32px;
+    margin-bottom: 15px;
+}
+
+.exit-offer-text {
+    font-size: 18px;
+    color: var(--text-secondary);
+    margin-bottom: 15px;
+}
+
+.discount-badge {
+    background: linear-gradient(135deg, #ff6b00, #ff0080);
+    color: white;
+    font-size: 28px;
+    font-weight: 800;
+    padding: 20px 30px;
+    border-radius: 12px;
+    margin: 20px 0;
+    box-shadow: 0 8px 30px rgba(255, 0, 128, 0.4);
+    animation: pulse 2s infinite;
+    letter-spacing: 1px;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+        box-shadow: 0 8px 30px rgba(255, 0, 128, 0.4);
+    }
+
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 12px 40px rgba(255, 0, 128, 0.6);
+    }
+}
+
+.exit-offer-subtext {
+    font-size: 16px;
+    color: var(--text-secondary);
+    margin-bottom: 30px;
+}
+
+.exit-offer-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.exit-offer-disclaimer {
+    font-size: 14px;
+    color: var(--accent-cyan);
+    font-weight: 600;
+    margin-top: 15px;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .leadmagnet-popup {

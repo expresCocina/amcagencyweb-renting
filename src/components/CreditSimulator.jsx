@@ -3,7 +3,7 @@ import { trackEvent } from '../utils/analytics';
 import './CreditSimulator.css';
 
 const CreditSimulator = () => {
-    const [amount, setAmount] = useState(2500);
+    const [amount, setAmount] = useState(10000000); // 10M COP
     const [months, setMonths] = useState(6);
 
     const calculatePayment = (principal, term) => {
@@ -18,9 +18,9 @@ const CreditSimulator = () => {
         const monthly = total / term;
 
         return {
-            monthly: monthly.toFixed(2),
-            total: total.toFixed(2),
-            interest: (total - principal).toFixed(2),
+            monthly: monthly.toFixed(0),
+            total: total.toFixed(0),
+            interest: (total - principal).toFixed(0),
             rate: (rate * 100).toFixed(0)
         };
     };
@@ -33,7 +33,7 @@ const CreditSimulator = () => {
             trackEvent('CustomizeProduct', {
                 content_name: 'Credit Simulation',
                 value: amount,
-                currency: 'USD',
+                currency: 'COP',
                 period: months
             });
         }, 2000); // Track after 2 seconds of inactivity
@@ -51,19 +51,19 @@ const CreditSimulator = () => {
                 <div className="simulator-controls mt-4">
                     <div className="control-group">
                         <label>Monto del proyecto</label>
-                        <div className="amount-display gradient-text">${amount.toLocaleString()} USD</div>
+                        <div className="amount-display gradient-text">${amount.toLocaleString()} COP</div>
                         <input
                             type="range"
-                            min="500"
-                            max="10000"
-                            step="100"
+                            min="2000000"
+                            max="40000000"
+                            step="500000"
                             value={amount}
                             onChange={(e) => setAmount(Number(e.target.value))}
                             className="slider"
                         />
                         <div className="range-labels">
-                            <span>$500</span>
-                            <span>$10,000</span>
+                            <span>$2M</span>
+                            <span>$40M</span>
                         </div>
                     </div>
 
@@ -87,15 +87,15 @@ const CreditSimulator = () => {
                     <div className="result-grid">
                         <div className="result-item">
                             <div className="result-label">Cuota mensual</div>
-                            <div className="result-value gradient-text">${payment.monthly}</div>
+                            <div className="result-value gradient-text">${Number(payment.monthly).toLocaleString()}</div>
                         </div>
                         <div className="result-item">
                             <div className="result-label">Total a pagar</div>
-                            <div className="result-value">${payment.total}</div>
+                            <div className="result-value">${Number(payment.total).toLocaleString()}</div>
                         </div>
                         <div className="result-item">
                             <div className="result-label">Interés total</div>
-                            <div className="result-value">${payment.interest} ({payment.rate}%)</div>
+                            <div className="result-value">${Number(payment.interest).toLocaleString()} ({payment.rate}%)</div>
                         </div>
                     </div>
 

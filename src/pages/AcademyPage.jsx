@@ -43,7 +43,7 @@ const AcademyPage = () => {
                             <p className="mt-2">Nuestros graduados tienen alta empleabilidad en el mercado.</p>
                         </div>
                         <div className="card">
-                            <h3>💰 Salario promedio $800-1,500 USD/mes</h3>
+                            <h3>💰 Salario promedio $3.2M-6M COP/mes</h3>
                             <p className="mt-2">Trabajos remotos con ingresos en dólares.</p>
                         </div>
                     </div>
@@ -57,7 +57,7 @@ const AcademyPage = () => {
                         <p className="mt-3">💳 Pago a crédito disponible - Hasta 6 cuotas sin interés</p>
                         <div className="page-ctas mt-4">
                             <a href="#contacto" className="btn btn-primary">Ver todos los cursos</a>
-                            <a href="https://wa.me/573138537261?text=Hola,%20quiero%20información%20sobre%20los%20cursos" className="btn btn-secondary" target="_blank" rel="noopener noreferrer">
+                            <a href="https://wa.me/573138537261?text=Hola,%20quiero%20información%20sobre%20los%20cursos" className="btn btn-secondary" target="_blank" rel="noopener noreferrer" onClick={() => trackEvent('Contact', { method: 'whatsapp', source: 'academy_page', button_text: 'Hablar con asesor' })}>
                                 Hablar con asesor
                             </a>
                         </div>

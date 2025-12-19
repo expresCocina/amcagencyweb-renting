@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { trackEvent } from '../utils/analytics';
 import ContactForm from '../components/ContactForm';
 import './SEOPage.css';
 
@@ -168,7 +169,7 @@ const SEOPage = () => {
                         <p className="mt-3">Planes desde $550.000 COP/mes. Pago a crédito disponible.</p>
                         <div className="page-ctas mt-4">
                             <a href="#contacto" className="btn btn-primary">Solicitar auditoría SEO gratuita</a>
-                            <a href="https://wa.me/573138537261?text=Hola,%20quiero%20información%20sobre%20SEO" className="btn btn-secondary" target="_blank" rel="noopener noreferrer">
+                            <a href="https://wa.me/573138537261?text=Hola,%20quiero%20información%20sobre%20SEO" className="btn btn-secondary" target="_blank" rel="noopener noreferrer" onClick={() => trackEvent('Contact', { method: 'whatsapp', source: 'seo_page', button_text: 'Hablar con especialista' })}>
                                 Hablar con especialista
                             </a>
                         </div>

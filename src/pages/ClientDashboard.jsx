@@ -32,14 +32,14 @@ const ClientDashboard = () => {
             status: 'En Progreso',
             progress: 75,
             startDate: '01/12/2024',
-            budget: '$2,500 USD'
+            budget: '$10,000,000 COP'
         },
         {
             name: 'Rediseño Web Corporativo',
             status: 'En Revisión',
             progress: 85,
             startDate: '15/11/2024',
-            budget: '$5,000 USD'
+            budget: '$20,000,000 COP'
         }
     ];
 

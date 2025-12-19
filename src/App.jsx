@@ -7,6 +7,7 @@ import ScrollToTop from './components/ScrollToTop';
 import LoadingSpinner from './components/LoadingSpinner';
 import AnalyticsTracker from './components/AnalyticsTracker';
 import { initAnalytics, trackPageView } from './utils/analytics';
+import AnnouncementBanner from './components/AnnouncementBanner';
 
 // Contexts
 import { LanguageProvider } from './contexts/LanguageContext';
@@ -92,6 +93,7 @@ function AppContent({ isDelayedLoaded, isPromoActive }) {
 
   return (
     <div className="App">
+      <AnnouncementBanner />
       <div className="bg-grid"></div>
       {!isLandingPage && <Navbar />}
       <Suspense fallback={<LoadingSpinner />}>

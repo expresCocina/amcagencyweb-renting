@@ -78,6 +78,22 @@
     transform: translateX(5px);
 }
 
+.social-icon {
+    font-size: 20px;
+    margin-right: 10px;
+    display: inline-block;
+    vertical-align: middle;
+    color: var(--accent-cyan);
+}
+
+.contact-icon {
+    font-size: 16px;
+    margin-right: 8px;
+    display: inline-block;
+    vertical-align: middle;
+    color: var(--accent-cyan);
+}
+
 .footer-section ul {
     list-style: none;
 }

@@ -1,3 +1,4 @@
+import { trackEvent } from '../utils/analytics';
 import CreditPayment from '../components/CreditPayment';
 import CreditSimulator from '../components/CreditSimulator';
 import ContactForm from '../components/ContactForm';
@@ -15,7 +16,7 @@ const CreditPage = () => {
                         </p>
                         <div className="page-ctas">
                             <a href="#simulador" className="btn btn-primary">Simular mi financiación</a>
-                            <a href="https://wa.me/573138537261?text=Hola,%20quiero%20información%20sobre%20financiación" className="btn btn-secondary" target="_blank" rel="noopener noreferrer">
+                            <a href="https://wa.me/573138537261?text=Hola,%20quiero%20información%20sobre%20financiación" className="btn btn-secondary" target="_blank" rel="noopener noreferrer" onClick={() => trackEvent('Contact', { method: 'whatsapp', source: 'credit_page', button_text: 'Hablar con asesor' })}>
                                 Hablar con asesor
                             </a>
                         </div>

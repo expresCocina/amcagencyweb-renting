@@ -1,3 +1,4 @@
+import { FaFacebook, FaInstagram, FaTiktok, FaLinkedin, FaWhatsapp, FaEnvelope, FaCalendarAlt } from 'react-icons/fa';
 import './Footer.css';
 
 const Footer = () => {
@@ -28,19 +29,39 @@ const Footer = () => {
                     <div className="footer-section">
                         <h4>Contacto</h4>
                         <ul>
-                            <li><a href="https://wa.me/573138537261" target="_blank" rel="noopener noreferrer">WhatsApp: +57 313 853 7261</a></li>
-                            <li><a href="mailto:info@amcagencyweb.com">info@amcagencyweb.com</a></li>
-                            <li><a href="https://calendly.com/amc-agency" target="_blank" rel="noopener noreferrer">Agendar Llamada</a></li>
+                            <li>
+                                <a href="https://wa.me/573138537261" target="_blank" rel="noopener noreferrer">
+                                    <FaWhatsapp className="contact-icon" /> WhatsApp: +57 313 853 7261
+                                </a>
+                            </li>
+                            <li>
+                                <a href="mailto:info@amcagencyweb.com">
+                                    <FaEnvelope className="contact-icon" /> info@amcagencyweb.com
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://calendly.com/amc-agency" target="_blank" rel="noopener noreferrer">
+                                    <FaCalendarAlt className="contact-icon" /> Agendar Llamada
+                                </a>
+                            </li>
                         </ul>
                     </div>
 
                     <div className="footer-section">
                         <h4>Síguenos</h4>
                         <div className="footer-social-links">
-                            <a href="https://www.facebook.com/DigitalBoostamc" target="_blank" rel="noopener noreferrer" aria-label="Facebook">Facebook</a>
-                            <a href="https://www.instagram.com/amc_agencycol?igsh=MWlrNWZhb2dzdXk4Yw%3D%3D&utm_source=qr" target="_blank" rel="noopener noreferrer" aria-label="Instagram">Instagram</a>
-                            <a href="https://www.tiktok.com/@amcagencycol?_r=1&_t=ZS-923QsYchh4L" target="_blank" rel="noopener noreferrer" aria-label="TikTok">TikTok</a>
-                            <a href="https://linkedin.com/company/amcagencyweb" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">LinkedIn</a>
+                            <a href="https://www.facebook.com/DigitalBoostamc" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                                <FaFacebook className="social-icon" /> Facebook
+                            </a>
+                            <a href="https://www.instagram.com/amc_agencycol?igsh=MWlrNWZhb2dzdXk4Yw%3D%3D&utm_source=qr" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                                <FaInstagram className="social-icon" /> Instagram
+                            </a>
+                            <a href="https://www.tiktok.com/@amcagencycol?_r=1&_t=ZS-923QsYchh4L" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+                                <FaTiktok className="social-icon" /> TikTok
+                            </a>
+                            <a href="https://linkedin.com/company/amcagencyweb" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                                <FaLinkedin className="social-icon" /> LinkedIn
+                            </a>
                         </div>
                     </div>
                 </div>

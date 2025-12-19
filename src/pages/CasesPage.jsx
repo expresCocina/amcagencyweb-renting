@@ -34,7 +34,7 @@ const CasesPage = () => {
                 { label: 'Automatización', value: '80%', desc: 'Del proceso de ventas' },
                 { label: 'Ahorro de tiempo', value: '-15h/sem', desc: 'Trabajo manual' },
                 { label: 'Conversión', value: '3% → 7.2%', desc: 'Tasa de cierre' },
-                { label: 'Ventas adicionales', value: '+$45K', desc: 'USD en 4 meses' }
+                { label: 'Ventas adicionales', value: '+$180M', desc: 'COP en 4 meses' }
             ],
             roi: '6.2x en 4 meses'
         },
@@ -98,7 +98,7 @@ const CasesPage = () => {
                 { label: 'Alumnos inscritos', value: '+650%', desc: '120 → 900 alumnos' },
                 { label: 'Suscriptores YouTube', value: '15.2K', desc: 'Desde 0' },
                 { label: 'Tráfico orgánico', value: '+980%', desc: 'Google Search' },
-                { label: 'Revenue mensual', value: '+$28K', desc: 'USD adicionales' }
+                { label: 'Revenue mensual', value: '+$112M', desc: 'COP adicionales' }
             ],
             roi: '8.2x en 6 meses'
         },
@@ -130,7 +130,7 @@ const CasesPage = () => {
                 { label: 'Leads calificados', value: '+740%', desc: '12 → 101/mes' },
                 { label: 'Propuestas enviadas', value: '+450%', desc: '5 → 27.5/mes' },
                 { label: 'Tasa cierre', value: '8% → 18%', desc: 'Conversión mejorada' },
-                { label: 'Revenue', value: '+$92K', desc: 'USD en 4 meses' }
+                { label: 'Revenue', value: '+$368M', desc: 'COP en 4 meses' }
             ],
             roi: '9.2x en 4 meses'
         }

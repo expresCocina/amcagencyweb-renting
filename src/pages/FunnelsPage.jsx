@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { trackEvent } from '../utils/analytics';
 import ContactForm from '../components/ContactForm';
 import './SEOPage.css';
 

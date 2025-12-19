@@ -12,9 +12,8 @@ import { initAnalytics, trackPageView } from './utils/analytics';
 import { LanguageProvider } from './contexts/LanguageContext';
 import { CurrencyProvider } from './contexts/CurrencyContext';
 
-// Lazy Load Non-Critical Components
+// Lazy Load Floating Components
 const WhatsAppButton = lazy(() => import('./components/WhatsAppButton'));
-const ChatWidget = lazy(() => import('./components/ChatWidget'));
 const LeadMagnetPopup = lazy(() => import('./components/LeadMagnetPopup'));
 
 // Lazy Load Pages
@@ -55,12 +54,9 @@ const TemplateOptimizacionPage = lazy(() => import('./pages/recursos/TemplateOpt
 function App() {
   const [isDelayedLoaded, setIsDelayedLoaded] = useState(false);
 
-  // Check if promotional period is active
+  // Check if promotional period is active - DISABLED for single-page focus
   const isPromoActive = () => {
-    const now = new Date();
-    const promoStart = new Date('2025-12-14T00:00:00');
-    const promoEnd = new Date('2026-02-28T23:59:59');
-    return now >= promoStart && now <= promoEnd;
+    return false; // Always show HomePage, not PromoLandingPage
   };
 
   useEffect(() => {
@@ -80,64 +76,75 @@ function App() {
         <Router>
           <ScrollToTop />
           <AnalyticsTracker />
-          <div className="App">
-            <div className="bg-grid"></div>
-            <Navbar />
-            <Suspense fallback={<LoadingSpinner />}>
-              <Routes>
-                {/* Promotional Landing Page - Active during Dec 14, 2025 - Feb 28, 2026 */}
-                <Route path="/" element={isPromoActive() ? <PromoLandingPage /> : <HomePage />} />
-                <Route path="/home" element={<HomePage />} />
-                <Route path="/seo" element={<SEOPage />} />
-                <Route path="/desarrollo-web" element={<WebDevPage />} />
-                <Route path="/embudos" element={<FunnelsPage />} />
-                <Route path="/cursos" element={<AcademyPage />} />
-                <Route path="/credito" element={<CreditPage />} />
-                <Route path="/casos" element={<CasesPage />} />
-                <Route path="/sobre-nosotros" element={<AboutPage />} />
-                <Route path="/blog" element={<BlogPage />} />
-                <Route path="/recursos" element={<ResourcesPage />} />
-                <Route path="/calculadora" element={<BudgetCalculatorPage />} />
-                <Route path="/generador-demos" element={<DemoGeneratorPage />} />
-                <Route path="/privacidad" element={<PrivacyPolicyPage />} />
-                <Route path="/terminos" element={<TermsPage />} />
-                <Route path="/agendar" element={<BookingPage />} />
-
-                {/* Demo Pages */}
-                <Route path="/demo/ecotienda" element={<EcoTiendaDemo />} />
-                <Route path="/demo/inmobiliaria" element={<InmobiliariaDemo />} />
-                <Route path="/demo/clinica-dental" element={<ClinicaDentalDemo />} />
-                <Route path="/demo/techstart" element={<TechStartDemo />} />
-                <Route path="/demo/restaurante" element={<RestauranteDemo />} />
-                <Route path="/demo/academia" element={<AcademiaDemo />} />
-                <Route path="/demo/boutique" element={<BoutiqueDemo />} />
-                <Route path="/demo/consultora" element={<ConsultoraDemo />} />
-
-                {/* Portal Routes */}
-                <Route path="/login" element={<LoginPage />} />
-                <Route path="/dashboard" element={<ClientDashboard />} />
-
-                {/* Resource Pages */}
-                <Route path="/recursos/guia-seo-2024" element={<GuiaSEOPage />} />
-                <Route path="/recursos/checklist-marketing" element={<ChecklistMarketingPage />} />
-                <Route path="/recursos/template-optimizacion" element={<TemplateOptimizacionPage />} />
-
-              </Routes>
-            </Suspense>
-            <Footer />
-
-            {/* Deferred Components */}
-            {isDelayedLoaded && (
-              <Suspense fallback={null}>
-                <WhatsAppButton />
-                <ChatWidget />
-                <LeadMagnetPopup />
-              </Suspense>
-            )}
-          </div>
+          <AppContent isDelayedLoaded={isDelayedLoaded} isPromoActive={isPromoActive} />
         </Router>
       </CurrencyProvider>
     </LanguageProvider>
+  );
+}
+
+// Separate component to use useLocation hook
+function AppContent({ isDelayedLoaded, isPromoActive }) {
+  const location = useLocation();
+
+  // No special handling needed - all pages use navbar/footer
+  const isLandingPage = false;
+
+  return (
+    <div className="App">
+      <div className="bg-grid"></div>
+      {!isLandingPage && <Navbar />}
+      <Suspense fallback={<LoadingSpinner />}>
+        <Routes>
+          {/* Promotional Landing Page - Active during Dec 14, 2025 - Feb 28, 2026 */}
+          <Route path="/" element={isPromoActive() ? <PromoLandingPage /> : <HomePage />} />
+          <Route path="/home" element={<HomePage />} />
+          <Route path="/seo" element={<SEOPage />} />
+          <Route path="/desarrollo-web" element={<WebDevPage />} />
+          <Route path="/embudos" element={<FunnelsPage />} />
+          <Route path="/cursos" element={<AcademyPage />} />
+          <Route path="/credito" element={<CreditPage />} />
+          <Route path="/casos" element={<CasesPage />} />
+          <Route path="/sobre-nosotros" element={<AboutPage />} />
+          <Route path="/blog" element={<BlogPage />} />
+          <Route path="/recursos" element={<ResourcesPage />} />
+          <Route path="/calculadora" element={<BudgetCalculatorPage />} />
+          <Route path="/generador-demos" element={<DemoGeneratorPage />} />
+          <Route path="/privacidad" element={<PrivacyPolicyPage />} />
+          <Route path="/terminos" element={<TermsPage />} />
+          <Route path="/agendar" element={<BookingPage />} />
+
+          {/* Demo Pages */}
+          <Route path="/demo/ecotienda" element={<EcoTiendaDemo />} />
+          <Route path="/demo/inmobiliaria" element={<InmobiliariaDemo />} />
+          <Route path="/demo/clinica-dental" element={<ClinicaDentalDemo />} />
+          <Route path="/demo/techstart" element={<TechStartDemo />} />
+          <Route path="/demo/restaurante" element={<RestauranteDemo />} />
+          <Route path="/demo/academia" element={<AcademiaDemo />} />
+          <Route path="/demo/boutique" element={<BoutiqueDemo />} />
+          <Route path="/demo/consultora" element={<ConsultoraDemo />} />
+
+          {/* Portal Routes */}
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/dashboard" element={<ClientDashboard />} />
+
+          {/* Resource Pages */}
+          <Route path="/recursos/guia-seo-2024" element={<GuiaSEOPage />} />
+          <Route path="/recursos/checklist-marketing" element={<ChecklistMarketingPage />} />
+          <Route path="/recursos/template-optimizacion" element={<TemplateOptimizacionPage />} />
+
+        </Routes>
+      </Suspense>
+      {!isLandingPage && <Footer />}
+
+      {/* Deferred Components */}
+      {isDelayedLoaded && (
+        <Suspense fallback={null}>
+          <WhatsAppButton />
+          <LeadMagnetPopup />
+        </Suspense>
+      )}
+    </div>
   );
 }
 

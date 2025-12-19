@@ -1,6 +1,10 @@
+import { useState, useEffect } from 'react';
 import './Testimonials.css';
 
 const Testimonials = () => {
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const [isFlipped, setIsFlipped] = useState(false);
+
     const testimonials = [
         {
             quote: "Triplicamos nuestras ventas online en 4 meses",
@@ -11,7 +15,7 @@ const Testimonials = () => {
             flag: "🇨🇴",
             avatar: "👩‍💼",
             rating: 5,
-            linkedin: "#"
+            color: "rgba(139, 92, 246, 0.6)"
         },
         {
             quote: "El embudo automatizado nos ahorra 15 horas semanales",
@@ -22,18 +26,7 @@ const Testimonials = () => {
             flag: "🇲🇽",
             avatar: "👨‍💼",
             rating: 5,
-            linkedin: "#"
-        },
-        {
-            quote: "Conseguí trabajo remoto gracias al bootcamp",
-            author: "Ana Martínez",
-            role: "Estudiante AMC Academy",
-            country: "Argentina",
-            text: "En 2 meses aprendí SEO profesional y conseguí mi primer cliente pagando $800 USD mensuales.",
-            flag: "🇦🇷",
-            avatar: "👩‍🎓",
-            rating: 5,
-            linkedin: "#"
+            color: "rgba(236, 72, 153, 0.6)"
         },
         {
             quote: "ROI del 6.2x en solo 4 meses",
@@ -44,84 +37,140 @@ const Testimonials = () => {
             flag: "🇨🇱",
             avatar: "👨‍💻",
             rating: 5,
-            linkedin: "#"
-        },
-        {
-            quote: "El mejor sitio web que hemos tenido",
-            author: "Laura Fernández",
-            role: "Gerente General",
-            country: "Perú",
-            text: "Diseño hermoso, funcionalidad perfecta y se carga súper rápido. Nuestros clientes están encantados.",
-            flag: "🇵🇪",
-            avatar: "👩‍💼",
-            rating: 5,
-            linkedin: "#"
-        },
-        {
-            quote: "Profesionales 100% confiables",
-            author: "Diego Torres",
-            role: "CEO Tech Startup",
-            country: "España",
-            text: "Cumplieron todos los plazos, comunicación excelente y resultados medibles. Los recomiendo totalmente.",
-            flag: "🇪🇸",
-            avatar: "👨‍🚀",
-            rating: 5,
-            linkedin: "#"
+            color: "rgba(34, 197, 94, 0.6)"
         }
     ];
+
+    const nextSlide = () => {
+        setIsFlipped(false);
+        setCurrentIndex((prev) => (prev + 1) % testimonials.length);
+    };
+
+    const prevSlide = () => {
+        setIsFlipped(false);
+        setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+    };
+
+    const goToSlide = (index) => {
+        setIsFlipped(false);
+        setCurrentIndex(index);
+    };
+
+    const toggleFlip = () => {
+        setIsFlipped(!isFlipped);
+    };
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            nextSlide();
+        }, 6000);
+        return () => clearInterval(interval);
+    }, []);
+
+    const getItemClass = (index) => {
+        if (index === currentIndex) return 'active';
+        if (index === (currentIndex + 1) % testimonials.length) return 'next';
+        if (index === (currentIndex - 1 + testimonials.length) % testimonials.length) return 'prev';
+        return '';
+    };
 
     const renderStars = (rating) => {
         return '⭐'.repeat(rating);
     };
 
     return (
-        <section className="section testimonials" id="casos">
+        <section className="section testimonials-3d" id="testimonios">
             <div className="container">
                 <div className="section-header text-center">
                     <h2>Lo que dicen nuestros clientes</h2>
-                    <p className="mt-3" style={{ color: 'var(--text-secondary)' }}>
+                    <p className="subtitle mt-3">
                         +100 reseñas verificadas con calificación promedio de 4.9/5
                     </p>
                 </div>
 
-                <div className="testimonials-grid">
-                    {testimonials.map((testimonial, index) => (
-                        <div key={index} className="card testimonial-card">
-                            <div className="testimonial-header">
-                                <div className="testimonial-avatar">{testimonial.avatar}</div>
-                                <div className="testimonial-info">
-                                    <strong>{testimonial.author}</strong>
-                                    <div className="author-role">{testimonial.role}</div>
-                                    <div className="testimonial-country">
-                                        {testimonial.flag} {testimonial.country}
+                <div className="carousel-3d-container">
+                    <div className="carousel-3d">
+                        {testimonials.map((testimonial, index) => (
+                            <div
+                                key={index}
+                                className={`carousel-item ${getItemClass(index)}`}
+                                style={{ '--service-color': testimonial.color }}
+                            >
+                                <div className={`service-box-3d ${isFlipped && index === currentIndex ? 'flipped' : ''}`} onClick={toggleFlip}>
+                                    {/* Front Face */}
+                                    <div className="box-face front">
+                                        <div className="testimonial-avatar-3d">{testimonial.avatar}</div>
+                                        <h3 className="testimonial-quote-3d">"{testimonial.quote}"</h3>
+                                        <div className="testimonial-rating-3d">
+                                            {renderStars(testimonial.rating)}
+                                        </div>
+                                        <div className="testimonial-author-3d">
+                                            <strong>{testimonial.author}</strong>
+                                            <div className="author-role-3d">{testimonial.role}</div>
+                                            <div className="testimonial-country-3d">
+                                                {testimonial.flag} {testimonial.country}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* Back Face */}
+                                    <div className="box-face back">
+                                        <div className="testimonial-detail">
+                                            <div className="detail-icon">💬</div>
+                                            <h4>Testimonio Completo</h4>
+                                            <p className="mt-3">{testimonial.text}</p>
+                                            <div className="verified-badge-3d mt-4">
+                                                ✓ Cliente Verificado
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* Side Faces */}
+                                    <div className="box-face left">
+                                        <div className="side-pattern"></div>
+                                    </div>
+                                    <div className="box-face right">
+                                        <div className="side-pattern"></div>
+                                    </div>
+
+                                    {/* Top and Bottom */}
+                                    <div className="box-face top">
+                                        <div className="top-glow"></div>
+                                    </div>
+                                    <div className="box-face bottom">
+                                        <div className="bottom-shadow"></div>
                                     </div>
                                 </div>
                             </div>
+                        ))}
+                    </div>
 
-                            <div className="testimonial-rating">
-                                {renderStars(testimonial.rating)}
-                            </div>
+                    {/* Navigation Controls */}
+                    <button className="carousel-control prev-btn" onClick={prevSlide} aria-label="Previous">
+                        ←
+                    </button>
+                    <button className="carousel-control next-btn" onClick={nextSlide} aria-label="Next">
+                        →
+                    </button>
 
-                            <h3 className="testimonial-quote">"{testimonial.quote}"</h3>
-                            <p className="testimonial-text mt-3">{testimonial.text}</p>
-
-                            <div className="testimonial-footer">
-                                <div className="verified-badge">
-                                    ✓ Cliente verificado
-                                </div>
-                                <a href={testimonial.linkedin} className="linkedin-link" target="_blank" rel="noopener noreferrer">
-                                    in →
-                                </a>
-                            </div>
-                        </div>
-                    ))}
+                    {/* Dots Navigation */}
+                    <div className="carousel-dots">
+                        {testimonials.map((_, index) => (
+                            <button
+                                key={index}
+                                className={`dot ${index === currentIndex ? 'active' : ''}`}
+                                onClick={() => goToSlide(index)}
+                                aria-label={`Go to slide ${index + 1}`}
+                            />
+                        ))}
+                    </div>
                 </div>
 
                 <div className="testimonials-cta text-center mt-5">
-                    <p style={{ color: 'var(--text-secondary)', marginBottom: '20px' }}>
+                    <p style={{ color: 'rgba(255, 255, 255, 0.7)', marginBottom: '20px' }}>
                         ¿Quieres ser nuestro próximo caso de éxito?
                     </p>
-                    <a href="#contacto" className="btn btn-primary">Comencemos a Trabajar</a>
+                    <a href="#contacto" className="btn btn-primary">Comenzemos a Trabajar</a>
                 </div>
             </div>
         </section>

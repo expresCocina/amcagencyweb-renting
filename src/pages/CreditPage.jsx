@@ -11,7 +11,7 @@ const CreditPage = () => {
                     <div className="page-hero-content">
                         <h1>Invierte en tu crecimiento hoy, <span className="gradient-text">paga en cuotas cómodas</span></h1>
                         <p className="page-subtitle">
-                            Financia tus servicios o formación sin complicaciones. Aprobación en 24-48 horas. Sin trámites bancarios complejos.
+                            Financia tus servicios sin complicaciones. <strong>Primera cuota cuando se entregue tu proyecto.</strong> Aprobación en 24-48 horas. Sin trámites bancarios complejos.
                         </p>
                         <div className="page-ctas">
                             <a href="#simulador" className="btn btn-primary">Simular mi financiación</a>
@@ -53,7 +53,7 @@ const CreditPage = () => {
                 </div>
             </section>
 
-            <section className="section">
+            <section className="section" style={{ background: 'linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%)' }}>
                 <div className="container">
                     <h2 className="text-center">Requisitos</h2>
 

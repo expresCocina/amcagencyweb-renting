@@ -45,18 +45,13 @@ const Navbar = () => {
                     </button>
 
                     <ul className={`nav-links ${menuOpen ? 'active' : ''}`}>
-                        <li><Link to="/">Inicio</Link></li>
-                        <li><Link to="/seo">SEO</Link></li>
-                        <li><Link to="/desarrollo-web">Desarrollo Web</Link></li>
-                        <li><Link to="/embudos">Automatización</Link></li>
-                        <li><Link to="/generador-demos" className="featured-link">🎨 Demos</Link></li>
-                        <li><Link to="/blog">Blog</Link></li>
-                        <li><Link to="/casos">Casos</Link></li>
-                        <li><Link to="/sobre-nosotros">Nosotros</Link></li>
-                        <li><Link to="/login" className="portal-link">🔐 Portal</Link></li>
+                        <li><a href="#inicio" onClick={() => setMenuOpen(false)}>Inicio</a></li>
+                        <li><a href="#servicios" onClick={() => setMenuOpen(false)}>Servicios</a></li>
+                        <li><a href="#financiacion" onClick={() => setMenuOpen(false)}>Financiación</a></li>
+                        <li><a href="#testimonios" onClick={() => setMenuOpen(false)}>Testimonios</a></li>
                         <li>
-                            <TrackedLink href="#contacto" type="contact" source="navbar" className="btn btn-primary btn-small">
-                                Contacto
+                            <TrackedLink href="#contacto" type="contact" source="navbar" className="btn btn-primary btn-small" onClick={() => setMenuOpen(false)}>
+                                COTIZAR PROYECTO
                             </TrackedLink>
                         </li>
                     </ul>

@@ -10,29 +10,14 @@ const Hero = () => {
             </div>
             <div className="container">
                 <div className="hero-content fade-in-up">
-                    <h1>Convertimos tu negocio en una <span className="gradient-text">máquina digital de ventas</span></h1>
+                    <h1>Desarrollamos la tecnología que <span className="gradient-text">escala tu facturación</span></h1>
                     <p className="hero-subtitle">
-                        Agencia especializada en SEO, desarrollo web y automatización para empresas en Latinoamérica que quieren crecer sin límites.
+                        Sitios web, SEO y automatización con financiación directa. No solo hacemos webs, creamos máquinas de ventas.
                     </p>
                     <div className="hero-ctas">
                         <TrackedLink href="#contacto" type="contact" source="hero" className="btn btn-primary">
-                            Solicitar cotización gratis
+                            COTIZAR PROYECTO
                         </TrackedLink>
-                        <Link to="/casos" className="btn btn-secondary">Ver casos de éxito →</Link>
-                    </div>
-                    <div className="hero-stats">
-                        <div className="stat">
-                            <div className="stat-number gradient-text">+287%</div>
-                            <div className="stat-label">Tráfico promedio</div>
-                        </div>
-                        <div className="stat">
-                            <div className="stat-number gradient-text">5.9x</div>
-                            <div className="stat-label">ROI promedio</div>
-                        </div>
-                        <div className="stat">
-                            <div className="stat-number gradient-text">+500</div>
-                            <div className="stat-label">Clientes LATAM</div>
-                        </div>
                     </div>
                 </div>
             </div>

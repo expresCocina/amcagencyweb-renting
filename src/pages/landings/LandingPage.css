@@ -1,0 +1,361 @@
+/* Landing Page Styles */
+
+.landing-page {
+    background: var(--bg-primary);
+    min-height: 100vh;
+}
+
+/* Hero Section */
+.landing-hero {
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 120px 20px 60px;
+    background: linear-gradient(135deg, rgba(0, 240, 255, 0.05), rgba(138, 43, 226, 0.05));
+}
+
+.landing-hero-content {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.landing-hero h1 {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+}
+
+.landing-subtitle {
+    font-size: clamp(1.1rem, 2vw, 1.4rem);
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.landing-benefits {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 2.5rem;
+}
+
+.benefit-item {
+    background: rgba(0, 240, 255, 0.1);
+    padding: 0.75rem 1.5rem;
+    border-radius: 50px;
+    font-size: 0.95rem;
+    border: 1px solid rgba(0, 240, 255, 0.3);
+}
+
+.btn-large {
+    padding: 1.2rem 3rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+/* Landing Sections */
+.landing-section {
+    padding: 80px 20px;
+}
+
+.landing-section.bg-dark {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+/* Problems Grid */
+.problems-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.problem-card {
+    padding: 2rem;
+    text-align: center;
+    transition: transform var(--transition-fast);
+}
+
+.problem-card:hover {
+    transform: translateY(-5px);
+}
+
+.problem-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.problem-card h3 {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    color: var(--accent-primary);
+}
+
+/* Features Grid */
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.feature-card {
+    padding: 2rem;
+    transition: transform var(--transition-fast);
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+}
+
+.feature-card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+}
+
+/* Results Timeline */
+.results-timeline {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.timeline-item {
+    padding: 2rem;
+    text-align: center;
+}
+
+.timeline-period {
+    display: inline-block;
+    background: var(--accent-gradient);
+    padding: 0.5rem 1.5rem;
+    border-radius: 50px;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.timeline-item h3 {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+}
+
+/* ROI Grid */
+.roi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.roi-card {
+    padding: 2.5rem;
+    text-align: center;
+}
+
+.roi-number {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.roi-card h3 {
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Use Cases Grid */
+.use-cases-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.use-case-card {
+    padding: 2rem;
+}
+
+.use-case-card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: var(--accent-primary);
+}
+
+/* Financing Banner */
+.financing-banner {
+    padding: 3rem;
+    text-align: center;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.financing-banner h2 {
+    margin-bottom: 1rem;
+}
+
+.financing-options {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+}
+
+.financing-option {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 1.5rem 2rem;
+    border-radius: 12px;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    transition: all var(--transition-fast);
+}
+
+.financing-option.highlighted {
+    border-color: var(--accent-primary);
+    background: rgba(0, 240, 255, 0.1);
+    transform: scale(1.05);
+}
+
+.financing-option:hover {
+    transform: scale(1.05);
+    border-color: var(--accent-primary);
+}
+
+.option-term {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.option-rate {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+/* Landing Form */
+.landing-form-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 3rem;
+}
+
+.landing-form {
+    margin-top: 2rem;
+}
+
+.landing-form .form-group {
+    margin-bottom: 1.5rem;
+}
+
+.landing-form input,
+.landing-form select {
+    width: 100%;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: var(--text-primary);
+    font-size: 1rem;
+    transition: all var(--transition-fast);
+}
+
+.landing-form input:focus,
+.landing-form select:focus {
+    outline: none;
+    border-color: var(--accent-primary);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.landing-form input::placeholder {
+    color: var(--text-secondary);
+}
+
+.form-note {
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+/* Success Message */
+.success-message {
+    text-align: center;
+    padding: 3rem;
+}
+
+.success-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+
+.success-message h3 {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Landing Footer */
+.landing-footer {
+    background: rgba(0, 0, 0, 0.5);
+    padding: 2rem 20px;
+    text-align: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.landing-footer p {
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+.landing-footer a {
+    color: var(--accent-primary);
+    text-decoration: none;
+    margin: 0 0.5rem;
+    transition: color var(--transition-fast);
+}
+
+.landing-footer a:hover {
+    color: var(--text-primary);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .landing-hero {
+        min-height: 80vh;
+        padding: 100px 20px 40px;
+    }
+
+    .landing-section {
+        padding: 60px 20px;
+    }
+
+    .problems-grid,
+    .features-grid,
+    .results-timeline,
+    .roi-grid,
+    .use-cases-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .financing-options {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .financing-option.highlighted {
+        transform: scale(1);
+    }
+
+    .landing-form-container {
+        padding: 2rem 1.5rem;
+    }
+
+    .btn-large {
+        padding: 1rem 2rem;
+        font-size: 1rem;
+    }
+}

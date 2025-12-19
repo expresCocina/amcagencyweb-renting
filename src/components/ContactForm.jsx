@@ -5,10 +5,9 @@ import './ContactForm.css';
 const ContactForm = () => {
     const [formData, setFormData] = useState({
         name: '',
-        email: '',
+        company: '',
         phone: '',
-        service: 'seo',
-        message: ''
+        service: 'seo'
     });
 
     const [submitted, setSubmitted] = useState(false);
@@ -27,10 +26,9 @@ const ContactForm = () => {
         const whatsappMessage = `Hola! Me gustaría solicitar información sobre:
     
 Nombre: ${formData.name}
-Email: ${formData.email}
+Empresa: ${formData.company}
 Teléfono: ${formData.phone}
-Servicio: ${formData.service}
-Mensaje: ${formData.message}`;
+Servicio: ${formData.service}`;
 
         const whatsappUrl = `https://wa.me/573138537261?text=${encodeURIComponent(whatsappMessage)}`;
 
@@ -43,7 +41,6 @@ Mensaje: ${formData.message}`;
             currency: 'USD',
             value: 0 // Or estimated value
         }, {
-            email: formData.email,
             phone: formData.phone
         });
 
@@ -53,10 +50,9 @@ Mensaje: ${formData.message}`;
         setTimeout(() => {
             setFormData({
                 name: '',
-                email: '',
+                company: '',
                 phone: '',
-                service: 'seo',
-                message: ''
+                service: 'seo'
             });
             setSubmitted(false);
         }, 3000);
@@ -136,20 +132,20 @@ Mensaje: ${formData.message}`;
                                 </div>
 
                                 <div className="form-group">
-                                    <label htmlFor="email">Email *</label>
+                                    <label htmlFor="company">Empresa *</label>
                                     <input
-                                        type="email"
-                                        id="email"
-                                        name="email"
-                                        value={formData.email}
+                                        type="text"
+                                        id="company"
+                                        name="company"
+                                        value={formData.company}
                                         onChange={handleChange}
                                         required
-                                        placeholder="juan@empresa.com"
+                                        placeholder="Mi Empresa S.A.S."
                                     />
                                 </div>
 
                                 <div className="form-group">
-                                    <label htmlFor="phone">Teléfono / WhatsApp *</label>
+                                    <label htmlFor="phone">WhatsApp *</label>
                                     <input
                                         type="tel"
                                         id="phone"
@@ -177,18 +173,6 @@ Mensaje: ${formData.message}`;
                                         <option value="credit">Financiación a Crédito</option>
                                         <option value="other">Otro</option>
                                     </select>
-                                </div>
-
-                                <div className="form-group">
-                                    <label htmlFor="message">Cuéntanos sobre tu proyecto</label>
-                                    <textarea
-                                        id="message"
-                                        name="message"
-                                        value={formData.message}
-                                        onChange={handleChange}
-                                        rows="4"
-                                        placeholder="Describe brevemente lo que necesitas..."
-                                    ></textarea>
                                 </div>
 
                                 <button type="submit" className="btn btn-primary" style={{ width: '100%' }}>

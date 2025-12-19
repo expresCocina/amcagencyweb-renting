@@ -7,9 +7,7 @@ import { visualizer } from 'rollup-plugin-visualizer';
 export default defineConfig({
   plugins: [
     react({
-      // Enable Fast Refresh
       fastRefresh: true,
-      // Babel optimizations
       babel: {
         plugins: [
           ['@babel/plugin-transform-react-jsx', { runtime: 'automatic' }]
@@ -20,7 +18,7 @@ export default defineConfig({
     compression({
       algorithm: 'gzip',
       exclude: [/\.(br)$/, /\.(gz)$/],
-      threshold: 1024, // Only compress files > 1KB
+      threshold: 1024,
     }),
     // Brotli compression
     compression({
@@ -37,7 +35,6 @@ export default defineConfig({
     }),
   ],
   build: {
-    // Optimize build
     minify: 'terser',
     terserOptions: {
       compress: {
@@ -50,7 +47,6 @@ export default defineConfig({
         safari10: true,
       },
     },
-    // Code splitting
     rollupOptions: {
       output: {
         manualChunks: {
@@ -59,24 +55,25 @@ export default defineConfig({
           'analytics': ['react-ga4', 'react-facebook-pixel', 'uuid'],
           'icons': ['react-icons/fa'],
         },
-        // Optimize chunk names
         chunkFileNames: 'assets/[name]-[hash].js',
         entryFileNames: 'assets/[name]-[hash].js',
-        assetFileNames: 'assets/[name]-[hash].[ext]',
+        assetFileNames: (assetInfo) => {
+          // Optimize image file names
+          if (/\.(png|jpe?g|gif|svg|webp)$/.test(assetInfo.name)) {
+            return 'assets/images/[name]-[hash][extname]';
+          }
+          return 'assets/[name]-[hash][extname]';
+        },
       },
     },
-    // Chunk size warnings
     chunkSizeWarningLimit: 500,
-    // CSS code splitting
     cssCodeSplit: true,
-    // Source maps only for errors
     sourcemap: false,
-    // Target modern browsers
     target: 'es2015',
-    // Optimize CSS
     cssMinify: true,
+    // Optimize assets
+    assetsInlineLimit: 4096, // Inline assets < 4KB
   },
-  // Optimize dependencies
   optimizeDeps: {
     include: [
       'react',
@@ -85,7 +82,6 @@ export default defineConfig({
     ],
     exclude: ['@vite/client', '@vite/env'],
   },
-  // Server optimizations
   server: {
     hmr: {
       overlay: false,

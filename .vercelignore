@@ -1,0 +1,11 @@
+# .vercelignore
+node_modules
+.git
+.env.local
+.env.development
+.env.production
+*.log
+.DS_Store
+dist/stats.html
+.vscode
+.idea

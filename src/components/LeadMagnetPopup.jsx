@@ -38,6 +38,22 @@ const LeadMagnetPopup = () => {
         return () => clearTimeout(timer);
     }, []);
 
+    // Manage body scroll when popup is visible
+    useEffect(() => {
+        if (isVisible) {
+            // Prevent body scroll when popup is open
+            document.body.style.overflow = 'hidden';
+        } else {
+            // Restore body scroll when popup is closed
+            document.body.style.overflow = 'unset';
+        }
+
+        // Cleanup on unmount
+        return () => {
+            document.body.style.overflow = 'unset';
+        };
+    }, [isVisible]);
+
     const handleClose = () => {
         if (!showExitOffer) {
             // Show exit offer instead of closing

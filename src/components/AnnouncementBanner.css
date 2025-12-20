@@ -10,6 +10,7 @@
     z-index: 1000;
     box-shadow: 0 4px 20px rgba(0, 240, 255, 0.3);
     border-bottom: 2px solid rgba(0, 240, 255, 0.4);
+    overflow: hidden;
 }
 
 @keyframes gradientShift {
@@ -26,21 +27,69 @@
     }
 }
 
-.announcement-content {
-    display: flex;
+/* Desktop version - hidden on mobile */
+.announcement-desktop {
+    display: none;
     align-items: center;
     justify-content: center;
     gap: 12px;
-    flex-wrap: wrap;
     padding: 0 20px;
     max-width: 1400px;
     margin: 0 auto;
 }
 
+/* Mobile marquee version - visible on mobile only */
+.announcement-mobile {
+    display: block;
+    width: 100%;
+    overflow: hidden;
+}
+
+.marquee {
+    width: 100%;
+    overflow: hidden;
+}
+
+.marquee-content {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    animation: marquee 25s linear infinite;
+    white-space: nowrap;
+}
+
+@keyframes marquee {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+/* Show desktop version on tablets and up */
+@media (min-width: 768px) {
+    .announcement-desktop {
+        display: flex;
+    }
+
+    .announcement-mobile {
+        display: none;
+    }
+}
+
 .announcement-icon {
-    font-size: 26px;
+    font-size: 24px;
     animation: bounce 2s ease-in-out infinite;
     filter: drop-shadow(0 0 10px rgba(0, 240, 255, 0.6));
+    flex-shrink: 0;
+}
+
+@media (min-width: 768px) {
+    .announcement-icon {
+        font-size: 26px;
+    }
 }
 
 @keyframes bounce {
@@ -55,6 +104,7 @@
     }
 }
 
+/* Desktop text */
 .announcement-text {
     color: #fff;
     font-size: 15px;
@@ -75,6 +125,25 @@
     animation: shimmer 3s linear infinite;
 }
 
+/* Mobile text */
+.announcement-text-mobile {
+    color: #fff;
+    font-size: 14px;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    flex-shrink: 0;
+}
+
+.announcement-text-mobile strong {
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    background: linear-gradient(90deg, #00f0ff, #a020f0, #00f0ff);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: shimmer 3s linear infinite;
+}
+
 @keyframes shimmer {
     0% {
         background-position: 0% center;
@@ -85,6 +154,7 @@
     }
 }
 
+/* Desktop CTA */
 .announcement-cta {
     background: linear-gradient(135deg, #00f0ff, #a020f0);
     color: #fff;
@@ -98,6 +168,29 @@
     white-space: nowrap;
     box-shadow: 0 4px 15px rgba(0, 240, 255, 0.4);
     animation: pulse 2s ease-in-out infinite;
+    flex-shrink: 0;
+}
+
+.announcement-cta:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(0, 240, 255, 0.6);
+}
+
+/* Mobile CTA */
+.announcement-cta-mobile {
+    background: linear-gradient(135deg, #00f0ff, #a020f0);
+    color: #fff;
+    padding: 6px 16px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 12px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    white-space: nowrap;
+    box-shadow: 0 4px 15px rgba(0, 240, 255, 0.4);
+    animation: pulse 2s ease-in-out infinite;
+    flex-shrink: 0;
+    display: inline-block;
 }
 
 @keyframes pulse {
@@ -105,63 +198,16 @@
     0%,
     100% {
         box-shadow: 0 4px 15px rgba(0, 240, 255, 0.4);
-        transform: scale(1);
     }
 
     50% {
-        box-shadow: 0 6px 25px rgba(0, 240, 255, 0.6);
-        transform: scale(1.05);
+        box-shadow: 0 4px 25px rgba(160, 32, 240, 0.6);
     }
 }
 
-.announcement-cta:hover {
-    background: linear-gradient(135deg, #a020f0, #00f0ff);
-    border-color: rgba(255, 255, 255, 0.6);
-    transform: translateY(-3px) scale(1.08);
-    box-shadow: 0 8px 30px rgba(0, 240, 255, 0.7);
-}
-
-@media (max-width: 768px) {
+/* Responsive adjustments */
+@media (max-width: 767px) {
     .announcement-banner {
-        padding: 12px 0;
-    }
-
-    .announcement-content {
-        gap: 10px;
-        padding: 0 16px;
-    }
-
-    .announcement-icon {
-        font-size: 22px;
-    }
-
-    .announcement-text {
-        font-size: 13px;
-    }
-
-    .announcement-text strong {
-        font-size: 15px;
-    }
-
-    .announcement-cta {
-        font-size: 13px;
-        padding: 7px 16px;
-    }
-}
-
-@media (max-width: 480px) {
-    .announcement-text {
-        font-size: 12px;
-    }
-
-    .announcement-text strong {
-        display: block;
-        margin-bottom: 4px;
-        font-size: 14px;
-    }
-
-    .announcement-cta {
-        font-size: 12px;
-        padding: 6px 14px;
+        padding: 10px 0;
     }
 }

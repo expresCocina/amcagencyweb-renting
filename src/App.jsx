@@ -143,7 +143,7 @@ function AppContent({ isDelayedLoaded, isPromoActive }) {
       {isDelayedLoaded && (
         <Suspense fallback={null}>
           <WhatsAppButton />
-          <LeadMagnetPopup />
+          {/* <LeadMagnetPopup /> */}
         </Suspense>
       )}
     </div>

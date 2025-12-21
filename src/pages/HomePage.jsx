@@ -1,21 +1,23 @@
 import Hero from '../components/Hero';
+import ComparisonTable from '../components/ComparisonTable';
+import RentingCatalog from '../components/RentingCatalog';
 import Services3D from '../components/Services3D';
-import CreditPayment from '../components/CreditPayment';
+import RentingFAQ from '../components/RentingFAQ';
 import Testimonials from '../components/Testimonials';
 import CTA from '../components/CTA';
 import ContactForm from '../components/ContactForm';
-import SocialProof from '../components/SocialProof';
 
 const HomePage = () => {
     return (
         <>
             <Hero />
-            <ContactForm />
+            <ComparisonTable />
+            <RentingCatalog />
             <Services3D />
-            <CreditPayment />
             <Testimonials />
+            <RentingFAQ />
             <CTA />
-            <SocialProof />
+            <ContactForm />
         </>
     );
 };

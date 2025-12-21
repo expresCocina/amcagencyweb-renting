@@ -1,0 +1,111 @@
+.comparison-section {
+    padding: 80px 0;
+    background: linear-gradient(135deg, #0a0118 0%, #1a0b2e 50%, #16213e 100%);
+}
+
+.comparison-section .section-title {
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 50px;
+    background: linear-gradient(135deg, #00d4ff 0%, #7b2ff7 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    padding: 20px;
+}
+
+.comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px;
+}
+
+.comparison-table thead {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.comparison-table th {
+    padding: 20px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: #fff;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.comparison-table td {
+    padding: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.feature-cell {
+    font-weight: 600;
+    color: #fff;
+}
+
+.traditional-cell {
+    color: #ff6b6b;
+}
+
+.amc-cell {
+    color: #51cf66;
+}
+
+.icon-x {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    background: #ff6b6b;
+    color: #fff;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 24px;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.icon-check {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    background: #51cf66;
+    color: #fff;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 24px;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.traditional-col {
+    color: #ff6b6b;
+}
+
+.amc-col {
+    color: #51cf66;
+}
+
+@media (max-width: 768px) {
+    .comparison-section .section-title {
+        font-size: 2rem;
+    }
+
+    .table-wrapper {
+        padding: 10px;
+    }
+
+    .comparison-table th,
+    .comparison-table td {
+        padding: 15px 10px;
+        font-size: 0.9rem;
+    }
+}

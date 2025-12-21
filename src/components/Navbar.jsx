@@ -1,11 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import TrackedLink from './TrackedLink';
 import './Navbar.css';
 
 const Navbar = () => {
     const [scrolled, setScrolled] = useState(false);
-    const [menuOpen, setMenuOpen] = useState(false);
     const location = useLocation();
 
     useEffect(() => {
@@ -16,9 +14,12 @@ const Navbar = () => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    useEffect(() => {
-        setMenuOpen(false);
-    }, [location]);
+    const scrollToDemos = () => {
+        const demosSection = document.getElementById('demos');
+        if (demosSection) {
+            demosSection.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
 
     return (
         <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
@@ -34,27 +35,9 @@ const Navbar = () => {
                         </span>
                     </Link>
 
-                    <button
-                        className="menu-toggle"
-                        onClick={() => setMenuOpen(!menuOpen)}
-                        aria-label="Toggle menu"
-                    >
-                        <span></span>
-                        <span></span>
-                        <span></span>
+                    <button onClick={scrollToDemos} className="btn btn-primary btn-small">
+                        VER PLANES
                     </button>
-
-                    <ul className={`nav-links ${menuOpen ? 'active' : ''}`}>
-                        <li><a href="#inicio" onClick={() => setMenuOpen(false)}>Inicio</a></li>
-                        <li><a href="#servicios" onClick={() => setMenuOpen(false)}>Servicios</a></li>
-                        <li><a href="#financiacion" onClick={() => setMenuOpen(false)}>Financiación</a></li>
-                        <li><a href="#testimonios" onClick={() => setMenuOpen(false)}>Testimonios</a></li>
-                        <li>
-                            <TrackedLink href="#contacto" type="contact" source="navbar" className="btn btn-primary btn-small" onClick={() => setMenuOpen(false)}>
-                                COTIZAR PROYECTO
-                            </TrackedLink>
-                        </li>
-                    </ul>
                 </div>
             </div>
         </nav>

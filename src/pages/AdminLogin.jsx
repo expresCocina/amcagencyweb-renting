@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { getCredentials } from '../data/adminMockData';
 import './AdminLogin.css';
 
 const AdminLogin = () => {
@@ -8,20 +9,19 @@ const AdminLogin = () => {
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 
-    // Hardcoded credentials (you can change these)
-    const ADMIN_USERNAME = 'admin';
-    const ADMIN_PASSWORD = 'AMC2025!';
-
     const handleSubmit = (e) => {
         e.preventDefault();
         setError('');
         setIsLoading(true);
 
+        // Get credentials from localStorage
+        const adminCreds = getCredentials();
+
         // Simulate a small delay for better UX
         setTimeout(() => {
             if (
-                credentials.username === ADMIN_USERNAME &&
-                credentials.password === ADMIN_PASSWORD
+                credentials.username === adminCreds.username &&
+                credentials.password === adminCreds.password
             ) {
                 // Store authentication in localStorage
                 localStorage.setItem('adminAuthenticated', 'true');
@@ -99,9 +99,6 @@ const AdminLogin = () => {
 
                 <div className="login-footer">
                     <p>WaaS Management System</p>
-                    <p className="login-hint">
-                        💡 Credenciales por defecto: admin / AMC2025!
-                    </p>
                 </div>
             </div>
         </div>

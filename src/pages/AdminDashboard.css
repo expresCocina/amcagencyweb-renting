@@ -32,6 +32,30 @@
     color: #94a3b8;
 }
 
+.header-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.btn-add-client {
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #10b981, #059669);
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.btn-add-client:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(16, 185, 129, 0.4);
+}
+
 .btn-logout {
     padding: 12px 24px;
     background: rgba(239, 68, 68, 0.1);
@@ -69,7 +93,12 @@
         font-size: 1rem;
     }
 
-    .btn-logout {
+    .header-actions {
         width: 100%;
+    }
+
+    .btn-add-client,
+    .btn-logout {
+        flex: 1;
     }
 }

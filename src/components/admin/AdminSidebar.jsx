@@ -6,7 +6,7 @@ const AdminSidebar = () => {
 
     const menuItems = [
         { path: '/admin', label: 'Dashboard', icon: '📊' },
-        { path: '/admin/clientes', label: 'Clientes', icon: '👥' },
+        { path: '/admin/clientes/nuevo', label: 'Agregar Cliente', icon: '➕' },
         { path: '/admin/pagos', label: 'Pagos Pendientes', icon: '⚠️' },
         { path: '/admin/config', label: 'Configuración', icon: '⚙️' },
     ];

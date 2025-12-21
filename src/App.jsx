@@ -36,6 +36,9 @@ import LoginPage from './pages/LoginPage';
 import ClientDashboard from './pages/ClientDashboard';
 import AdminDashboard from './pages/AdminDashboard';
 import AdminLogin from './pages/AdminLogin';
+import AddClientPage from './pages/AddClientPage';
+import PendingPaymentsPage from './pages/PendingPaymentsPage';
+import SettingsPage from './pages/SettingsPage';
 import ProtectedAdminRoute from './components/admin/ProtectedAdminRoute';
 
 // Import Demo Pages normally for fast loading

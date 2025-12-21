@@ -17,9 +17,11 @@ import { CurrencyProvider } from './contexts/CurrencyContext';
 const WhatsAppButton = lazy(() => import('./components/WhatsAppButton'));
 const LeadMagnetPopup = lazy(() => import('./components/LeadMagnetPopup'));
 
-// Lazy Load Pages
+// Import HomePage normally (not lazy) - it's the main page
+import HomePage from './pages/HomePage';
+
+// Lazy Load Other Pages
 const PromoLandingPage = lazy(() => import('./pages/PromoLandingPage'));
-const HomePage = lazy(() => import('./pages/HomePage'));
 const SEOPage = lazy(() => import('./pages/SEOPage'));
 const WebDevPage = lazy(() => import('./pages/WebDevPage'));
 const FunnelsPage = lazy(() => import('./pages/FunnelsPage'));

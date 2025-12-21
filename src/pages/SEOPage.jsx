@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { trackEvent } from '../utils/analytics';
 import ContactForm from '../components/ContactForm';
+import './SharedPageStyles.css';
 import './SEOPage.css';
 
 const SEOPage = () => {

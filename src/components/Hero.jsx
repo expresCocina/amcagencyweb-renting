@@ -1,3 +1,6 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { trackCTAClick, trackButtonClick } from '../utils/analytics';
 import './Hero.css';
 
 const Hero = () => {
@@ -23,10 +26,32 @@ const Hero = () => {
                         <span className="badge-label">Plan Todo Incluido:</span>
                         <span className="badge-price">$80.000 COP / mes</span>
                     </div>
-                    <div className="hero-ctas">
-                        <button onClick={scrollToDemos} className="btn btn-primary">
-                            VER PLANTILLAS
-                        </button>
+                    <div className="hero-buttons">
+                        <Link
+                            to="/demos"
+                            className="btn btn-primary"
+                            onClick={() => {
+                                trackCTAClick('Ver Planes', 'Hero', '/demos', {
+                                    position: 'primary_cta'
+                                });
+                            }}
+                        >
+                            Ver Planes
+                        </Link>
+                        <a
+                            href="https://wa.me/573138537261?text=Hola,%20quiero%20información%20sobre%20el%20plan%20renting"
+                            className="btn btn-secondary"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={() => {
+                                trackCTAClick('Iniciar Proyecto', 'Hero', 'WhatsApp', {
+                                    position: 'secondary_cta',
+                                    destination: 'WhatsApp'
+                                });
+                            }}
+                        >
+                            Iniciar Proyecto →
+                        </a>
                     </div>
                 </div>
             </div>

@@ -34,6 +34,7 @@ import TermsPage from './pages/TermsPage';
 import BookingPage from './pages/BookingPage';
 import LoginPage from './pages/LoginPage';
 import ClientDashboard from './pages/ClientDashboard';
+import AdminDashboard from './pages/AdminDashboard';
 
 // Import Demo Pages normally for fast loading
 import EcoTiendaDemo from './pages/demos/EcoTiendaDemo';
@@ -129,6 +130,7 @@ function AppContent({ isDelayedLoaded, isPromoActive }) {
           {/* Portal Routes */}
           <Route path="/login" element={<LoginPage />} />
           <Route path="/dashboard" element={<ClientDashboard />} />
+          <Route path="/admin" element={<AdminDashboard />} />
 
           {/* Resource Pages */}
           <Route path="/recursos/guia-seo-2024" element={<GuiaSEOPage />} />

@@ -1,5 +1,12 @@
 // Facebook Pixel & Google Analytics Tracking Utilities
 
+// Initialize analytics (for backward compatibility)
+export const initAnalytics = () => {
+    console.log('📊 Analytics initialized');
+    // This function is kept for backward compatibility
+    // Actual initialization happens in main.jsx or App.jsx
+};
+
 // Track custom events
 export const trackEvent = (eventName, params = {}) => {
     try {

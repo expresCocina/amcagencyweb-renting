@@ -1,4 +1,5 @@
 import React from 'react';
+import WhatsAppCTA from './WhatsAppCTA';
 import './RentingCatalog.css';
 
 const RentingCatalog = () => {
@@ -47,6 +48,12 @@ const RentingCatalog = () => {
                         </div>
                     ))}
                 </div>
+
+                <WhatsAppCTA
+                    message="¡Hola! Me encanta el catálogo. ¿Puedo personalizar mi diseño? 🎨"
+                    buttonText="Quiero personalizar mi diseño"
+                    section="catalog"
+                />
             </div>
         </section>
     );

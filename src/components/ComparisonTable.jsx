@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import WhatsAppCTA from './WhatsAppCTA';
 import './ComparisonTable.css';
 
 const ComparisonTable = () => {
@@ -105,6 +106,12 @@ const ComparisonTable = () => {
                         />
                     ))}
                 </div>
+
+                <WhatsAppCTA
+                    message="¡Hola! Quiero mi web sin inversión inicial. ¿Cuándo puedo empezar? 🚀"
+                    buttonText="Quiero mi web sin pagar inicial"
+                    section="comparison"
+                />
             </div>
         </section>
     );

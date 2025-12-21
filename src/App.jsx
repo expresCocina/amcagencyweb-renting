@@ -19,24 +19,24 @@ const LeadMagnetPopup = lazy(() => import('./components/LeadMagnetPopup'));
 
 // Import HomePage normally (not lazy) - it's the main page
 import HomePage from './pages/HomePage';
+import SEOPage from './pages/SEOPage';
+import WebDevPage from './pages/WebDevPage';
+import FunnelsPage from './pages/FunnelsPage';
+import AcademyPage from './pages/AcademyPage';
+import CreditPage from './pages/CreditPage';
+import CasesPage from './pages/CasesPage';
+import AboutPage from './pages/AboutPage';
+import BlogPage from './pages/BlogPage';
+import ResourcesPage from './pages/ResourcesPage';
+import BudgetCalculatorPage from './pages/BudgetCalculatorPage';
+import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
+import TermsPage from './pages/TermsPage';
+import BookingPage from './pages/BookingPage';
+import LoginPage from './pages/LoginPage';
+import ClientDashboard from './pages/ClientDashboard';
 
-// Lazy Load Other Pages
+// Lazy Load Only Demo Pages and Promo (less critical)
 const PromoLandingPage = lazy(() => import('./pages/PromoLandingPage'));
-const SEOPage = lazy(() => import('./pages/SEOPage'));
-const WebDevPage = lazy(() => import('./pages/WebDevPage'));
-const FunnelsPage = lazy(() => import('./pages/FunnelsPage'));
-const AcademyPage = lazy(() => import('./pages/AcademyPage'));
-const CreditPage = lazy(() => import('./pages/CreditPage'));
-const CasesPage = lazy(() => import('./pages/CasesPage'));
-const AboutPage = lazy(() => import('./pages/AboutPage'));
-const BlogPage = lazy(() => import('./pages/BlogPage'));
-const ResourcesPage = lazy(() => import('./pages/ResourcesPage'));
-const BudgetCalculatorPage = lazy(() => import('./pages/BudgetCalculatorPage'));
-const PrivacyPolicyPage = lazy(() => import('./pages/PrivacyPolicyPage'));
-const TermsPage = lazy(() => import('./pages/TermsPage'));
-const BookingPage = lazy(() => import('./pages/BookingPage'));
-const LoginPage = lazy(() => import('./pages/LoginPage'));
-const ClientDashboard = lazy(() => import('./pages/ClientDashboard'));
 
 // Lazy Load Demo Pages
 const EcoTiendaDemo = lazy(() => import('./pages/demos/EcoTiendaDemo'));

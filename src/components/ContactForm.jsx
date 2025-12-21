@@ -1,14 +1,13 @@
 import { useState } from 'react';
-import { trackFormSubmission, trackWhatsAppClick } from '../utils/analytics';
+import { trackEvent } from '../utils/analytics';
 import './ContactForm.css';
 
 const ContactForm = () => {
     const [formData, setFormData] = useState({
         name: '',
-        email: '',
+        company: '',
         phone: '',
-        service: '',
-        message: ''
+        service: 'seo'
     });
 
     const [isSubmitted, setIsSubmitted] = useState(false);
@@ -23,43 +22,31 @@ const ContactForm = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        // Track form submission as lead
-        trackFormSubmission('Contact Form', {
-            service: formData.service,
-            has_email: !!formData.email,
-            has_phone: !!formData.phone,
-            message_length: formData.message.length
+        // Track form submission
+        trackEvent('form_submission', {
+            form_name: 'Contact Form',
+            service: formData.service
         });
 
         // Crear mensaje de WhatsApp
         const whatsappMessage = `Hola! Me gustaría solicitar información sobre:
 
 Nombre: ${formData.name}
-Email: ${formData.email}
+Empresa: ${formData.company}
 Teléfono: ${formData.phone}
-Servicio: ${formData.service}
-Mensaje: ${formData.message} `;
+Servicio: ${formData.service}`;
 
         const whatsappUrl = `https://wa.me/573138537261?text=${encodeURIComponent(whatsappMessage)}`;
 
-        // Track WhatsApp redirect
-        trackWhatsAppClick('Contact Form Submission', whatsappMessage, {
-            form_data: formData
+        // Track WhatsApp click
+        trackEvent('whatsapp_click', {
+            source: 'Contact Form'
         });
 
         // Abrir WhatsApp
         window.open(whatsappUrl, '_blank');
 
-        // Track Lead Event
-        trackEvent('Lead', {
-            content_name: formData.service,
-            currency: 'USD',
-            value: 0 // Or estimated value
-        }, {
-            phone: formData.phone
-        });
-
-        setSubmitted(true);
+        setIsSubmitted(true);
 
         // Reset form después de 3 segundos
         setTimeout(() => {
@@ -69,7 +56,7 @@ Mensaje: ${formData.message} `;
                 phone: '',
                 service: 'seo'
             });
-            setSubmitted(false);
+            setIsSubmitted(false);
         }, 3000);
     };
 
@@ -125,7 +112,7 @@ Mensaje: ${formData.message} `;
                     </div>
 
                     <div className="contact-form-container glass">
-                        {submitted ? (
+                        {isSubmitted ? (
                             <div className="success-message">
                                 <div className="success-icon">✅</div>
                                 <h3>¡Mensaje enviado!</h3>

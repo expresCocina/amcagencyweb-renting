@@ -2,24 +2,24 @@ import React from 'react';
 import './ComparisonTable.css';
 
 const ComparisonTable = () => {
-    const comparisons = [
+    const features = [
         {
-            feature: "Costo Inicial",
+            name: "Costo Inicial",
             traditional: "$2M - $5M",
             amc: "$0 Pesos"
         },
         {
-            feature: "Hosting/SSL",
+            name: "Hosting/SSL",
             traditional: "Se paga aparte",
             amc: "INCLUIDO"
         },
         {
-            feature: "Tecnología",
+            name: "Tecnología",
             traditional: "WordPress Lento",
             amc: "Next.js Ultra Rápido"
         },
         {
-            feature: "Entrega",
+            name: "Entrega",
             traditional: "20 días",
             amc: "48 Horas"
         }
@@ -29,31 +29,43 @@ const ComparisonTable = () => {
         <section className="comparison-section">
             <div className="container">
                 <h2 className="section-title">¿Por qué comprar si puedes alquilar?</h2>
-                <div className="table-wrapper">
-                    <table className="comparison-table">
-                        <thead>
-                            <tr>
-                                <th>Característica</th>
-                                <th className="traditional-col">Agencia Tradicional</th>
-                                <th className="amc-col">AMC Renting</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {comparisons.map((item, index) => (
-                                <tr key={index}>
-                                    <td className="feature-cell">{item.feature}</td>
-                                    <td className="traditional-cell">
-                                        <span className="icon-x">✗</span>
-                                        <span>{item.traditional}</span>
-                                    </td>
-                                    <td className="amc-cell">
-                                        <span className="icon-check">✓</span>
-                                        <span>{item.amc}</span>
-                                    </td>
-                                </tr>
+
+                <div className="comparison-cards-grid">
+                    {/* Traditional Agency Card */}
+                    <div className="comparison-card traditional-card">
+                        <div className="card-header">
+                            <span className="card-icon">❌</span>
+                            <h3>Agencia Tradicional</h3>
+                        </div>
+                        <div className="card-body">
+                            {features.map((feature, index) => (
+                                <div key={index} className="feature-item">
+                                    <span className="feature-name">{feature.name}</span>
+                                    <span className="feature-value traditional-value">
+                                        {feature.traditional}
+                                    </span>
+                                </div>
                             ))}
-                        </tbody>
-                    </table>
+                        </div>
+                    </div>
+
+                    {/* AMC Renting Card */}
+                    <div className="comparison-card amc-card">
+                        <div className="card-header">
+                            <span className="card-icon">✅</span>
+                            <h3>AMC Renting</h3>
+                        </div>
+                        <div className="card-body">
+                            {features.map((feature, index) => (
+                                <div key={index} className="feature-item">
+                                    <span className="feature-name">{feature.name}</span>
+                                    <span className="feature-value amc-value">
+                                        {feature.amc}
+                                    </span>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>

@@ -3,132 +3,185 @@
     background: linear-gradient(135deg, #0a0118 0%, #1a0b2e 50%, #16213e 100%);
     max-width: 100vw;
     overflow-x: hidden;
-    perspective: 1000px;
+    perspective: 1500px;
 }
 
 .comparison-section .section-title {
     text-align: center;
     font-size: 2.5rem;
     font-weight: 700;
-    margin-bottom: 50px;
+    margin-bottom: 60px;
     background: linear-gradient(135deg, #00d4ff 0%, #7b2ff7 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
 }
 
-.table-wrapper {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    border-radius: 12px;
+.comparison-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.comparison-card {
     background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(10px);
-    padding: 20px;
-    max-width: 100%;
-    margin: 0 auto;
-    transform: rotateX(5deg) rotateY(-2deg);
-    transition: transform 0.3s ease;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    border-radius: 20px;
+    padding: 32px;
+    transform-style: preserve-3d;
+    transform: rotateY(-5deg) rotateX(5deg);
+    transition: all 0.4s cubic-bezier(0.4, 0.0, 0.2, 1);
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.5),
+        0 0 0 1px rgba(255, 255, 255, 0.1);
 }
 
-.table-wrapper:hover {
-    transform: rotateX(0deg) rotateY(0deg) translateY(-10px);
+.comparison-card:hover {
+    transform: rotateY(0deg) rotateX(0deg) translateY(-15px);
+    box-shadow:
+        0 30px 80px rgba(0, 0, 0, 0.6),
+        0 0 0 1px rgba(255, 255, 255, 0.2);
 }
 
-.comparison-table {
-    width: 100%;
-    border-collapse: collapse;
-    min-width: 600px;
+.traditional-card {
+    border: 2px solid rgba(255, 107, 107, 0.3);
 }
 
-.comparison-table thead {
-    background: rgba(255, 255, 255, 0.1);
+.traditional-card:hover {
+    border-color: rgba(255, 107, 107, 0.6);
+    box-shadow:
+        0 30px 80px rgba(255, 107, 107, 0.3),
+        0 0 0 1px rgba(255, 107, 107, 0.4);
 }
 
-.comparison-table th {
-    padding: 20px;
-    text-align: left;
-    font-weight: 600;
-    font-size: 1.1rem;
-    color: #fff;
+.amc-card {
+    border: 2px solid rgba(81, 207, 102, 0.3);
+    transform: rotateY(5deg) rotateX(5deg);
+}
+
+.amc-card:hover {
+    border-color: rgba(81, 207, 102, 0.6);
+    box-shadow:
+        0 30px 80px rgba(81, 207, 102, 0.3),
+        0 0 0 1px rgba(81, 207, 102, 0.4);
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 32px;
+    padding-bottom: 20px;
     border-bottom: 2px solid rgba(255, 255, 255, 0.1);
 }
 
-.comparison-table td {
-    padding: 20px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+.card-icon {
+    font-size: 2rem;
 }
 
-.feature-cell {
-    font-weight: 600;
+.card-header h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
     color: #fff;
+    margin: 0;
 }
 
-.traditional-cell {
+.traditional-card .card-header h3 {
     color: #ff6b6b;
 }
 
-.amc-cell {
+.amc-card .card-header h3 {
     color: #51cf66;
 }
 
-.icon-x {
-    display: inline-block;
-    width: 24px;
-    height: 24px;
-    background: #ff6b6b;
-    color: #fff;
-    border-radius: 50%;
-    text-align: center;
-    line-height: 24px;
-    margin-right: 10px;
-    font-weight: bold;
+.card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
-.icon-check {
-    display: inline-block;
-    width: 24px;
-    height: 24px;
-    background: #51cf66;
-    color: #fff;
-    border-radius: 50%;
-    text-align: center;
-    line-height: 24px;
-    margin-right: 10px;
-    font-weight: bold;
+.feature-item {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 16px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 12px;
+    transition: all 0.3s ease;
 }
 
-.traditional-col {
+.feature-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateX(5px);
+}
+
+.feature-name {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.feature-value {
+    font-size: 1.125rem;
+    font-weight: 700;
+}
+
+.traditional-value {
     color: #ff6b6b;
 }
 
-.amc-col {
+.amc-value {
     color: #51cf66;
 }
 
 @media (max-width: 768px) {
     .comparison-section {
         padding: 60px 0;
-        perspective: 800px;
+        perspective: 1000px;
     }
 
     .comparison-section .section-title {
         font-size: 2rem;
+        margin-bottom: 40px;
     }
 
-    .table-wrapper {
-        padding: 10px;
-        margin: 0 10px;
-        transform: rotateX(3deg) rotateY(-1deg);
+    .comparison-cards-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        padding: 0 16px;
     }
 
-    .table-wrapper:hover {
-        transform: rotateX(0deg) rotateY(0deg);
+    .comparison-card {
+        padding: 24px;
+        transform: rotateY(0deg) rotateX(3deg);
     }
 
-    .comparison-table th,
-    .comparison-table td {
-        padding: 15px 10px;
-        font-size: 0.9rem;
+    .amc-card {
+        transform: rotateY(0deg) rotateX(3deg);
+    }
+
+    .comparison-card:hover {
+        transform: rotateY(0deg) rotateX(0deg) translateY(-10px);
+    }
+
+    .card-header {
+        margin-bottom: 24px;
+    }
+
+    .card-header h3 {
+        font-size: 1.25rem;
+    }
+
+    .card-icon {
+        font-size: 1.5rem;
+    }
+
+    .feature-value {
+        font-size: 1rem;
     }
 }

@@ -1,31 +1,39 @@
 import './KPICards.css';
 
-const KPICards = ({ kpis }) => {
+const KPICards = ({ kpis = {} }) => {
+    // Provide default values to prevent crashes
+    const {
+        mrr = 0,
+        activeClients = 0,
+        overduePayments = 0,
+        retentionRate = 0
+    } = kpis;
+
     const cards = [
         {
             title: 'Ingreso Mensual Recurrente',
-            value: `$${kpis.mrr.toLocaleString('es-CO')}`,
+            value: `$${mrr.toLocaleString('es-CO')}`,
             subtitle: 'COP/mes',
             icon: '💰',
             color: 'green',
         },
         {
             title: 'Clientes Activos',
-            value: kpis.activeClients,
+            value: activeClients,
             subtitle: 'suscripciones',
             icon: '👥',
             color: 'blue',
         },
         {
             title: 'Pagos Atrasados',
-            value: kpis.overduePayments,
+            value: overduePayments,
             subtitle: 'clientes en mora',
             icon: '⚠️',
             color: 'red',
         },
         {
             title: 'Tasa de Retención',
-            value: `${kpis.retentionRate}%`,
+            value: `${retentionRate}%`,
             subtitle: 'clientes activos',
             icon: '📈',
             color: 'purple',

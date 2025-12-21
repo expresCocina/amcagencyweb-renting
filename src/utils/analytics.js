@@ -253,6 +253,7 @@ export const initializeTracking = () => {
 };
 
 export default {
+    initAnalytics,
     trackEvent,
     trackLead,
     trackContact,
@@ -269,3 +270,4 @@ export default {
     trackError,
     initializeTracking
 };
+

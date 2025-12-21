@@ -94,8 +94,6 @@ function App() {
 function AppContent({ isDelayedLoaded, isPromoActive }) {
   const location = useLocation();
 
-  const location = useLocation();
-
   // No special handling needed - all pages use navbar/footer
   // Except admin pages
   const isAdminPage = location.pathname.startsWith('/admin');

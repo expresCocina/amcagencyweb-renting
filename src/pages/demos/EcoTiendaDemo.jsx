@@ -1,6 +1,9 @@
 import { useState } from 'react';
+import '../SharedPageStyles.css';
 import { Link } from 'react-router-dom';
+import '../SharedPageStyles.css';
 import './DemoPages.css';
+import '../SharedPageStyles.css';
 
 const EcoTiendaDemo = () => {
     const [cart, setCart] = useState([]);

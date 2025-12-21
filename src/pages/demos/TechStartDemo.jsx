@@ -1,5 +1,7 @@
 import { useState } from 'react';
+import '../SharedPageStyles.css';
 import '../demos/DemoPages.css';
+import '../SharedPageStyles.css';
 
 const TechStartDemo = () => {
     const [activeTab, setActiveTab] = useState('features');

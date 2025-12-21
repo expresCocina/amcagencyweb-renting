@@ -35,18 +35,18 @@ import BookingPage from './pages/BookingPage';
 import LoginPage from './pages/LoginPage';
 import ClientDashboard from './pages/ClientDashboard';
 
-// Lazy Load Only Demo Pages and Promo (less critical)
-const PromoLandingPage = lazy(() => import('./pages/PromoLandingPage'));
+// Import Demo Pages normally for fast loading
+import EcoTiendaDemo from './pages/demos/EcoTiendaDemo';
+import InmobiliariaDemo from './pages/demos/InmobiliariaDemo';
+import ClinicaDentalDemo from './pages/demos/ClinicaDentalDemo';
+import TechStartDemo from './pages/demos/TechStartDemo';
+import RestauranteDemo from './pages/demos/RestauranteDemo';
+import AcademiaDemo from './pages/demos/AcademiaDemo';
+import BoutiqueDemo from './pages/demos/BoutiqueDemo';
+import ConsultoraDemo from './pages/demos/ConsultoraDemo';
 
-// Lazy Load Demo Pages
-const EcoTiendaDemo = lazy(() => import('./pages/demos/EcoTiendaDemo'));
-const InmobiliariaDemo = lazy(() => import('./pages/demos/InmobiliariaDemo'));
-const ClinicaDentalDemo = lazy(() => import('./pages/demos/ClinicaDentalDemo'));
-const TechStartDemo = lazy(() => import('./pages/demos/TechStartDemo'));
-const RestauranteDemo = lazy(() => import('./pages/demos/RestauranteDemo'));
-const AcademiaDemo = lazy(() => import('./pages/demos/AcademiaDemo'));
-const BoutiqueDemo = lazy(() => import('./pages/demos/BoutiqueDemo'));
-const ConsultoraDemo = lazy(() => import('./pages/demos/ConsultoraDemo'));
+// Lazy Load Only Promo (less critical)
+const PromoLandingPage = lazy(() => import('./pages/PromoLandingPage'));
 const DemoGeneratorPage = lazy(() => import('./pages/DemoGeneratorPage'));
 
 // Lazy Load Resource Pages

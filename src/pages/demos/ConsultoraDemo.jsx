@@ -1,5 +1,7 @@
 import { useState } from 'react';
+import '../SharedPageStyles.css';
 import '../demos/DemoPages.css';
+import '../SharedPageStyles.css';
 
 const ConsultoraDemo = () => {
     const [selectedService, setSelectedService] = useState(null);

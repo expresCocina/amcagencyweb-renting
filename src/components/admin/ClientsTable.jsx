@@ -1,7 +1,8 @@
 import { useState } from 'react';
+import { updateClient, deleteClient } from '../../data/adminMockData';
 import './ClientsTable.css';
 
-const ClientsTable = ({ clients }) => {
+const ClientsTable = ({ clients, onUpdate }) => {
     const [searchTerm, setSearchTerm] = useState('');
     const [clientStates, setClientStates] = useState(
         clients.reduce((acc, client) => ({
@@ -9,6 +10,8 @@ const ClientsTable = ({ clients }) => {
             [client.id]: client.isActive
         }), {})
     );
+    const [editingClient, setEditingClient] = useState(null);
+    const [editFormData, setEditFormData] = useState({});
 
     const filteredClients = clients.filter(client =>
         client.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -40,10 +43,49 @@ const ClientsTable = ({ clients }) => {
     };
 
     const toggleSiteStatus = (clientId) => {
+        const newStatus = !clientStates[clientId];
         setClientStates(prev => ({
             ...prev,
-            [clientId]: !prev[clientId]
+            [clientId]: newStatus
         }));
+        updateClient(clientId, { isActive: newStatus });
+        if (onUpdate) onUpdate();
+    };
+
+    const handleEditClick = (client) => {
+        setEditingClient(client);
+        setEditFormData({
+            name: client.name,
+            company: client.company,
+            domain: client.domain,
+            phone: client.phone,
+            plan: client.plan,
+            nextPayment: client.nextPayment,
+            status: client.status,
+            isActive: client.isActive
+        });
+    };
+
+    const handleEditChange = (e) => {
+        const { name, value, type, checked } = e.target;
+        setEditFormData(prev => ({
+            ...prev,
+            [name]: type === 'checkbox' ? checked : value
+        }));
+    };
+
+    const handleEditSubmit = (e) => {
+        e.preventDefault();
+        updateClient(editingClient.id, editFormData);
+        setEditingClient(null);
+        if (onUpdate) onUpdate();
+    };
+
+    const handleDelete = (clientId) => {
+        if (window.confirm('¿Estás seguro de que quieres eliminar este cliente?')) {
+            deleteClient(clientId);
+            if (onUpdate) onUpdate();
+        }
     };
 
     return (
@@ -122,6 +164,7 @@ const ClientsTable = ({ clients }) => {
                                             </button>
                                             <button
                                                 className="btn-edit"
+                                                onClick={() => handleEditClick(client)}
                                                 title="Editar cliente"
                                             >
                                                 ✏️
@@ -148,6 +191,146 @@ const ClientsTable = ({ clients }) => {
                     </div>
                 )}
             </div>
+
+            {/* Edit Modal */}
+            {editingClient && (
+                <div className="demo-modal" onClick={() => setEditingClient(null)}>
+                    <div className="demo-modal-content edit-modal-content" onClick={(e) => e.stopPropagation()}>
+                        <button className="modal-close" onClick={() => setEditingClient(null)}>
+                            ×
+                        </button>
+                        <div className="modal-body">
+                            <h2>Editar Cliente</h2>
+                            <form onSubmit={handleEditSubmit} className="edit-form">
+                                <div className="form-row">
+                                    <div className="form-group">
+                                        <label htmlFor="edit-name">Nombre Completo</label>
+                                        <input
+                                            type="text"
+                                            id="edit-name"
+                                            name="name"
+                                            value={editFormData.name}
+                                            onChange={handleEditChange}
+                                            required
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <label htmlFor="edit-company">Empresa</label>
+                                        <input
+                                            type="text"
+                                            id="edit-company"
+                                            name="company"
+                                            value={editFormData.company}
+                                            onChange={handleEditChange}
+                                            required
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="form-row">
+                                    <div className="form-group">
+                                        <label htmlFor="edit-domain">Dominio</label>
+                                        <input
+                                            type="text"
+                                            id="edit-domain"
+                                            name="domain"
+                                            value={editFormData.domain}
+                                            onChange={handleEditChange}
+                                            required
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <label htmlFor="edit-phone">Teléfono</label>
+                                        <input
+                                            type="tel"
+                                            id="edit-phone"
+                                            name="phone"
+                                            value={editFormData.phone}
+                                            onChange={handleEditChange}
+                                            required
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="form-row">
+                                    <div className="form-group">
+                                        <label htmlFor="edit-plan">Plan Mensual (COP)</label>
+                                        <input
+                                            type="number"
+                                            id="edit-plan"
+                                            name="plan"
+                                            value={editFormData.plan}
+                                            onChange={handleEditChange}
+                                            required
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <label htmlFor="edit-nextPayment">Próximo Pago</label>
+                                        <input
+                                            type="text"
+                                            id="edit-nextPayment"
+                                            name="nextPayment"
+                                            value={editFormData.nextPayment}
+                                            onChange={handleEditChange}
+                                            placeholder="dd/mm/yyyy"
+                                            required
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="form-row">
+                                    <div className="form-group">
+                                        <label htmlFor="edit-status">Estado</label>
+                                        <select
+                                            id="edit-status"
+                                            name="status"
+                                            value={editFormData.status}
+                                            onChange={handleEditChange}
+                                            required
+                                        >
+                                            <option value="active">Activo</option>
+                                            <option value="pending">Pendiente Pago</option>
+                                            <option value="suspended">Suspendido</option>
+                                        </select>
+                                    </div>
+                                    <div className="form-group checkbox-group">
+                                        <label>
+                                            <input
+                                                type="checkbox"
+                                                name="isActive"
+                                                checked={editFormData.isActive}
+                                                onChange={handleEditChange}
+                                            />
+                                            <span>Sitio web activo</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div className="form-actions">
+                                    <button
+                                        type="button"
+                                        onClick={() => handleDelete(editingClient.id)}
+                                        className="btn-delete"
+                                    >
+                                        🗑️ Eliminar Cliente
+                                    </button>
+                                    <div style={{ flex: 1 }}></div>
+                                    <button
+                                        type="button"
+                                        onClick={() => setEditingClient(null)}
+                                        className="btn-cancel"
+                                    >
+                                        Cancelar
+                                    </button>
+                                    <button type="submit" className="btn-submit">
+                                        Guardar Cambios
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

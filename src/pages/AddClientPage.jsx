@@ -6,13 +6,27 @@ import './AddClientPage.css';
 
 const AddClientPage = () => {
     const navigate = useNavigate();
+
+    // Calculate next payment date (1 month from today)
+    const getNextPaymentDate = () => {
+        const today = new Date();
+        const nextMonth = new Date(today);
+        nextMonth.setMonth(nextMonth.getMonth() + 1);
+
+        const day = String(nextMonth.getDate()).padStart(2, '0');
+        const month = String(nextMonth.getMonth() + 1).padStart(2, '0');
+        const year = nextMonth.getFullYear();
+
+        return `${day}/${month}/${year}`;
+    };
+
     const [formData, setFormData] = useState({
         name: '',
         company: '',
         domain: '',
         plan: 80000,
         phone: '',
-        nextPayment: '',
+        nextPayment: getNextPaymentDate(), // Auto-calculate
         status: 'active',
         isActive: true,
     });
@@ -146,16 +160,20 @@ const AddClientPage = () => {
                             </div>
 
                             <div className="form-group">
-                                <label htmlFor="nextPayment">Próximo Pago *</label>
+                                <label htmlFor="nextPayment">Próximo Pago (Auto-calculado) *</label>
                                 <input
-                                    type="date"
+                                    type="text"
                                     id="nextPayment"
                                     name="nextPayment"
                                     value={formData.nextPayment}
                                     onChange={handleChange}
+                                    placeholder="dd/mm/yyyy"
                                     required
                                     disabled={isSubmitting}
                                 />
+                                <small style={{ color: '#64748b', fontSize: '0.8rem' }}>
+                                    📅 Calculado automáticamente: 1 mes desde hoy
+                                </small>
                             </div>
                         </div>
 

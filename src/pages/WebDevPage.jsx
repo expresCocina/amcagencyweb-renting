@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import ContactForm from '../components/ContactForm';
+import './SharedPageStyles.css';
 import '../pages/SEOPage.css';
 
 const WebDevPage = () => {

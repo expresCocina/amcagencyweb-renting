@@ -222,6 +222,51 @@ export const trackError = (errorType, errorMessage, location) => {
     });
 };
 
+// Track Contact Click (for TrackedLink component)
+export const trackContactClick = (source, details = {}) => {
+    trackEvent('Contact_Click', {
+        event_category: 'Contact',
+        event_label: source,
+        source: source,
+        ...details
+    });
+
+    trackLead(`Contact Click - ${source}`, {
+        type: 'contact',
+        ...details
+    });
+};
+
+// Track Booking Click (for TrackedLink component)
+export const trackBookingClick = (source, details = {}) => {
+    trackEvent('Booking_Click', {
+        event_category: 'Booking',
+        event_label: source,
+        source: source,
+        ...details
+    });
+
+    trackLead(`Booking Click - ${source}`, {
+        type: 'booking',
+        ...details
+    });
+};
+
+// Track Calculator Click (for TrackedLink component)
+export const trackCalculatorClick = (source, details = {}) => {
+    trackEvent('Calculator_Click', {
+        event_category: 'Calculator',
+        event_label: source,
+        source: source,
+        ...details
+    });
+
+    trackLead(`Calculator Click - ${source}`, {
+        type: 'calculator',
+        ...details
+    });
+};
+
 // Initialize tracking on page load
 export const initializeTracking = () => {
     if (typeof window === 'undefined') return;
@@ -271,5 +316,8 @@ export default {
     trackVideoPlay,
     trackExternalLink,
     trackError,
+    trackContactClick,
+    trackBookingClick,
+    trackCalculatorClick,
     initializeTracking
 };

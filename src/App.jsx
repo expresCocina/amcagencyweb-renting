@@ -94,14 +94,17 @@ function App() {
 function AppContent({ isDelayedLoaded, isPromoActive }) {
   const location = useLocation();
 
+  const location = useLocation();
+
   // No special handling needed - all pages use navbar/footer
-  const isLandingPage = false;
+  // Except admin pages
+  const isAdminPage = location.pathname.startsWith('/admin');
 
   return (
     <div className="App">
       <AnnouncementBanner />
       <div className="bg-grid"></div>
-      {!isLandingPage && <Navbar />}
+      {!isAdminPage && <Navbar />}
       <Suspense fallback={<LoadingSpinner />}>
         <Routes>
           {/* Promotional Landing Page - Active during Dec 14, 2025 - Feb 28, 2026 */}
@@ -166,7 +169,7 @@ function AppContent({ isDelayedLoaded, isPromoActive }) {
 
         </Routes>
       </Suspense>
-      {!isLandingPage && <Footer />}
+      {!isAdminPage && <Footer />}
 
       {/* Deferred Components */}
       {isDelayedLoaded && (

@@ -54,6 +54,7 @@ const TemplateOptimizacionPage = lazy(() => import('./pages/recursos/TemplateOpt
 
 function App() {
   const [isDelayedLoaded, setIsDelayedLoaded] = useState(false);
+  const [componentsLoaded, setComponentsLoaded] = useState(false);
 
   // Check if promotional period is active - DISABLED for single-page focus
   const isPromoActive = () => {
@@ -61,15 +62,11 @@ function App() {
   };
 
   useEffect(() => {
-    // Initialize analytics immediately for better tracking
+    // Initialize analytics immediately
     initAnalytics();
 
-    // Defer loading of heavy non-critical components
-    const timer = setTimeout(() => {
-      setIsDelayedLoaded(true);
-    }, 3000);
-
-    return () => clearTimeout(timer);
+    // Load heavy components immediately instead of delayed
+    setComponentsLoaded(true);
   }, []);
 
   return (

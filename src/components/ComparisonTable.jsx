@@ -1,71 +1,98 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './ComparisonTable.css';
 
 const ComparisonTable = () => {
-    const features = [
+    const [currentIndex, setCurrentIndex] = useState(0);
+
+    const comparisons = [
         {
-            name: "Costo Inicial",
-            traditional: "$2M - $5M",
-            amc: "$0 Pesos"
+            title: "Agencia Tradicional",
+            icon: "❌",
+            color: "red",
+            features: [
+                { name: "Costo Inicial", value: "$2M - $5M" },
+                { name: "Hosting/SSL", value: "Se paga aparte" },
+                { name: "Tecnología", value: "WordPress Lento" },
+                { name: "Entrega", value: "20 días" }
+            ]
         },
         {
-            name: "Hosting/SSL",
-            traditional: "Se paga aparte",
-            amc: "INCLUIDO"
-        },
-        {
-            name: "Tecnología",
-            traditional: "WordPress Lento",
-            amc: "Next.js Ultra Rápido"
-        },
-        {
-            name: "Entrega",
-            traditional: "20 días",
-            amc: "48 Horas"
+            title: "AMC Renting",
+            icon: "✅",
+            color: "green",
+            features: [
+                { name: "Costo Inicial", value: "$0 Pesos" },
+                { name: "Hosting/SSL", value: "INCLUIDO" },
+                { name: "Tecnología", value: "Next.js Ultra Rápido" },
+                { name: "Entrega", value: "48 Horas" }
+            ]
         }
     ];
+
+    const nextSlide = () => {
+        setCurrentIndex((prevIndex) =>
+            prevIndex === comparisons.length - 1 ? 0 : prevIndex + 1
+        );
+    };
+
+    const prevSlide = () => {
+        setCurrentIndex((prevIndex) =>
+            prevIndex === 0 ? comparisons.length - 1 : prevIndex - 1
+        );
+    };
 
     return (
         <section className="comparison-section">
             <div className="container">
                 <h2 className="section-title">¿Por qué comprar si puedes alquilar?</h2>
 
-                <div className="comparison-cards-grid">
-                    {/* Traditional Agency Card */}
-                    <div className="comparison-card traditional-card">
-                        <div className="card-header">
-                            <span className="card-icon">❌</span>
-                            <h3>Agencia Tradicional</h3>
-                        </div>
-                        <div className="card-body">
-                            {features.map((feature, index) => (
-                                <div key={index} className="feature-item">
-                                    <span className="feature-name">{feature.name}</span>
-                                    <span className="feature-value traditional-value">
-                                        {feature.traditional}
-                                    </span>
+                <div className="comparison-carousel">
+                    <button className="carousel-btn prev-btn" onClick={prevSlide}>
+                        ‹
+                    </button>
+
+                    <div className="comparison-cards-wrapper">
+                        <div
+                            className="comparison-cards-container"
+                            style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+                        >
+                            {comparisons.map((comparison, index) => (
+                                <div
+                                    key={index}
+                                    className={`comparison-card ${comparison.color}-card`}
+                                >
+                                    <div className="card-header">
+                                        <span className="card-icon">{comparison.icon}</span>
+                                        <h3>{comparison.title}</h3>
+                                    </div>
+                                    <div className="card-body">
+                                        {comparison.features.map((feature, idx) => (
+                                            <div key={idx} className="feature-item">
+                                                <span className="feature-name">{feature.name}</span>
+                                                <span className={`feature-value ${comparison.color}-value`}>
+                                                    {feature.value}
+                                                </span>
+                                            </div>
+                                        ))}
+                                    </div>
                                 </div>
                             ))}
                         </div>
                     </div>
 
-                    {/* AMC Renting Card */}
-                    <div className="comparison-card amc-card">
-                        <div className="card-header">
-                            <span className="card-icon">✅</span>
-                            <h3>AMC Renting</h3>
-                        </div>
-                        <div className="card-body">
-                            {features.map((feature, index) => (
-                                <div key={index} className="feature-item">
-                                    <span className="feature-name">{feature.name}</span>
-                                    <span className="feature-value amc-value">
-                                        {feature.amc}
-                                    </span>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
+                    <button className="carousel-btn next-btn" onClick={nextSlide}>
+                        ›
+                    </button>
+                </div>
+
+                <div className="carousel-dots">
+                    {comparisons.map((_, index) => (
+                        <button
+                            key={index}
+                            className={`dot ${index === currentIndex ? 'active' : ''}`}
+                            onClick={() => setCurrentIndex(index)}
+                        />
+                    ))}
                 </div>
             </div>
         </section>

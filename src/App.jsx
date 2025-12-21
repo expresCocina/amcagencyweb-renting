@@ -61,20 +61,15 @@ function App() {
   };
 
   useEffect(() => {
-    // Defer analytics to prioritize critical rendering
-    const analyticsTimer = setTimeout(() => {
-      initAnalytics();
-    }, 2000);
+    // Initialize analytics immediately for better tracking
+    initAnalytics();
 
     // Defer loading of heavy non-critical components
     const timer = setTimeout(() => {
       setIsDelayedLoaded(true);
     }, 3000);
 
-    return () => {
-      clearTimeout(analyticsTimer);
-      clearTimeout(timer);
-    };
+    return () => clearTimeout(timer);
   }, []);
 
   return (

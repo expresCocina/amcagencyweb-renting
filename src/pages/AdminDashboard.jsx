@@ -1,7 +1,7 @@
-import AdminSidebar from '../../components/admin/AdminSidebar';
-import KPICards from '../../components/admin/KPICards';
-import ClientsTable from '../../components/admin/ClientsTable';
-import { clientsData, calculateKPIs } from '../../data/adminMockData';
+import AdminSidebar from '../components/admin/AdminSidebar';
+import KPICards from '../components/admin/KPICards';
+import ClientsTable from '../components/admin/ClientsTable';
+import { clientsData, calculateKPIs } from '../data/adminMockData';
 import './AdminDashboard.css';
 
 const AdminDashboard = () => {

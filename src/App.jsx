@@ -100,8 +100,8 @@ function AppContent({ isDelayedLoaded, isPromoActive }) {
 
   return (
     <div className="App">
-      <AnnouncementBanner />
-      <div className="bg-grid"></div>
+      {!isAdminPage && <AnnouncementBanner />}
+      {!isAdminPage && <div className="bg-grid"></div>}
       {!isAdminPage && <Navbar />}
       <Suspense fallback={<LoadingSpinner />}>
         <Routes>

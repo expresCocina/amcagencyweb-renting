@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AdminSidebar from '../components/admin/AdminSidebar';
-import { addClient } from '../data/adminMockData';
+import { supabase } from '../supabaseClient';
 import './AddClientPage.css';
 
 const AddClientPage = () => {
@@ -13,45 +13,56 @@ const AddClientPage = () => {
         const nextMonth = new Date(today);
         nextMonth.setMonth(nextMonth.getMonth() + 1);
 
-        const day = String(nextMonth.getDate()).padStart(2, '0');
-        const month = String(nextMonth.getMonth() + 1).padStart(2, '0');
+        // Format as YYYY-MM-DD for date input
         const year = nextMonth.getFullYear();
+        const month = String(nextMonth.getMonth() + 1).padStart(2, '0');
+        const day = String(nextMonth.getDate()).padStart(2, '0');
 
-        return `${day}/${month}/${year}`;
+        return `${year}-${month}-${day}`;
     };
 
     const [formData, setFormData] = useState({
         name: '',
         company: '',
         domain: '',
-        plan: 80000,
+        plan: '80000',
         phone: '',
-        nextPayment: getNextPaymentDate(), // Auto-calculate
+        next_payment: getNextPaymentDate(),
         status: 'active',
-        isActive: true,
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [success, setSuccess] = useState(false);
+    const [error, setError] = useState(null);
 
     const handleChange = (e) => {
-        const { name, value, type, checked } = e.target;
+        const { name, value } = e.target;
         setFormData({
             ...formData,
-            [name]: type === 'checkbox' ? checked : value,
+            [name]: value,
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setIsSubmitting(true);
+        setError(null);
 
-        // Add client
-        addClient(formData);
+        try {
+            const { error: insertError } = await supabase
+                .from('clients')
+                .insert([formData]);
 
-        setSuccess(true);
-        setTimeout(() => {
-            navigate('/admin');
-        }, 1500);
+            if (insertError) throw insertError;
+
+            setSuccess(true);
+            setTimeout(() => {
+                navigate('/admin');
+            }, 1500);
+        } catch (err) {
+            console.error('Error adding client:', err);
+            setError('Error al agregar el cliente. Por favor, intenta de nuevo.');
+            setIsSubmitting(false);
+        }
     };
 
     const handleLogout = () => {
@@ -79,6 +90,12 @@ const AddClientPage = () => {
                     {success && (
                         <div className="success-message">
                             ✅ Cliente agregado exitosamente. Redirigiendo...
+                        </div>
+                    )}
+
+                    {error && (
+                        <div className="error-message">
+                            ⚠️ {error}
                         </div>
                     )}
 
@@ -160,14 +177,13 @@ const AddClientPage = () => {
                             </div>
 
                             <div className="form-group">
-                                <label htmlFor="nextPayment">Próximo Pago (Auto-calculado) *</label>
+                                <label htmlFor="next_payment">Próximo Pago (Auto-calculado) *</label>
                                 <input
-                                    type="text"
-                                    id="nextPayment"
-                                    name="nextPayment"
-                                    value={formData.nextPayment}
+                                    type="date"
+                                    id="next_payment"
+                                    name="next_payment"
+                                    value={formData.next_payment}
                                     onChange={handleChange}
-                                    placeholder="dd/mm/yyyy"
                                     required
                                     disabled={isSubmitting}
                                 />
@@ -192,19 +208,6 @@ const AddClientPage = () => {
                                     <option value="pending">Pendiente Pago</option>
                                     <option value="suspended">Suspendido</option>
                                 </select>
-                            </div>
-
-                            <div className="form-group checkbox-group">
-                                <label>
-                                    <input
-                                        type="checkbox"
-                                        name="isActive"
-                                        checked={formData.isActive}
-                                        onChange={handleChange}
-                                        disabled={isSubmitting}
-                                    />
-                                    <span>Sitio web activo</span>
-                                </label>
                             </div>
                         </div>
 

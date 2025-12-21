@@ -1,45 +1,20 @@
 .add-client-container {
     max-width: 900px;
+}
+
+.client-form {
     background: rgba(30, 41, 59, 0.5);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(148, 163, 184, 0.1);
     border-radius: 16px;
-    padding: 40px;
-}
-
-.success-message {
-    padding: 16px 20px;
-    background: rgba(16, 185, 129, 0.1);
-    border: 1px solid rgba(16, 185, 129, 0.3);
-    border-radius: 8px;
-    color: #10b981;
-    font-weight: 600;
-    margin-bottom: 24px;
-    animation: slideDown 0.3s ease;
-}
-
-@keyframes slideDown {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.client-form {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
+    padding: 32px;
 }
 
 .form-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 24px;
+    margin-bottom: 24px;
 }
 
 .form-group {
@@ -72,14 +47,14 @@
     box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
-.form-group input:disabled,
-.form-group select:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-
 .form-group input::placeholder {
     color: #64748b;
+}
+
+.form-group input:disabled,
+.form-group select:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
 }
 
 .checkbox-group {
@@ -117,7 +92,7 @@
     display: flex;
     gap: 16px;
     justify-content: flex-end;
-    margin-top: 16px;
+    margin-top: 32px;
     padding-top: 24px;
     border-top: 1px solid rgba(148, 163, 184, 0.1);
 }
@@ -139,8 +114,13 @@
     color: #94a3b8;
 }
 
-.btn-cancel:hover:not(:disabled) {
+.btn-cancel:hover {
     background: rgba(148, 163, 184, 0.2);
+}
+
+.btn-cancel:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
 }
 
 .btn-submit {
@@ -153,27 +133,57 @@
     box-shadow: 0 8px 24px rgba(59, 130, 246, 0.4);
 }
 
-.btn-cancel:disabled,
 .btn-submit:disabled {
-    opacity: 0.5;
+    opacity: 0.6;
     cursor: not-allowed;
 }
 
+.success-message {
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 24px;
+    color: #10b981;
+    font-weight: 600;
+    text-align: center;
+}
+
+.error-message {
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 24px;
+    color: #ef4444;
+    font-weight: 600;
+    text-align: center;
+}
+
 @media (max-width: 768px) {
-    .add-client-container {
+    .client-form {
         padding: 24px;
     }
 
     .form-row {
         grid-template-columns: 1fr;
+        gap: 16px;
+        margin-bottom: 16px;
     }
 
     .form-actions {
         flex-direction: column-reverse;
+        margin-top: 24px;
     }
 
     .btn-cancel,
     .btn-submit {
         width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .client-form {
+        padding: 20px;
     }
 }

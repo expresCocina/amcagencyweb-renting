@@ -1,17 +1,12 @@
 import { useState } from 'react';
-import { updateClient, deleteClient } from '../../data/adminMockData';
+import { supabase } from '../../supabaseClient';
 import './ClientsTable.css';
 
 const ClientsTable = ({ clients, onUpdate }) => {
     const [searchTerm, setSearchTerm] = useState('');
-    const [clientStates, setClientStates] = useState(
-        clients.reduce((acc, client) => ({
-            ...acc,
-            [client.id]: client.isActive
-        }), {})
-    );
     const [editingClient, setEditingClient] = useState(null);
     const [editFormData, setEditFormData] = useState({});
+    const [updating, setUpdating] = useState(false);
 
     const filteredClients = clients.filter(client =>
         client.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -37,19 +32,27 @@ const ClientsTable = ({ clients, onUpdate }) => {
     };
 
     const handleWhatsApp = (client) => {
-        const message = `Hola ${client.name}, te recordamos que tu próximo pago de $${client.plan.toLocaleString('es-CO')} COP vence el ${client.nextPayment}. ¡Gracias por confiar en nosotros!`;
+        const message = `Hola ${client.name}, te recordamos que tu próximo pago de $${parseInt(client.plan).toLocaleString('es-CO')} COP vence el ${client.next_payment}. ¡Gracias por confiar en nosotros!`;
         const url = `https://wa.me/57${client.phone}?text=${encodeURIComponent(message)}`;
         window.open(url, '_blank');
     };
 
-    const toggleSiteStatus = (clientId) => {
-        const newStatus = !clientStates[clientId];
-        setClientStates(prev => ({
-            ...prev,
-            [clientId]: newStatus
-        }));
-        updateClient(clientId, { isActive: newStatus });
-        if (onUpdate) onUpdate();
+    const toggleSiteStatus = async (client) => {
+        try {
+            const newStatus = client.status === 'active' ? 'suspended' : 'active';
+
+            const { error } = await supabase
+                .from('clients')
+                .update({ status: newStatus })
+                .eq('id', client.id);
+
+            if (error) throw error;
+
+            if (onUpdate) onUpdate();
+        } catch (err) {
+            console.error('Error updating client status:', err);
+            alert('Error al actualizar el estado del cliente');
+        }
     };
 
     const handleEditClick = (client) => {
@@ -60,31 +63,59 @@ const ClientsTable = ({ clients, onUpdate }) => {
             domain: client.domain,
             phone: client.phone,
             plan: client.plan,
-            nextPayment: client.nextPayment,
+            next_payment: client.next_payment,
             status: client.status,
-            isActive: client.isActive
         });
     };
 
     const handleEditChange = (e) => {
-        const { name, value, type, checked } = e.target;
+        const { name, value } = e.target;
         setEditFormData(prev => ({
             ...prev,
-            [name]: type === 'checkbox' ? checked : value
+            [name]: value
         }));
     };
 
-    const handleEditSubmit = (e) => {
+    const handleEditSubmit = async (e) => {
         e.preventDefault();
-        updateClient(editingClient.id, editFormData);
-        setEditingClient(null);
-        if (onUpdate) onUpdate();
+        setUpdating(true);
+
+        try {
+            const { error } = await supabase
+                .from('clients')
+                .update(editFormData)
+                .eq('id', editingClient.id);
+
+            if (error) throw error;
+
+            setEditingClient(null);
+            if (onUpdate) onUpdate();
+        } catch (err) {
+            console.error('Error updating client:', err);
+            alert('Error al actualizar el cliente');
+        } finally {
+            setUpdating(false);
+        }
     };
 
-    const handleDelete = (clientId) => {
-        if (window.confirm('¿Estás seguro de que quieres eliminar este cliente?')) {
-            deleteClient(clientId);
+    const handleDelete = async (clientId) => {
+        if (!window.confirm('¿Estás seguro de que quieres eliminar este cliente? Esta acción no se puede deshacer.')) {
+            return;
+        }
+
+        try {
+            const { error } = await supabase
+                .from('clients')
+                .delete()
+                .eq('id', clientId);
+
+            if (error) throw error;
+
+            setEditingClient(null);
             if (onUpdate) onUpdate();
+        } catch (err) {
+            console.error('Error deleting client:', err);
+            alert('Error al eliminar el cliente');
         }
     };
 
@@ -120,7 +151,7 @@ const ClientsTable = ({ clients, onUpdate }) => {
                             const statusBadge = getStatusBadge(client.status);
                             return (
                                 <tr key={client.id}>
-                                    <td>
+                                    <td data-label="Cliente">
                                         <div className="client-info">
                                             <div className="client-avatar">
                                                 {getInitials(client.name)}
@@ -131,7 +162,7 @@ const ClientsTable = ({ clients, onUpdate }) => {
                                             </div>
                                         </div>
                                     </td>
-                                    <td>
+                                    <td data-label="Dominio">
                                         <a
                                             href={`https://${client.domain}`}
                                             target="_blank"
@@ -142,18 +173,18 @@ const ClientsTable = ({ clients, onUpdate }) => {
                                             <span className="external-icon">↗</span>
                                         </a>
                                     </td>
-                                    <td>
+                                    <td data-label="Plan">
                                         <span className="plan-badge">
-                                            ${client.plan.toLocaleString('es-CO')} COP
+                                            ${parseInt(client.plan).toLocaleString('es-CO')} COP
                                         </span>
                                     </td>
-                                    <td>
+                                    <td data-label="Estado">
                                         <span className={`status-badge ${statusBadge.class}`}>
                                             {statusBadge.icon} {statusBadge.label}
                                         </span>
                                     </td>
-                                    <td className="payment-date">{client.nextPayment}</td>
-                                    <td>
+                                    <td data-label="Próximo Pago" className="payment-date">{client.next_payment}</td>
+                                    <td data-label="Acciones">
                                         <div className="action-buttons">
                                             <button
                                                 className="btn-whatsapp"
@@ -172,8 +203,8 @@ const ClientsTable = ({ clients, onUpdate }) => {
                                             <label className="toggle-switch">
                                                 <input
                                                     type="checkbox"
-                                                    checked={clientStates[client.id]}
-                                                    onChange={() => toggleSiteStatus(client.id)}
+                                                    checked={client.status === 'active'}
+                                                    onChange={() => toggleSiteStatus(client)}
                                                 />
                                                 <span className="toggle-slider"></span>
                                             </label>
@@ -212,6 +243,7 @@ const ClientsTable = ({ clients, onUpdate }) => {
                                             value={editFormData.name}
                                             onChange={handleEditChange}
                                             required
+                                            disabled={updating}
                                         />
                                     </div>
                                     <div className="form-group">
@@ -223,6 +255,7 @@ const ClientsTable = ({ clients, onUpdate }) => {
                                             value={editFormData.company}
                                             onChange={handleEditChange}
                                             required
+                                            disabled={updating}
                                         />
                                     </div>
                                 </div>
@@ -237,6 +270,7 @@ const ClientsTable = ({ clients, onUpdate }) => {
                                             value={editFormData.domain}
                                             onChange={handleEditChange}
                                             required
+                                            disabled={updating}
                                         />
                                     </div>
                                     <div className="form-group">
@@ -248,6 +282,7 @@ const ClientsTable = ({ clients, onUpdate }) => {
                                             value={editFormData.phone}
                                             onChange={handleEditChange}
                                             required
+                                            disabled={updating}
                                         />
                                     </div>
                                 </div>
@@ -262,18 +297,19 @@ const ClientsTable = ({ clients, onUpdate }) => {
                                             value={editFormData.plan}
                                             onChange={handleEditChange}
                                             required
+                                            disabled={updating}
                                         />
                                     </div>
                                     <div className="form-group">
-                                        <label htmlFor="edit-nextPayment">Próximo Pago</label>
+                                        <label htmlFor="edit-next_payment">Próximo Pago</label>
                                         <input
-                                            type="text"
-                                            id="edit-nextPayment"
-                                            name="nextPayment"
-                                            value={editFormData.nextPayment}
+                                            type="date"
+                                            id="edit-next_payment"
+                                            name="next_payment"
+                                            value={editFormData.next_payment}
                                             onChange={handleEditChange}
-                                            placeholder="dd/mm/yyyy"
                                             required
+                                            disabled={updating}
                                         />
                                     </div>
                                 </div>
@@ -287,22 +323,12 @@ const ClientsTable = ({ clients, onUpdate }) => {
                                             value={editFormData.status}
                                             onChange={handleEditChange}
                                             required
+                                            disabled={updating}
                                         >
                                             <option value="active">Activo</option>
                                             <option value="pending">Pendiente Pago</option>
                                             <option value="suspended">Suspendido</option>
                                         </select>
-                                    </div>
-                                    <div className="form-group checkbox-group">
-                                        <label>
-                                            <input
-                                                type="checkbox"
-                                                name="isActive"
-                                                checked={editFormData.isActive}
-                                                onChange={handleEditChange}
-                                            />
-                                            <span>Sitio web activo</span>
-                                        </label>
                                     </div>
                                 </div>
 
@@ -311,6 +337,7 @@ const ClientsTable = ({ clients, onUpdate }) => {
                                         type="button"
                                         onClick={() => handleDelete(editingClient.id)}
                                         className="btn-delete"
+                                        disabled={updating}
                                     >
                                         🗑️ Eliminar Cliente
                                     </button>
@@ -319,11 +346,12 @@ const ClientsTable = ({ clients, onUpdate }) => {
                                         type="button"
                                         onClick={() => setEditingClient(null)}
                                         className="btn-cancel"
+                                        disabled={updating}
                                     >
                                         Cancelar
                                     </button>
-                                    <button type="submit" className="btn-submit">
-                                        Guardar Cambios
+                                    <button type="submit" className="btn-submit" disabled={updating}>
+                                        {updating ? 'Guardando...' : 'Guardar Cambios'}
                                     </button>
                                 </div>
                             </form>

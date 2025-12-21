@@ -143,6 +143,21 @@ function AppContent({ isDelayedLoaded, isPromoActive }) {
               <AdminDashboard />
             </ProtectedAdminRoute>
           } />
+          <Route path="/admin/clientes/nuevo" element={
+            <ProtectedAdminRoute>
+              <AddClientPage />
+            </ProtectedAdminRoute>
+          } />
+          <Route path="/admin/pagos" element={
+            <ProtectedAdminRoute>
+              <PendingPaymentsPage />
+            </ProtectedAdminRoute>
+          } />
+          <Route path="/admin/config" element={
+            <ProtectedAdminRoute>
+              <SettingsPage />
+            </ProtectedAdminRoute>
+          } />
 
           {/* Resource Pages */}
           <Route path="/recursos/guia-seo-2024" element={<GuiaSEOPage />} />

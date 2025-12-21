@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { trackEvent } from '../utils/analytics';
+import { trackEvent, trackLead } from '../utils/analytics';
 import './ContactForm.css';
 
 const ContactForm = () => {
@@ -22,10 +22,17 @@ const ContactForm = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        // Track form submission
+        // Track form submission (Browser only)
         trackEvent('form_submission', {
             form_name: 'Contact Form',
             service: formData.service
+        });
+
+        // Track Lead - THIS SENDS TO CAPI
+        trackLead('Contact Form', {
+            phone: formData.phone,
+            service: formData.service,
+            company: formData.company
         });
 
         // Crear mensaje de WhatsApp
@@ -38,7 +45,7 @@ Servicio: ${formData.service}`;
 
         const whatsappUrl = `https://wa.me/573138537261?text=${encodeURIComponent(whatsappMessage)}`;
 
-        // Track WhatsApp click
+        // Track WhatsApp click (Browser only)
         trackEvent('whatsapp_click', {
             source: 'Contact Form'
         });

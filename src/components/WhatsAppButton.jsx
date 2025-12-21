@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { trackEvent } from '../utils/analytics';
+import { trackEvent, trackLead } from '../utils/analytics';
 import './WhatsAppButton.css';
 
 const WhatsAppButton = () => {
@@ -13,12 +13,19 @@ const WhatsAppButton = () => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    const whatsappNumber = '573138537261'; // Cambiar por el número real
+    const whatsappNumber = '573138537261';
     const message = encodeURIComponent('Hola, vengo desde la web de AMC Agency Web');
+
+    const handleClick = () => {
+        // Browser tracking
+        trackEvent('Contact', { method: 'WhatsApp', location: 'Floating Button' });
+        // CAPI tracking
+        trackLead('WhatsApp Button', { source: 'Floating Button' });
+    };
 
     return (
         <a
-            onClick={() => trackEvent('Contact', { method: 'WhatsApp', location: 'Floating Button' })}
+            onClick={handleClick}
             href={`https://wa.me/${whatsappNumber}?text=${message}`}
             className={`whatsapp-button ${visible ? 'visible' : ''}`}
             target="_blank"

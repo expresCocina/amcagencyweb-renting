@@ -1,5 +1,5 @@
 import React from 'react';
-import { trackEvent } from '../utils/analytics';
+import { trackWhatsAppClick, trackCTAClick } from '../utils/analytics';
 import './WhatsAppCTA.css';
 
 const WhatsAppCTA = ({ message, buttonText = "Hablar por WhatsApp", section = "general" }) => {
@@ -8,9 +8,15 @@ const WhatsAppCTA = ({ message, buttonText = "Hablar por WhatsApp", section = "g
     const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
 
     const handleClick = () => {
-        trackEvent('WhatsApp_CTA_Click', {
-            section: section,
-            message: message
+        // Track WhatsApp click as lead
+        trackWhatsAppClick(section, message, {
+            button_text: buttonText,
+            destination: 'WhatsApp'
+        });
+
+        // Track CTA click
+        trackCTAClick(buttonText, section, 'WhatsApp', {
+            message_preview: message.substring(0, 100)
         });
     };
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import { trackDesignSelection, trackWhatsAppClick } from '../utils/analytics';
 import WhatsAppCTA from './WhatsAppCTA';
 import './RentingCatalog.css';
 
@@ -24,7 +25,18 @@ const RentingCatalog = () => {
         }
     ];
 
-    const handleWhatsApp = (text) => {
+    const handleWhatsApp = (text, category) => {
+        // Track design selection as lead
+        trackDesignSelection(category.title, 'Renting Catalog', {
+            plan: 'Renting 80k',
+            icon: category.icon
+        });
+
+        // Track WhatsApp click
+        trackWhatsAppClick('Catalog Design Selection', text, {
+            design: category.title
+        });
+
         const url = `https://wa.me/573138537261?text=${encodeURIComponent(text)}`;
         window.open(url, '_blank');
     };
@@ -41,7 +53,7 @@ const RentingCatalog = () => {
                             <p className="card-description">{cat.description}</p>
                             <button
                                 className="cta-button"
-                                onClick={() => handleWhatsApp(cat.whatsappText)}
+                                onClick={() => handleWhatsApp(cat.whatsappText, cat)}
                             >
                                 QUIERO ESTE DISEÑO
                             </button>

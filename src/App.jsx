@@ -61,14 +61,20 @@ function App() {
   };
 
   useEffect(() => {
-    initAnalytics();
+    // Defer analytics to prioritize critical rendering
+    const analyticsTimer = setTimeout(() => {
+      initAnalytics();
+    }, 2000);
 
     // Defer loading of heavy non-critical components
     const timer = setTimeout(() => {
       setIsDelayedLoaded(true);
-    }, 4000); // Load chat/whatsapp after 4 seconds
+    }, 3000);
 
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(analyticsTimer);
+      clearTimeout(timer);
+    };
   }, []);
 
   return (

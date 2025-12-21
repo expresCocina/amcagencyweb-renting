@@ -28,12 +28,53 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
     href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Inter:wght@400;600&display=swap"
-    rel="stylesheet" media="print" onload="this.media='all'">
+    rel="stylesheet" media="print" onload="this.media='all';this.onload=null;">
+  <noscript>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Inter:wght@400;600&display=swap"
+      rel="stylesheet">
+  </noscript>
 
   <!-- Preload Critical Fonts -->
   <link rel="preload"
     href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Inter:wght@400;600&display=swap"
     as="style">
+
+  <!-- Inline Critical CSS for above-fold content -->
+  <style>
+    /* Critical styles for initial render */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      background: #0a0118;
+      color: #fff;
+      line-height: 1.6;
+    }
+
+    #root {
+      min-height: 100vh;
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Loading spinner */
+    .loading-spinner {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+  </style>
 
   <!-- Preload Critical Images -->
   <link rel="preload" as="image" href="/hero-background.webp" fetchpriority="high">

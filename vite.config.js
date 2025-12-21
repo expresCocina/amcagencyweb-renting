@@ -69,7 +69,7 @@ export default defineConfig({
     chunkSizeWarningLimit: 500,
     cssCodeSplit: true,
     sourcemap: false,
-    target: 'es2015',
+    target: 'es2020', // Modern browsers only for smaller bundles
     cssMinify: true,
     // Optimize assets
     assetsInlineLimit: 4096, // Inline assets < 4KB

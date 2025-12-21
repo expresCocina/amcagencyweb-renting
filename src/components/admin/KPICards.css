@@ -41,6 +41,7 @@
 .kpi-value {
     font-size: 2.5rem;
     font-weight: 700;
+    color: #fff;
     margin-bottom: 8px;
     font-variant-numeric: tabular-nums;
 }
@@ -51,44 +52,72 @@
 }
 
 /* Color variants */
+.kpi-green {
+    border-color: rgba(16, 185, 129, 0.3);
+}
+
 .kpi-green .kpi-value {
     color: #10b981;
 }
 
-.kpi-green:hover {
-    border-color: rgba(16, 185, 129, 0.3);
+.kpi-blue {
+    border-color: rgba(59, 130, 246, 0.3);
 }
 
 .kpi-blue .kpi-value {
     color: #3b82f6;
 }
 
-.kpi-blue:hover {
-    border-color: rgba(59, 130, 246, 0.3);
+.kpi-red {
+    border-color: rgba(239, 68, 68, 0.3);
 }
 
 .kpi-red .kpi-value {
     color: #ef4444;
 }
 
-.kpi-red:hover {
-    border-color: rgba(239, 68, 68, 0.3);
+.kpi-purple {
+    border-color: rgba(139, 92, 246, 0.3);
 }
 
 .kpi-purple .kpi-value {
     color: #8b5cf6;
 }
 
-.kpi-purple:hover {
-    border-color: rgba(139, 92, 246, 0.3);
-}
-
 @media (max-width: 768px) {
     .kpi-cards-grid {
         grid-template-columns: 1fr;
+        gap: 16px;
+        margin-bottom: 32px;
+    }
+
+    .kpi-card {
+        padding: 20px;
     }
 
     .kpi-value {
         font-size: 2rem;
+    }
+
+    .kpi-icon {
+        font-size: 1.75rem;
+    }
+
+    .kpi-title {
+        font-size: 0.8125rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .kpi-card {
+        padding: 16px;
+    }
+
+    .kpi-value {
+        font-size: 1.75rem;
+    }
+
+    .kpi-icon {
+        font-size: 1.5rem;
     }
 }

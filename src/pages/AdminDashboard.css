@@ -76,17 +76,18 @@
 
 @media (max-width: 768px) {
     .admin-content {
-        margin-left: 70px;
-        padding: 24px 16px;
+        margin-left: 0;
+        padding: 80px 16px 24px;
     }
 
     .admin-header {
         flex-direction: column;
         align-items: flex-start;
+        gap: 16px;
     }
 
     .admin-header h1 {
-        font-size: 2rem;
+        font-size: 1.75rem;
     }
 
     .admin-subtitle {
@@ -95,10 +96,27 @@
 
     .header-actions {
         width: 100%;
+        flex-direction: column;
     }
 
     .btn-add-client,
     .btn-logout {
-        flex: 1;
+        width: 100%;
+        justify-content: center;
+        display: flex;
+    }
+}
+
+@media (max-width: 480px) {
+    .admin-content {
+        padding: 70px 12px 20px;
+    }
+
+    .admin-header h1 {
+        font-size: 1.5rem;
+    }
+
+    .admin-subtitle {
+        font-size: 0.875rem;
     }
 }

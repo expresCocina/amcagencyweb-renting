@@ -11,12 +11,12 @@ export const initAnalytics = () => {
 export const trackEvent = (eventName, params = {}) => {
     try {
         // Facebook Pixel
-        if (window.fbq) {
+        if (typeof window !== 'undefined' && window.fbq) {
             window.fbq('trackCustom', eventName, params);
         }
 
         // Google Analytics 4
-        if (window.gtag) {
+        if (typeof window !== 'undefined' && window.gtag) {
             window.gtag('event', eventName, params);
         }
 
@@ -38,7 +38,7 @@ export const trackLead = (source, details = {}) => {
     });
 
     // Facebook Pixel Lead Event
-    if (window.fbq) {
+    if (typeof window !== 'undefined' && window.fbq) {
         window.fbq('track', 'Lead', {
             content_name: source,
             ...details
@@ -57,7 +57,7 @@ export const trackContact = (method, source, details = {}) => {
     });
 
     // Facebook Pixel Contact Event
-    if (window.fbq) {
+    if (typeof window !== 'undefined' && window.fbq) {
         window.fbq('track', 'Contact', {
             content_name: source,
             method: method,
@@ -115,7 +115,7 @@ export const trackFormSubmission = (formName, formData = {}) => {
     });
 
     // Facebook Pixel CompleteRegistration
-    if (window.fbq) {
+    if (typeof window !== 'undefined' && window.fbq) {
         window.fbq('track', 'CompleteRegistration', {
             content_name: formName,
             status: 'completed'
@@ -144,7 +144,7 @@ export const trackPageView = (pageName, pageData = {}) => {
     });
 
     // Facebook Pixel PageView
-    if (window.fbq) {
+    if (typeof window !== 'undefined' && window.fbq) {
         window.fbq('track', 'PageView', {
             content_name: pageName
         });
@@ -224,6 +224,8 @@ export const trackError = (errorType, errorMessage, location) => {
 
 // Initialize tracking on page load
 export const initializeTracking = () => {
+    if (typeof window === 'undefined') return;
+
     // Track initial page view
     const pageName = window.location.pathname;
     trackPageView(pageName);
@@ -252,6 +254,7 @@ export const initializeTracking = () => {
     console.log('📊 Analytics initialized');
 };
 
+// Default export
 export default {
     initAnalytics,
     trackEvent,
@@ -270,4 +273,3 @@ export default {
     trackError,
     initializeTracking
 };
-

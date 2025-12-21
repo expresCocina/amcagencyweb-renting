@@ -35,11 +35,11 @@ import BookingPage from './pages/BookingPage';
 import LoginPage from './pages/LoginPage';
 import ClientDashboard from './pages/ClientDashboard';
 import AdminDashboard from './pages/AdminDashboard';
-import AdminLogin from './pages/AdminLogin';
+import Login from './pages/Login';
 import AddClientPage from './pages/AddClientPage';
 import PendingPaymentsPage from './pages/PendingPaymentsPage';
 import SettingsPage from './pages/SettingsPage';
-import ProtectedAdminRoute from './components/admin/ProtectedAdminRoute';
+import ProtectedRoute from './components/admin/ProtectedRoute';
 
 // Import Demo Pages normally for fast loading
 import EcoTiendaDemo from './pages/demos/EcoTiendaDemo';
@@ -137,27 +137,27 @@ function AppContent({ isDelayedLoaded, isPromoActive }) {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/dashboard" element={<ClientDashboard />} />
 
-          {/* Admin Routes */}
-          <Route path="/admin/login" element={<AdminLogin />} />
+          {/* Admin Routes - Protected with Supabase Auth */}
+          <Route path="/admin/login" element={<Login />} />
           <Route path="/admin" element={
-            <ProtectedAdminRoute>
+            <ProtectedRoute>
               <AdminDashboard />
-            </ProtectedAdminRoute>
+            </ProtectedRoute>
           } />
           <Route path="/admin/clientes/nuevo" element={
-            <ProtectedAdminRoute>
+            <ProtectedRoute>
               <AddClientPage />
-            </ProtectedAdminRoute>
+            </ProtectedRoute>
           } />
           <Route path="/admin/pagos" element={
-            <ProtectedAdminRoute>
+            <ProtectedRoute>
               <PendingPaymentsPage />
-            </ProtectedAdminRoute>
+            </ProtectedRoute>
           } />
           <Route path="/admin/config" element={
-            <ProtectedAdminRoute>
+            <ProtectedRoute>
               <SettingsPage />
-            </ProtectedAdminRoute>
+            </ProtectedRoute>
           } />
 
           {/* Resource Pages */}

@@ -60,10 +60,13 @@ const AdminDashboard = () => {
         fetchClients();
     }, []);
 
-    const handleLogout = () => {
-        localStorage.removeItem('adminAuthenticated');
-        localStorage.removeItem('adminLoginTime');
-        navigate('/admin/login');
+    const handleLogout = async () => {
+        try {
+            await supabase.auth.signOut();
+            navigate('/admin/login');
+        } catch (err) {
+            console.error('Error logging out:', err);
+        }
     };
 
     if (loading) {

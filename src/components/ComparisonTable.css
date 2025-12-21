@@ -24,39 +24,58 @@
     padding: 0 60px;
 }
 
-.comparison-cards-wrapper {
-    overflow: hidden;
+.comparison-cards-stack {
+    position: relative;
+    height: 500px;
     border-radius: 20px;
 }
 
-.comparison-cards-container {
-    display: flex;
-    transition: transform 0.5s cubic-bezier(0.4, 0.0, 0.2, 1);
-}
-
 .comparison-card {
-    min-width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
     background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(10px);
     border-radius: 20px;
     padding: 32px;
     transform-style: preserve-3d;
-    transform: rotateY(-5deg) rotateX(3deg);
-    transition: all 0.4s cubic-bezier(0.4, 0.0, 0.2, 1);
+    transition: all 0.6s cubic-bezier(0.4, 0.0, 0.2, 1);
     box-shadow:
         0 20px 60px rgba(0, 0, 0, 0.5),
         0 0 0 1px rgba(255, 255, 255, 0.1);
 }
 
-.comparison-card:hover {
-    transform: rotateY(0deg) rotateX(0deg) scale(1.02);
+.comparison-card.active {
+    z-index: 2;
+    transform: translateZ(0) scale(1) rotateY(-3deg) rotateX(2deg);
+    opacity: 1;
+}
+
+.comparison-card.next {
+    z-index: 1;
+    transform: translateZ(-100px) scale(0.9) rotateY(3deg) rotateX(2deg);
+    opacity: 0.5;
+    filter: blur(2px);
+}
+
+.comparison-card.hidden {
+    z-index: 0;
+    transform: translateZ(-200px) scale(0.8);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.comparison-card:hover.active {
+    transform: translateZ(20px) scale(1.02) rotateY(0deg) rotateX(0deg);
 }
 
 .red-card {
     border: 2px solid rgba(255, 107, 107, 0.3);
 }
 
-.red-card:hover {
+.red-card.active:hover {
     border-color: rgba(255, 107, 107, 0.6);
     box-shadow:
         0 30px 80px rgba(255, 107, 107, 0.3),
@@ -67,7 +86,7 @@
     border: 2px solid rgba(81, 207, 102, 0.3);
 }
 
-.green-card:hover {
+.green-card.active:hover {
     border-color: rgba(81, 207, 102, 0.6);
     box-shadow:
         0 30px 80px rgba(81, 207, 102, 0.3),
@@ -215,13 +234,20 @@
         padding: 0 50px;
     }
 
-    .comparison-card {
-        padding: 24px;
-        transform: rotateY(0deg) rotateX(2deg);
+    .comparison-cards-stack {
+        height: 450px;
     }
 
-    .comparison-card:hover {
-        transform: rotateY(0deg) rotateX(0deg);
+    .comparison-card {
+        padding: 24px;
+    }
+
+    .comparison-card.active {
+        transform: translateZ(0) scale(1) rotateY(0deg) rotateX(2deg);
+    }
+
+    .comparison-card.next {
+        transform: translateZ(-80px) scale(0.92) rotateY(0deg) rotateX(2deg);
     }
 
     .card-header h3 {
@@ -246,6 +272,10 @@
 @media (max-width: 480px) {
     .comparison-carousel {
         padding: 0 40px;
+    }
+
+    .comparison-cards-stack {
+        height: 420px;
     }
 
     .comparison-card {

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import TrackedLink from './TrackedLink';
-import { trackDemoDownload } from '../utils/analytics';
+import { trackEvent } from '../utils/analytics';
 import './DemoPreview.css';
 
 const DemoPreview = ({ demoData, onRegenerate, onDownload }) => {
@@ -38,7 +38,7 @@ const DemoPreview = ({ demoData, onRegenerate, onDownload }) => {
     };
 
     const handleDownload = () => {
-        trackDemoDownload();
+        trackEvent('demo_download', { source: 'demo_preview' });
         onDownload();
     };
 

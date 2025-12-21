@@ -1,6 +1,6 @@
 .cta-section {
   background: linear-gradient(135deg, rgba(10, 1, 24, 0.9) 0%, rgba(26, 11, 46, 0.9) 50%, rgba(22, 33, 62, 0.9) 100%),
-    url('/cta-background.png') center/cover no-repeat;
+    url('/cta-background.webp') center/cover no-repeat;
   position: relative;
 }
 

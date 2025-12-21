@@ -1,10 +1,50 @@
 // Facebook Pixel & Google Analytics Tracking Utilities
 
-// Initialize analytics (for backward compatibility)
+// Initialize analytics - Dynamically loads tracking scripts
 export const initAnalytics = () => {
-    console.log('📊 Analytics initialized');
-    // This function is kept for backward compatibility
-    // Actual initialization happens in main.jsx or App.jsx
+    if (typeof window === 'undefined') return;
+
+    const FB_PIXEL_ID = import.meta.env.VITE_FACEBOOK_PIXEL_ID;
+    const GA_MEASUREMENT_ID = import.meta.env.VITE_GA_MEASUREMENT_ID;
+
+    // Initialize Facebook Pixel
+    if (FB_PIXEL_ID && !window.fbq) {
+        console.log('📊 Initializing Facebook Pixel:', FB_PIXEL_ID);
+
+        // Facebook Pixel base code
+        !function (f, b, e, v, n, t, s) {
+            if (f.fbq) return; n = f.fbq = function () {
+                n.callMethod ?
+                n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+            };
+            if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
+            n.queue = []; t = b.createElement(e); t.async = !0;
+            t.src = v; s = b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t, s)
+        }(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+
+        window.fbq('init', FB_PIXEL_ID);
+        window.fbq('track', 'PageView');
+    }
+
+    // Initialize Google Analytics 4
+    if (GA_MEASUREMENT_ID && !window.gtag) {
+        console.log('📊 Initializing Google Analytics:', GA_MEASUREMENT_ID);
+
+        // Load gtag.js script
+        const script = document.createElement('script');
+        script.async = true;
+        script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
+        document.head.appendChild(script);
+
+        // Initialize gtag
+        window.dataLayer = window.dataLayer || [];
+        window.gtag = function () { window.dataLayer.push(arguments); };
+        window.gtag('js', new Date());
+        window.gtag('config', GA_MEASUREMENT_ID);
+    }
+
+    console.log('📊 Analytics initialization complete');
 };
 
 // Track custom events

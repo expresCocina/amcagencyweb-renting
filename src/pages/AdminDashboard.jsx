@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import AdminSidebar from '../components/admin/AdminSidebar';
 import KPICards from '../components/admin/KPICards';
 import ClientsTable from '../components/admin/ClientsTable';
@@ -6,6 +7,13 @@ import './AdminDashboard.css';
 
 const AdminDashboard = () => {
     const kpis = calculateKPIs();
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        localStorage.removeItem('adminAuthenticated');
+        localStorage.removeItem('adminLoginTime');
+        navigate('/admin/login');
+    };
 
     return (
         <div className="admin-dashboard">
@@ -13,8 +21,13 @@ const AdminDashboard = () => {
 
             <div className="admin-content">
                 <div className="admin-header">
-                    <h1>Dashboard de Administración</h1>
-                    <p className="admin-subtitle">Gestión de clientes WaaS</p>
+                    <div>
+                        <h1>Dashboard de Administración</h1>
+                        <p className="admin-subtitle">Gestión de clientes WaaS</p>
+                    </div>
+                    <button onClick={handleLogout} className="btn-logout">
+                        🚪 Cerrar Sesión
+                    </button>
                 </div>
 
                 <KPICards kpis={kpis} />

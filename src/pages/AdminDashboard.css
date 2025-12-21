@@ -13,6 +13,11 @@
 
 .admin-header {
     margin-bottom: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+    flex-wrap: wrap;
 }
 
 .admin-header h1 {
@@ -27,10 +32,33 @@
     color: #94a3b8;
 }
 
+.btn-logout {
+    padding: 12px 24px;
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    border-radius: 8px;
+    color: #ef4444;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.btn-logout:hover {
+    background: rgba(239, 68, 68, 0.2);
+    transform: translateY(-2px);
+}
+
 @media (max-width: 768px) {
     .admin-content {
         margin-left: 70px;
         padding: 24px 16px;
+    }
+
+    .admin-header {
+        flex-direction: column;
+        align-items: flex-start;
     }
 
     .admin-header h1 {
@@ -39,5 +67,9 @@
 
     .admin-subtitle {
         font-size: 1rem;
+    }
+
+    .btn-logout {
+        width: 100%;
     }
 }

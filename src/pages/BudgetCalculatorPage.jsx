@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import './SharedPageStyles.css';
 import './BudgetCalculatorPage.css';
 
 const BudgetCalculatorPage = () => {

@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import Testimonials from '../components/Testimonials';
 import ContactForm from '../components/ContactForm';
+import './SharedPageStyles.css';
 import './SEOPage.css';
 import './CasesPage.css';
 

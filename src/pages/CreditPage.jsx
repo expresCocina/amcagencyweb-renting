@@ -2,6 +2,7 @@ import { trackEvent } from '../utils/analytics';
 import CreditPayment from '../components/CreditPayment';
 import CreditSimulator from '../components/CreditSimulator';
 import ContactForm from '../components/ContactForm';
+import './SharedPageStyles.css';
 import './SEOPage.css';
 
 const CreditPage = () => {

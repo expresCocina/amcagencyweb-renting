@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import './SharedPageStyles.css';
 import './PromoLandingPage.css';
 
 const PromoLandingPage = () => {

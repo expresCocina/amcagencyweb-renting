@@ -3,6 +3,7 @@ import DemoGeneratorForm from '../components/DemoGeneratorForm';
 import DemoPreview from '../components/DemoPreview';
 import { generateWebsiteMockup } from '../utils/demoGenerator';
 import { trackDemoGenerated, trackDemoDownload, trackBookingClick, trackCalculatorClick } from '../utils/analytics';
+import './SharedPageStyles.css';
 import './DemoGeneratorPage.css';
 
 const DemoGeneratorPage = () => {

@@ -1,5 +1,6 @@
 import Academy from '../components/Academy';
 import ContactForm from '../components/ContactForm';
+import './SharedPageStyles.css';
 import './SEOPage.css';
 
 const AcademyPage = () => {

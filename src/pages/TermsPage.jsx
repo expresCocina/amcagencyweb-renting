@@ -1,3 +1,4 @@
+import './SharedPageStyles.css';
 import './PolicyPage.css';
 
 const TermsPage = () => {

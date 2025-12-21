@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import './SharedPageStyles.css';
 import './BookingPage.css';
 
 const BookingPage = () => {

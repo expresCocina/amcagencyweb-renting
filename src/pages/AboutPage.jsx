@@ -1,4 +1,5 @@
 import ContactForm from '../components/ContactForm';
+import './SharedPageStyles.css';
 import './AboutPage.css';
 
 const AboutPage = () => {

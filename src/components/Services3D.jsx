@@ -134,7 +134,7 @@ const Services3D = () => {
                                     style={{ '--service-color': service.color }}
                                 >
                                     <div
-                                        className={`service - box - 3d ${position === 0 && isFlipped ? 'flipped' : ''} `}
+                                        className={`service-box-3d ${position === 0 && isFlipped ? 'flipped' : ''}`}
                                         onClick={position === 0 ? handleBoxClick : undefined}
                                     >
                                         {/* Front Face */}
@@ -199,9 +199,9 @@ const Services3D = () => {
                         {services.map((_, index) => (
                             <button
                                 key={index}
-                                className={`dot ${index === currentIndex ? 'active' : ''} `}
+                                className={`dot ${index === currentIndex ? 'active' : ''}`}
                                 onClick={() => handleDotClick(index)}
-                                aria-label={`Ir a servicio ${index + 1} `}
+                                aria-label={`Ir a servicio ${index + 1}`}
                             />
                         ))}
                     </div>

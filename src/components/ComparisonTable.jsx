@@ -29,13 +29,13 @@ const ComparisonTable = () => {
         }
     ];
 
-    // Auto-rotate every 4 seconds
+    // Auto-rotate every 5 seconds
     useEffect(() => {
         const interval = setInterval(() => {
             setCurrentIndex((prevIndex) =>
                 prevIndex === comparisons.length - 1 ? 0 : prevIndex + 1
             );
-        }, 4000);
+        }, 5000);
 
         return () => clearInterval(interval);
     }, [comparisons.length]);
@@ -62,16 +62,15 @@ const ComparisonTable = () => {
                         ‹
                     </button>
 
-                    <div className="comparison-cards-stack">
-                        {comparisons.map((comparison, index) => {
-                            const isActive = index === currentIndex;
-                            const isNext = index === (currentIndex + 1) % comparisons.length;
-
-                            return (
+                    <div className="comparison-cards-wrapper">
+                        <div
+                            className="comparison-cards-container"
+                            style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+                        >
+                            {comparisons.map((comparison, index) => (
                                 <div
                                     key={index}
-                                    className={`comparison-card ${comparison.color}-card ${isActive ? 'active' : isNext ? 'next' : 'hidden'
-                                        }`}
+                                    className={`comparison-card ${comparison.color}-card`}
                                 >
                                     <div className="card-header">
                                         <span className="card-icon">{comparison.icon}</span>
@@ -88,8 +87,8 @@ const ComparisonTable = () => {
                                         ))}
                                     </div>
                                 </div>
-                            );
-                        })}
+                            ))}
+                        </div>
                     </div>
 
                     <button className="carousel-btn next-btn" onClick={nextSlide}>

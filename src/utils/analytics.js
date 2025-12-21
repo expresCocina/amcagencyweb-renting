@@ -15,7 +15,7 @@ export const initAnalytics = () => {
         !function (f, b, e, v, n, t, s) {
             if (f.fbq) return; n = f.fbq = function () {
                 n.callMethod ?
-                n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+                    n.callMethod.apply(n, arguments) : n.queue.push(arguments)
             };
             if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
             n.queue = []; t = b.createElement(e); t.async = !0;
@@ -47,10 +47,60 @@ export const initAnalytics = () => {
     console.log('📊 Analytics initialization complete');
 };
 
-// Track custom events
-export const trackEvent = (eventName, params = {}) => {
+// Helper to get Facebook cookies for deduplication
+const getFacebookCookies = () => {
+    if (typeof document === 'undefined') return {};
+
+    const cookies = document.cookie.split(';').reduce((acc, cookie) => {
+        const [key, value] = cookie.trim().split('=');
+        acc[key] = value;
+        return acc;
+    }, {});
+
+    return {
+        fbp: cookies._fbp || null,
+        fbc: cookies._fbc || null
+    };
+};
+
+// Send event to Server CAPI
+const sendToServerCAPI = async (eventName, customData = {}, userData = {}) => {
     try {
-        // Facebook Pixel
+        const { fbp, fbc } = getFacebookCookies();
+        const eventId = `${eventName}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+
+        const response = await fetch('/api/events', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                eventName,
+                eventId,
+                eventSourceUrl: window.location.href,
+                userData: {
+                    ...userData,
+                    fbp,
+                    fbc
+                },
+                customData
+            })
+        });
+
+        if (response.ok) {
+            console.log('📊 CAPI Event Sent:', eventName);
+        } else {
+            console.warn('📊 CAPI Event Failed:', eventName, await response.text());
+        }
+    } catch (error) {
+        console.error('📊 CAPI Error:', error);
+    }
+};
+
+// Track custom events (browser only by default, pass sendToCAPI: true for server)
+export const trackEvent = (eventName, params = {}, options = {}) => {
+    try {
+        // Facebook Pixel (Browser)
         if (typeof window !== 'undefined' && window.fbq) {
             window.fbq('trackCustom', eventName, params);
         }
@@ -60,6 +110,11 @@ export const trackEvent = (eventName, params = {}) => {
             window.gtag('event', eventName, params);
         }
 
+        // Send to Server CAPI for important events
+        if (options.sendToCAPI && typeof window !== 'undefined') {
+            sendToServerCAPI(eventName, params, options.userData || {});
+        }
+
         // Console log for debugging
         console.log('📊 Event Tracked:', eventName, params);
     } catch (error) {
@@ -67,22 +122,27 @@ export const trackEvent = (eventName, params = {}) => {
     }
 };
 
-// Track Lead Generation
+// Track Lead Generation - SENDS TO CAPI automatically
 export const trackLead = (source, details = {}) => {
-    trackEvent('Lead', {
+    const leadData = {
         event_category: 'Lead Generation',
         event_label: source,
         value: 1,
         currency: 'COP',
+        content_name: source,
         ...details
-    });
+    };
 
-    // Facebook Pixel Lead Event
+    trackEvent('Lead', leadData);
+
+    // Facebook Pixel Lead Event (Standard Event)
     if (typeof window !== 'undefined' && window.fbq) {
-        window.fbq('track', 'Lead', {
-            content_name: source,
-            ...details
-        });
+        window.fbq('track', 'Lead', leadData);
+    }
+
+    // Send to Server CAPI (for deduplication)
+    if (typeof window !== 'undefined') {
+        sendToServerCAPI('Lead', leadData, details);
     }
 };
 

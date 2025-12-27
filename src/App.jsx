@@ -16,22 +16,27 @@ import { CurrencyProvider } from './contexts/CurrencyContext';
 // Lazy Load Floating Components
 const WhatsAppButton = lazy(() => import('./components/WhatsAppButton'));
 const LeadMagnetPopup = lazy(() => import('./components/LeadMagnetPopup'));
+const ChatWidget = lazy(() => import('./components/ChatWidget'));
 
 // Import HomePage normally (not lazy) - it's the main page
 import HomePage from './pages/HomePage';
-import SEOPage from './pages/SEOPage';
-import WebDevPage from './pages/WebDevPage';
-import FunnelsPage from './pages/FunnelsPage';
-import AcademyPage from './pages/AcademyPage';
-import CreditPage from './pages/CreditPage';
-import CasesPage from './pages/CasesPage';
-import AboutPage from './pages/AboutPage';
-import BlogPage from './pages/BlogPage';
-import ResourcesPage from './pages/ResourcesPage';
-import BudgetCalculatorPage from './pages/BudgetCalculatorPage';
-import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
-import TermsPage from './pages/TermsPage';
-import BookingPage from './pages/BookingPage';
+
+// Lazy Load Secondary Pages (not critical for initial load)
+const SEOPage = lazy(() => import('./pages/SEOPage'));
+const WebDevPage = lazy(() => import('./pages/WebDevPage'));
+const FunnelsPage = lazy(() => import('./pages/FunnelsPage'));
+const AcademyPage = lazy(() => import('./pages/AcademyPage'));
+const CreditPage = lazy(() => import('./pages/CreditPage'));
+const CasesPage = lazy(() => import('./pages/CasesPage'));
+const AboutPage = lazy(() => import('./pages/AboutPage'));
+const BlogPage = lazy(() => import('./pages/BlogPage'));
+const ResourcesPage = lazy(() => import('./pages/ResourcesPage'));
+const BudgetCalculatorPage = lazy(() => import('./pages/BudgetCalculatorPage'));
+const PrivacyPolicyPage = lazy(() => import('./pages/PrivacyPolicyPage'));
+const TermsPage = lazy(() => import('./pages/TermsPage'));
+const BookingPage = lazy(() => import('./pages/BookingPage'));
+
+// Auth pages - keep normal for fast login
 import LoginPage from './pages/LoginPage';
 import ClientDashboard from './pages/ClientDashboard';
 import AdminDashboard from './pages/AdminDashboard';
@@ -43,15 +48,15 @@ import RegistroPage from './pages/RegistroPage';
 import SitioBloqueadoPage from './pages/SitioBloqueadoPage';
 import ProtectedRoute from './components/admin/ProtectedRoute';
 
-// Import Demo Pages normally for fast loading
-import EcoTiendaDemo from './pages/demos/EcoTiendaDemo';
-import InmobiliariaDemo from './pages/demos/InmobiliariaDemo';
-import ClinicaDentalDemo from './pages/demos/ClinicaDentalDemo';
-import TechStartDemo from './pages/demos/TechStartDemo';
-import RestauranteDemo from './pages/demos/RestauranteDemo';
-import AcademiaDemo from './pages/demos/AcademiaDemo';
-import BoutiqueDemo from './pages/demos/BoutiqueDemo';
-import ConsultoraDemo from './pages/demos/ConsultoraDemo';
+// Lazy Load Demo Pages (not critical)
+const EcoTiendaDemo = lazy(() => import('./pages/demos/EcoTiendaDemo'));
+const InmobiliariaDemo = lazy(() => import('./pages/demos/InmobiliariaDemo'));
+const ClinicaDentalDemo = lazy(() => import('./pages/demos/ClinicaDentalDemo'));
+const TechStartDemo = lazy(() => import('./pages/demos/TechStartDemo'));
+const RestauranteDemo = lazy(() => import('./pages/demos/RestauranteDemo'));
+const AcademiaDemo = lazy(() => import('./pages/demos/AcademiaDemo'));
+const BoutiqueDemo = lazy(() => import('./pages/demos/BoutiqueDemo'));
+const ConsultoraDemo = lazy(() => import('./pages/demos/ConsultoraDemo'));
 
 // Lazy Load Only Promo (less critical)
 const PromoLandingPage = lazy(() => import('./pages/PromoLandingPage'));

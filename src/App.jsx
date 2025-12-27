@@ -95,15 +95,16 @@ function App() {
 function AppContent({ isDelayedLoaded, isPromoActive }) {
   const location = useLocation();
 
-  // No special handling needed - all pages use navbar/footer
-  // Except admin pages
+  // Hide navbar/footer on admin and registration pages
   const isAdminPage = location.pathname.startsWith('/admin');
+  const isRegistroPage = location.pathname === '/registro';
+  const hideNavigation = isAdminPage || isRegistroPage;
 
   return (
     <div className="App">
-      {!isAdminPage && <AnnouncementBanner />}
-      {!isAdminPage && <div className="bg-grid"></div>}
-      {!isAdminPage && <Navbar />}
+      {!hideNavigation && <AnnouncementBanner />}
+      {!hideNavigation && <div className="bg-grid"></div>}
+      {!hideNavigation && <Navbar />}
       <Suspense fallback={<LoadingSpinner />}>
         <Routes>
           {/* Promotional Landing Page - Active during Dec 14, 2025 - Feb 28, 2026 */}
@@ -169,7 +170,7 @@ function AppContent({ isDelayedLoaded, isPromoActive }) {
 
         </Routes>
       </Suspense>
-      {!isAdminPage && <Footer />}
+      {!hideNavigation && <Footer />}
 
       {/* Deferred Components */}
       {isDelayedLoaded && (

@@ -47,6 +47,8 @@
 .registro-benefits {
     text-align: left;
     margin-top: 20px;
+    list-style: none;
+    padding: 0;
 }
 
 .registro-benefits li {
@@ -126,6 +128,7 @@
     color: var(--text-primary);
     font-size: 1rem;
     transition: all 0.3s ease;
+    box-sizing: border-box;
 }
 
 .form-group input:focus {
@@ -215,19 +218,34 @@
     color: var(--accent-cyan);
 }
 
-/* Responsive */
+/* Mobile Responsive - COMPLETELY REDESIGNED */
 @media (max-width: 768px) {
+    .registro-page {
+        padding: 20px 0;
+        align-items: flex-start;
+    }
+
     .registro-container {
         grid-template-columns: 1fr;
-        max-width: 480px;
+        max-width: 100%;
+        border-radius: 0;
+        box-shadow: none;
+        border: none;
     }
 
     .registro-hero {
-        padding: 40px 24px;
+        padding: 30px 20px;
+        border-radius: 0;
     }
 
     .registro-branding h1 {
-        font-size: 1.8rem;
+        font-size: 1.5rem;
+        line-height: 1.3;
+    }
+
+    .registro-branding p {
+        font-size: 0.95rem;
+        margin-bottom: 0;
     }
 
     .registro-benefits {
@@ -235,12 +253,55 @@
     }
 
     .registro-form-container {
-        padding: 32px 24px;
+        padding: 24px 20px 40px 20px;
+    }
+
+    .registro-form h2 {
+        font-size: 1.5rem;
+    }
+
+    .registro-form .subtitle {
+        font-size: 0.9rem;
     }
 
     .form-row {
         grid-template-columns: 1fr;
         gap: 0;
+    }
+
+    .form-group input {
+        padding: 16px;
+        font-size: 16px;
+        /* Prevents iOS zoom */
+    }
+
+    .payment-notice {
+        padding: 12px;
+        font-size: 0.8rem;
+    }
+
+    .btn-register {
+        padding: 18px;
+        font-size: 1rem;
+    }
+}
+
+/* Extra small screens */
+@media (max-width: 375px) {
+    .registro-page {
+        padding: 16px 0;
+    }
+
+    .registro-hero {
+        padding: 24px 16px;
+    }
+
+    .registro-branding h1 {
+        font-size: 1.3rem;
+    }
+
+    .registro-form-container {
+        padding: 20px 16px 32px 16px;
     }
 }
 

@@ -13,6 +13,8 @@ const RegistroPage = () => {
         nombre_negocio: '',
         nombre_representante: '',
         email: '',
+        password: '',
+        confirmPassword: '',
         whatsapp: '',
         dominio: '',
     });
@@ -34,10 +36,20 @@ const RegistroPage = () => {
         setError('');
 
         try {
+            // Validate passwords match
+            if (formData.password !== formData.confirmPassword) {
+                throw new Error('Las contraseñas no coinciden.');
+            }
+
+            // Validate password length
+            if (formData.password.length < 6) {
+                throw new Error('La contraseña debe tener al menos 6 caracteres.');
+            }
+
             // Step 1: Create user with Supabase Auth
             const { data: authData, error: authError } = await supabase.auth.signUp({
                 email: formData.email,
-                password: generateTempPassword(),
+                password: formData.password,
                 options: {
                     data: {
                         nombre_representante: formData.nombre_representante,
@@ -95,16 +107,6 @@ const RegistroPage = () => {
             setError(err.message || 'Ocurrió un error durante el registro. Por favor intenta de nuevo.');
             setIsSubmitting(false);
         }
-    };
-
-    // Generate a temporary secure password
-    const generateTempPassword = () => {
-        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%';
-        let password = '';
-        for (let i = 0; i < 16; i++) {
-            password += chars.charAt(Math.floor(Math.random() * chars.length));
-        }
-        return password;
     };
 
     return (
@@ -189,6 +191,37 @@ const RegistroPage = () => {
                                     value={formData.email}
                                     onChange={handleChange}
                                     placeholder="tu@email.com"
+                                    required
+                                    disabled={isSubmitting || success}
+                                />
+                            </div>
+
+                            <div className="form-group">
+                                <label htmlFor="password">Contraseña *</label>
+                                <input
+                                    type="password"
+                                    id="password"
+                                    name="password"
+                                    value={formData.password}
+                                    onChange={handleChange}
+                                    placeholder="Mínimo 6 caracteres"
+                                    required
+                                    minLength={6}
+                                    disabled={isSubmitting || success}
+                                />
+                            </div>
+                        </div>
+
+                        <div className="form-row">
+                            <div className="form-group">
+                                <label htmlFor="confirmPassword">Confirmar Contraseña *</label>
+                                <input
+                                    type="password"
+                                    id="confirmPassword"
+                                    name="confirmPassword"
+                                    value={formData.confirmPassword}
+                                    onChange={handleChange}
+                                    placeholder="Repite tu contraseña"
                                     required
                                     disabled={isSubmitting || success}
                                 />

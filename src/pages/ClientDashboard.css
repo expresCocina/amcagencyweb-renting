@@ -1,51 +1,39 @@
+/* Client Dashboard - Modern Dark Theme */
+:root {
+    --bg-primary: #0a0a0a;
+    --bg-secondary: #1a1a2e;
+    --bg-card: #16213e;
+    --text-primary: #ffffff;
+    --text-secondary: #94a3b8;
+    --accent-cyan: #00f0ff;
+    --accent-magenta: #ff0080;
+    --accent-green: #10b981;
+    --accent-orange: #fb923c;
+    --accent-red: #ef4444;
+}
+
 .dashboard-page {
     min-height: 100vh;
-    background: var(--bg-primary);
-}
-
-.dashboard-header {
-    background: linear-gradient(135deg, var(--accent-cyan), var(--accent-magenta));
-    padding: 40px 0;
-    color: white;
-}
-
-.dashboard-header-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.dashboard-welcome h1 {
-    font-size: 2.5rem;
-    margin-bottom: 8px;
-}
-
-.dashboard-welcome p {
-    opacity: 0.9;
-    font-size: 1.1rem;
-}
-
-.dashboard-content {
-    padding: 40px 0;
+    background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+    color: var(--text-primary);
 }
 
 /* Loading State */
 .dashboard-loading {
+    min-height: 100vh;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 60vh;
-    gap: 16px;
+    background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
 }
 
 .dashboard-loading .spinner {
     width: 50px;
     height: 50px;
-    border: 4px solid rgba(0, 240, 255, 0.2);
+    border: 4px solid rgba(0, 240, 255, 0.1);
     border-top-color: var(--accent-cyan);
     border-radius: 50%;
-    animation: spin 0.8s linear infinite;
+    animation: spin 1s linear infinite;
 }
 
 @keyframes spin {
@@ -54,45 +42,107 @@
     }
 }
 
-/* Payment Notice Banner */
-.payment-notice-banner {
-    background: linear-gradient(135deg, rgba(251, 146, 60, 0.15), rgba(245, 158, 11, 0.1));
-    border: 2px solid rgba(251, 146, 60, 0.4);
-    border-radius: 20px;
-    padding: 32px;
-    margin-bottom: 40px;
+/* Header */
+.dashboard-header {
+    background: linear-gradient(135deg, rgba(0, 240, 255, 0.1), rgba(255, 0, 128, 0.1));
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 2rem 0;
+}
+
+.dashboard-header-content {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    gap: 24px;
+    gap: 1rem;
 }
 
-.payment-notice-banner .notice-icon {
-    font-size: 4rem;
-    flex-shrink: 0;
+.dashboard-welcome h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--accent-cyan), var(--accent-magenta));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.5rem;
 }
 
-.payment-notice-banner .notice-content h3 {
-    color: #fb923c;
-    margin-bottom: 12px;
-    font-size: 1.5rem;
-}
-
-.payment-notice-banner .notice-content p {
+.dashboard-welcome p {
     color: var(--text-secondary);
-    margin-bottom: 20px;
-    line-height: 1.6;
+    font-size: 1rem;
+}
+
+/* Buttons */
+.btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--accent-cyan), var(--accent-magenta));
+    color: white;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 240, 255, 0.3);
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+}
+
+.btn-large {
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+}
+
+/* Content */
+.dashboard-content {
+    padding: 3rem 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
 }
 
 /* Suspension Notice Banner */
 .suspension-notice-banner {
-    background: linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(220, 38, 38, 0.1));
-    border: 2px solid rgba(239, 68, 68, 0.5);
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(220, 38, 38, 0.15));
+    border: 2px solid var(--accent-red);
     border-radius: 20px;
-    padding: 32px;
-    margin-bottom: 40px;
+    padding: 2rem;
+    margin-bottom: 2.5rem;
     display: flex;
     align-items: center;
-    gap: 24px;
+    gap: 1.5rem;
+    animation: pulse-border 2s ease-in-out infinite;
+}
+
+@keyframes pulse-border {
+
+    0%,
+    100% {
+        border-color: var(--accent-red);
+    }
+
+    50% {
+        border-color: rgba(239, 68, 68, 0.5);
+    }
 }
 
 .suspension-notice-banner .notice-icon {
@@ -101,68 +151,94 @@
 }
 
 .suspension-notice-banner .notice-content h3 {
-    color: #ef4444;
-    margin-bottom: 12px;
+    color: var(--accent-red);
+    margin-bottom: 0.75rem;
     font-size: 1.5rem;
 }
 
 .suspension-notice-banner .notice-content p {
-    color: var(--text-secondary);
-    margin-bottom: 16px;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
     line-height: 1.6;
 }
 
-.suspension-notice-banner .btn-large {
-    padding: 14px 28px;
-    font-size: 1.1rem;
+/* Payment Notice Banner */
+.payment-notice-banner {
+    background: linear-gradient(135deg, rgba(251, 146, 60, 0.2), rgba(245, 158, 11, 0.15));
+    border: 2px solid var(--accent-orange);
+    border-radius: 20px;
+    padding: 2rem;
+    margin-bottom: 2.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.payment-notice-banner .notice-icon {
+    font-size: 4rem;
+    flex-shrink: 0;
+}
+
+.payment-notice-banner .notice-content h3 {
+    color: var(--accent-orange);
+    margin-bottom: 0.75rem;
+    font-size: 1.5rem;
+}
+
+.payment-notice-banner .notice-content p {
+    color: var(--text-primary);
+    margin-bottom: 1.25rem;
+    line-height: 1.6;
 }
 
 /* Status Cards */
 .status-cards {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 24px;
-    margin-bottom: 40px;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
 }
 
 .status-card {
-    background: var(--bg-container);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 16px;
-    padding: 28px;
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
 }
 
 .status-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(0, 240, 255, 0.15);
+    border-color: rgba(0, 240, 255, 0.3);
+    box-shadow: 0 8px 24px rgba(0, 240, 255, 0.1);
 }
 
 .status-card.active {
-    background: linear-gradient(135deg, rgba(31, 255, 157, 0.1), rgba(34, 197, 94, 0.1));
-    border: 1px solid rgba(31, 255, 157, 0.3);
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(5, 150, 105, 0.1));
+    border: 1px solid rgba(16, 185, 129, 0.3);
 }
 
 .status-card.pending {
-    background: linear-gradient(135deg, rgba(251, 146, 60, 0.1), rgba(245, 158, 11, 0.1));
+    background: linear-gradient(135deg, rgba(251, 146, 60, 0.15), rgba(245, 158, 11, 0.1));
     border: 1px solid rgba(251, 146, 60, 0.3);
 }
 
 .status-card.suspended {
-    background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(220, 38, 38, 0.1));
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(220, 38, 38, 0.1));
     border: 1px solid rgba(239, 68, 68, 0.3);
 }
 
 .status-icon {
     font-size: 3rem;
+    margin-bottom: 1rem;
+    display: block;
 }
 
 .status-info h3 {
     font-size: 1.5rem;
+    font-weight: 700;
     color: var(--text-primary);
-    margin-bottom: 4px;
+    margin-bottom: 0.5rem;
 }
 
 .status-info p {
@@ -170,204 +246,267 @@
     font-size: 0.9rem;
 }
 
-/* Dashboard Sections */
-.dashboard-section {
-    margin-bottom: 50px;
-}
-
-.dashboard-section h2 {
-    margin-bottom: 28px;
-    color: var(--text-primary);
-    font-size: 1.8rem;
-}
-
-/* Domain Card Large */
+/* Domain Card */
 .domain-card-large {
-    background: var(--bg-container);
-    border-radius: 16px;
-    padding: 32px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 24px;
-    border: 1px solid rgba(0, 240, 255, 0.1);
+    background: linear-gradient(135deg, rgba(0, 240, 255, 0.1), rgba(255, 0, 128, 0.1));
+    border: 1px solid rgba(0, 240, 255, 0.3);
+    border-radius: 20px;
+    padding: 2rem;
+    margin-bottom: 2.5rem;
+    transition: all 0.3s ease;
 }
 
-.domain-main {
+.domain-card-large:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0, 240, 255, 0.2);
+}
+
+.domain-header {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 1rem;
+    margin-bottom: 1rem;
 }
 
 .domain-icon {
     font-size: 3rem;
 }
 
-.domain-details h3 {
-    color: var(--text-secondary);
-    font-size: 0.9rem;
-    margin-bottom: 8px;
-    font-weight: 500;
-}
-
-.domain-details a {
-    color: var(--accent-cyan);
+.domain-info h3 {
     font-size: 1.3rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+}
+
+.domain-link {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--accent-cyan);
     text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.domain-link:hover {
+    color: var(--accent-magenta);
+    transform: translateX(4px);
+}
+
+.domain-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 12px;
     font-weight: 600;
+    font-size: 0.9rem;
+    margin-top: 1rem;
 }
 
-.domain-details a:hover {
-    text-decoration: underline;
+.domain-status.active {
+    background: rgba(16, 185, 129, 0.2);
+    color: var(--accent-green);
+    border: 1px solid rgba(16, 185, 129, 0.3);
 }
 
-.domain-status-badge .badge-active {
-    background: rgba(31, 255, 157, 0.15);
-    color: #1fff9d;
-    padding: 10px 20px;
-    border-radius: 25px;
-    font-weight: 600;
-    font-size: 0.95rem;
+.domain-status.pending {
+    background: rgba(251, 146, 60, 0.2);
+    color: var(--accent-orange);
+    border: 1px solid rgba(251, 146, 60, 0.3);
 }
 
-.domain-status-badge .badge-pending {
-    background: rgba(251, 146, 60, 0.15);
-    color: #fb923c;
-    padding: 10px 20px;
-    border-radius: 25px;
-    font-weight: 600;
-    font-size: 0.95rem;
+/* Services Section */
+.services-section {
+    margin-bottom: 2.5rem;
 }
 
-/* Services Grid */
+.services-section h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, var(--accent-cyan), var(--accent-magenta));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.services-section p {
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+}
+
 .services-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 24px;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
 }
 
 .service-card {
-    background: var(--bg-container);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 16px;
-    padding: 24px;
-    display: flex;
-    gap: 16px;
+    padding: 1.5rem;
     transition: all 0.3s ease;
-    border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .service-card:hover {
     transform: translateY(-4px);
-    border-color: var(--accent-cyan);
+    border-color: rgba(0, 240, 255, 0.5);
     box-shadow: 0 8px 24px rgba(0, 240, 255, 0.15);
+    background: linear-gradient(135deg, rgba(0, 240, 255, 0.1), rgba(255, 0, 128, 0.05));
 }
 
 .service-icon {
     font-size: 2.5rem;
-    flex-shrink: 0;
+    margin-bottom: 1rem;
+    display: block;
 }
 
-.service-content {
-    flex: 1;
-}
-
-.service-content h3 {
+.service-card h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
     color: var(--text-primary);
-    font-size: 1.1rem;
-    margin-bottom: 8px;
+    margin-bottom: 0.5rem;
 }
 
-.service-content p {
+.service-card p {
     color: var(--text-secondary);
     font-size: 0.9rem;
-    margin-bottom: 12px;
     line-height: 1.5;
 }
 
 .service-status {
-    display: inline-block;
-    background: rgba(0, 240, 255, 0.1);
-    color: var(--accent-cyan);
-    padding: 4px 12px;
-    border-radius: 12px;
-    font-size: 0.8rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.8rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
     font-weight: 600;
+    margin-top: 0.75rem;
+    background: rgba(16, 185, 129, 0.2);
+    color: var(--accent-green);
+    border: 1px solid rgba(16, 185, 129, 0.3);
 }
 
-/* Support Grid */
+/* Support Section */
+.support-section {
+    margin-bottom: 2.5rem;
+}
+
+.support-section h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+}
+
+.support-section>p {
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+}
+
 .support-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 24px;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
 }
 
-.support-card-item {
-    background: var(--bg-container);
+.support-card {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 16px;
-    padding: 28px;
-    display: flex;
-    align-items: center;
-    gap: 20px;
+    padding: 1.5rem;
+    text-align: center;
     transition: all 0.3s ease;
 }
 
-.support-card-item:hover {
+.support-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(0, 240, 255, 0.15);
+    border-color: rgba(0, 240, 255, 0.3);
+    box-shadow: 0 8px 24px rgba(0, 240, 255, 0.1);
 }
 
-.support-icon {
+.support-card .support-icon {
     font-size: 3rem;
+    margin-bottom: 1rem;
 }
 
-.support-info h3 {
+.support-card h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.75rem;
+}
+
+.support-card p {
     color: var(--text-secondary);
-    font-size: 0.9rem;
-    margin-bottom: 8px;
-    font-weight: 500;
+    margin-bottom: 1rem;
 }
 
-.support-info a {
+.support-link {
     color: var(--accent-cyan);
-    font-size: 1.1rem;
     text-decoration: none;
     font-weight: 600;
+    transition: all 0.3s ease;
 }
 
-.support-info a:hover {
-    text-decoration: underline;
+.support-link:hover {
+    color: var(--accent-magenta);
 }
 
-/* Mobile Responsive */
+/* Responsive Design */
 @media (max-width: 768px) {
+    .dashboard-header {
+        padding: 1.5rem 0;
+    }
+
     .dashboard-header-content {
         flex-direction: column;
-        gap: 16px;
-        text-align: center;
+        align-items: flex-start;
     }
 
     .dashboard-welcome h1 {
-        font-size: 2rem;
+        font-size: 1.5rem;
     }
 
+    .dashboard-content {
+        padding: 2rem 0;
+    }
+
+    .suspension-notice-banner,
     .payment-notice-banner {
         flex-direction: column;
         text-align: center;
-        padding: 24px;
+        padding: 1.5rem;
     }
 
+    .suspension-notice-banner .notice-icon,
+    .payment-notice-banner .notice-icon {
+        font-size: 3rem;
+    }
+
+    .suspension-notice-banner .notice-content h3,
     .payment-notice-banner .notice-content h3 {
         font-size: 1.2rem;
     }
 
     .status-cards {
         grid-template-columns: 1fr;
+        gap: 1rem;
     }
 
-    .domain-card-large {
-        flex-direction: column;
-        align-items: flex-start;
+    .domain-link {
+        font-size: 1.3rem;
+    }
+
+    .services-section h2,
+    .support-section h2 {
+        font-size: 1.5rem;
     }
 
     .services-grid {
@@ -376,5 +515,45 @@
 
     .support-grid {
         grid-template-columns: 1fr;
+    }
+
+    .btn {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 0 1rem;
+    }
+
+    .dashboard-welcome h1 {
+        font-size: 1.3rem;
+    }
+
+    .status-icon {
+        font-size: 2.5rem;
+    }
+
+    .status-info h3 {
+        font-size: 1.2rem;
+    }
+
+    .domain-icon {
+        font-size: 2.5rem;
+    }
+
+    .domain-link {
+        font-size: 1.1rem;
+        word-break: break-all;
+    }
+
+    .service-icon {
+        font-size: 2rem;
+    }
+
+    .service-card h3 {
+        font-size: 1.1rem;
     }
 }

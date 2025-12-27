@@ -83,6 +83,40 @@
     line-height: 1.6;
 }
 
+/* Suspension Notice Banner */
+.suspension-notice-banner {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(220, 38, 38, 0.1));
+    border: 2px solid rgba(239, 68, 68, 0.5);
+    border-radius: 20px;
+    padding: 32px;
+    margin-bottom: 40px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.suspension-notice-banner .notice-icon {
+    font-size: 4rem;
+    flex-shrink: 0;
+}
+
+.suspension-notice-banner .notice-content h3 {
+    color: #ef4444;
+    margin-bottom: 12px;
+    font-size: 1.5rem;
+}
+
+.suspension-notice-banner .notice-content p {
+    color: var(--text-secondary);
+    margin-bottom: 16px;
+    line-height: 1.6;
+}
+
+.suspension-notice-banner .btn-large {
+    padding: 14px 28px;
+    font-size: 1.1rem;
+}
+
 /* Status Cards */
 .status-cards {
     display: grid;
@@ -114,6 +148,11 @@
 .status-card.pending {
     background: linear-gradient(135deg, rgba(251, 146, 60, 0.1), rgba(245, 158, 11, 0.1));
     border: 1px solid rgba(251, 146, 60, 0.3);
+}
+
+.status-card.suspended {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(220, 38, 38, 0.1));
+    border: 1px solid rgba(239, 68, 68, 0.3);
 }
 
 .status-icon {

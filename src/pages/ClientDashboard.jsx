@@ -163,6 +163,26 @@ const ClientDashboard = () => {
 
             <div className="dashboard-content">
                 <div className="container">
+                    {/* Suspension Notice */}
+                    {clientData?.estado_pago === 'suspendido' && (
+                        <div className="suspension-notice-banner">
+                            <div className="notice-icon">🚫</div>
+                            <div className="notice-content">
+                                <h3>⚠️ Servicio Suspendido por Falta de Pago</h3>
+                                <p>Tu servicio ha sido suspendido debido a falta de pago. Tu sitio web está bloqueado y no es accesible para tus clientes.</p>
+                                <p><strong>Para reactivar tu servicio:</strong> Realiza el pago de {formatPlan(clientData?.plan)} y tu sitio será reactivado en menos de 24 horas.</p>
+                                <a
+                                    href="https://checkout.nequi.wompi.co/l/xQ1z3t"
+                                    className="btn btn-primary btn-large"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    💳 Pagar y Reactivar Servicio
+                                </a>
+                            </div>
+                        </div>
+                    )}
+
                     {/* Payment Notice for Pending */}
                     {clientData?.estado_pago === 'pendiente' && (
                         <div className="payment-notice-banner">

@@ -40,6 +40,7 @@ import AddClientPage from './pages/AddClientPage';
 import PendingPaymentsPage from './pages/PendingPaymentsPage';
 import SettingsPage from './pages/SettingsPage';
 import RegistroPage from './pages/RegistroPage';
+import SitioBloqueadoPage from './pages/SitioBloqueadoPage';
 import ProtectedRoute from './components/admin/ProtectedRoute';
 
 // Import Demo Pages normally for fast loading

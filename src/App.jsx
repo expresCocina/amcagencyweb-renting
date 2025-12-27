@@ -95,10 +95,11 @@ function App() {
 function AppContent({ isDelayedLoaded, isPromoActive }) {
   const location = useLocation();
 
-  // Hide navbar/footer on admin and registration pages
+  // Hide navbar/footer on admin, registration, and client dashboard pages
   const isAdminPage = location.pathname.startsWith('/admin');
   const isRegistroPage = location.pathname === '/registro';
-  const hideNavigation = isAdminPage || isRegistroPage;
+  const isClientDashboard = location.pathname === '/dashboard';
+  const hideNavigation = isAdminPage || isRegistroPage || isClientDashboard;
 
   return (
     <div className="App">

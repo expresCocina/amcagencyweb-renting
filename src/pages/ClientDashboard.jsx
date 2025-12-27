@@ -15,7 +15,6 @@ const ClientDashboard = () => {
 
     const checkAuthAndFetchData = async () => {
         try {
-            // Check Supabase session
             const { data: { session } } = await supabase.auth.getSession();
 
             if (!session) {
@@ -23,7 +22,6 @@ const ClientDashboard = () => {
                 return;
             }
 
-            // Fetch client data
             const { data: client, error } = await supabase
                 .from('clients')
                 .select('*')
@@ -81,6 +79,58 @@ const ClientDashboard = () => {
         return `$${parseInt(plan).toLocaleString('es-CO')} COP`;
     };
 
+    // Servicios incluidos en el plan
+    const planServices = [
+        {
+            icon: '🌐',
+            title: 'Sitio Web Profesional',
+            description: 'Diseño y desarrollo de tu sitio web',
+            status: clientData?.status === 'active' ? 'Activo' : 'En desarrollo'
+        },
+        {
+            icon: '🚀',
+            title: 'Hosting Incluido',
+            description: 'Alojamiento web de alta velocidad',
+            status: 'Incluido'
+        },
+        {
+            icon: '🔒',
+            title: 'Certificado SSL',
+            description: 'Seguridad HTTPS para tu sitio',
+            status: 'Incluido'
+        },
+        {
+            icon: '📱',
+            title: 'Diseño Responsive',
+            description: 'Adaptado a móviles y tablets',
+            status: 'Incluido'
+        },
+        {
+            icon: '🎨',
+            title: 'Diseño Personalizado',
+            description: 'Colores y estilo de tu marca',
+            status: 'Incluido'
+        },
+        {
+            icon: '📊',
+            title: 'Google Analytics',
+            description: 'Seguimiento de visitas y métricas',
+            status: 'Incluido'
+        },
+        {
+            icon: '🔍',
+            title: 'SEO Básico',
+            description: 'Optimización para buscadores',
+            status: 'Incluido'
+        },
+        {
+            icon: '🎧',
+            title: 'Soporte 24/7',
+            description: 'Asistencia técnica permanente',
+            status: 'Incluido'
+        }
+    ];
+
     if (isLoading) {
         return (
             <div className="dashboard-page">
@@ -96,12 +146,13 @@ const ClientDashboard = () => {
 
     return (
         <div className="dashboard-page">
+            {/* Header */}
             <div className="dashboard-header">
                 <div className="container">
                     <div className="dashboard-header-content">
                         <div className="dashboard-welcome">
                             <h1>👋 Hola, {userName}</h1>
-                            <p>Bienvenido a tu portal de cliente</p>
+                            <p>Panel de Control - {clientData?.company || 'Mi Negocio'}</p>
                         </div>
                         <button onClick={handleLogout} className="btn btn-secondary">
                             Cerrar Sesión
@@ -112,117 +163,112 @@ const ClientDashboard = () => {
 
             <div className="dashboard-content">
                 <div className="container">
-                    {/* Client Info Cards */}
-                    <div className="stats-grid">
-                        <div className="stat-card">
-                            <div className="stat-icon">🏢</div>
-                            <div className="stat-info">
-                                <div className="stat-value">{clientData?.company || 'Mi Negocio'}</div>
-                                <div className="stat-label">Empresa</div>
+                    {/* Payment Notice for Pending */}
+                    {clientData?.estado_pago === 'pendiente' && (
+                        <div className="payment-notice-banner">
+                            <div className="notice-icon">💳</div>
+                            <div className="notice-content">
+                                <h3>¡Completa tu pago para activar tu sitio web!</h3>
+                                <p>Tu registro está completo. Una vez realices el pago de {formatPlan(clientData?.plan)}, activaremos tu sitio web en 48 horas.</p>
+                                <a
+                                    href="https://checkout.nequi.wompi.co/l/xQ1z3t"
+                                    className="btn btn-primary"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    💰 Pagar Ahora
+                                </a>
                             </div>
                         </div>
-                        <div className={`stat-card ${paymentStatus.class}`}>
-                            <div className="stat-icon">{paymentStatus.icon}</div>
-                            <div className="stat-info">
-                                <div className="stat-value">{paymentStatus.label}</div>
-                                <div className="stat-label">Estado del Servicio</div>
+                    )}
+
+                    {/* Status Cards */}
+                    <div className="status-cards">
+                        <div className={`status-card ${paymentStatus.class}`}>
+                            <div className="status-icon">{paymentStatus.icon}</div>
+                            <div className="status-info">
+                                <h3>{paymentStatus.label}</h3>
+                                <p>Estado del Servicio</p>
                             </div>
                         </div>
-                        <div className="stat-card">
-                            <div className="stat-icon">💰</div>
-                            <div className="stat-info">
-                                <div className="stat-value">{formatPlan(clientData?.plan)}</div>
-                                <div className="stat-label">Plan Mensual</div>
+                        <div className="status-card">
+                            <div className="status-icon">💰</div>
+                            <div className="status-info">
+                                <h3>{formatPlan(clientData?.plan)}</h3>
+                                <p>Plan Mensual</p>
                             </div>
                         </div>
-                        <div className="stat-card">
-                            <div className="stat-icon">📅</div>
-                            <div className="stat-info">
-                                <div className="stat-value">{formatDate(clientData?.next_payment)}</div>
-                                <div className="stat-label">Próximo Pago</div>
+                        <div className="status-card">
+                            <div className="status-icon">📅</div>
+                            <div className="status-info">
+                                <h3>{formatDate(clientData?.next_payment)}</h3>
+                                <p>Próximo Pago</p>
                             </div>
                         </div>
                     </div>
 
-                    {/* Domain Section */}
+                    {/* Domain Info */}
                     {clientData?.domain && (
                         <section className="dashboard-section">
                             <h2>🌐 Tu Sitio Web</h2>
-                            <div className="domain-card">
-                                <div className="domain-info">
-                                    <strong>Dominio:</strong>
-                                    <a href={`https://${clientData.domain}`} target="_blank" rel="noopener noreferrer">
-                                        {clientData.domain}
-                                    </a>
+                            <div className="domain-card-large">
+                                <div className="domain-main">
+                                    <div className="domain-icon">🌐</div>
+                                    <div className="domain-details">
+                                        <h3>Dominio</h3>
+                                        <a href={`https://${clientData.domain}`} target="_blank" rel="noopener noreferrer">
+                                            {clientData.domain}
+                                        </a>
+                                    </div>
                                 </div>
-                                <div className="domain-status">
+                                <div className="domain-status-badge">
                                     {clientData.status === 'active' ? (
-                                        <span className="status-badge active">🟢 Sitio Activo</span>
+                                        <span className="badge-active">🟢 Sitio Activo</span>
                                     ) : (
-                                        <span className="status-badge pending">🟡 En Construcción</span>
+                                        <span className="badge-pending">🟡 En Construcción</span>
                                     )}
                                 </div>
                             </div>
                         </section>
                     )}
 
-                    {/* Payment Notice for Pending */}
-                    {clientData?.estado_pago === 'pendiente' && (
-                        <section className="dashboard-section payment-notice-section">
-                            <div className="payment-notice-card">
-                                <div className="notice-icon">💳</div>
-                                <div className="notice-content">
-                                    <h3>Completa tu pago para activar tu servicio</h3>
-                                    <p>Tu registro está completo. Una vez realices el pago, tu sitio web será activado.</p>
-                                    <a
-                                        href="https://checkout.nequi.wompi.co/l/xQ1z3t"
-                                        className="btn btn-primary"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                    >
-                                        💰 Realizar Pago
-                                    </a>
-                                </div>
-                            </div>
-                        </section>
-                    )}
-
-                    {/* Contact Section */}
+                    {/* Services Included */}
                     <section className="dashboard-section">
-                        <h2>📞 Contacto</h2>
-                        <div className="contact-grid">
-                            <div className="contact-item">
-                                <span className="contact-icon">📧</span>
-                                <div className="contact-info">
-                                    <strong>Email</strong>
-                                    <span>soporte@amcagencyweb.com</span>
+                        <h2>✨ Servicios Incluidos en tu Plan</h2>
+                        <div className="services-grid">
+                            {planServices.map((service, index) => (
+                                <div key={index} className="service-card">
+                                    <div className="service-icon">{service.icon}</div>
+                                    <div className="service-content">
+                                        <h3>{service.title}</h3>
+                                        <p>{service.description}</p>
+                                        <span className="service-status">{service.status}</span>
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="contact-item">
-                                <span className="contact-icon">📱</span>
-                                <div className="contact-info">
-                                    <strong>WhatsApp</strong>
-                                    <a href="https://wa.me/573138537261" target="_blank" rel="noopener noreferrer">
-                                        +57 313 853 7261
-                                    </a>
-                                </div>
-                            </div>
+                            ))}
                         </div>
                     </section>
 
                     {/* Support Section */}
                     <section className="dashboard-section">
-                        <h2>🎧 Soporte</h2>
-                        <div className="support-card">
-                            <p>¿Necesitas ayuda con tu sitio web?</p>
-                            <a
-                                href="https://wa.me/573138537261?text=Hola,%20necesito%20ayuda%20con%20mi%20sitio%20web"
-                                className="btn btn-primary"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                💬 Contactar Soporte
-                            </a>
+                        <h2>💬 ¿Necesitas Ayuda?</h2>
+                        <div className="support-grid">
+                            <div className="support-card-item">
+                                <div className="support-icon">📧</div>
+                                <div className="support-info">
+                                    <h3>Email</h3>
+                                    <a href="mailto:soporte@amcagencyweb.com">soporte@amcagencyweb.com</a>
+                                </div>
+                            </div>
+                            <div className="support-card-item">
+                                <div className="support-icon">📱</div>
+                                <div className="support-info">
+                                    <h3>WhatsApp</h3>
+                                    <a href="https://wa.me/573138537261?text=Hola,%20necesito%20ayuda%20con%20mi%20sitio%20web" target="_blank" rel="noopener noreferrer">
+                                        +57 313 853 7261
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </section>
                 </div>

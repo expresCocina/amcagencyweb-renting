@@ -1,0 +1,553 @@
+/* Free Website Landing Page Styles */
+
+.free-website-landing {
+    background: linear-gradient(135deg, #0a0118 0%, #1a0b2e 50%, #16213e 100%);
+    min-height: 100vh;
+    color: #fff;
+}
+
+/* Hero Section */
+.fwl-hero {
+    padding: 150px 20px 80px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.fwl-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 20% 50%, rgba(0, 240, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(160, 32, 240, 0.1) 0%, transparent 50%);
+    z-index: 0;
+}
+
+.fwl-hero>.container {
+    position: relative;
+    z-index: 1;
+}
+
+.fwl-hero-badge {
+    display: inline-block;
+    padding: 12px 28px;
+    background: linear-gradient(135deg, rgba(255, 193, 7, 0.2) 0%, rgba(255, 152, 0, 0.2) 100%);
+    border: 2px solid #ffc107;
+    border-radius: 50px;
+    color: #ffc107;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 24px;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.fwl-hero-title {
+    font-size: clamp(32px, 8vw, 64px);
+    font-weight: 800;
+    margin-bottom: 20px;
+    line-height: 1.1;
+}
+
+.fwl-hero-subtitle {
+    font-size: clamp(16px, 3vw, 22px);
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 40px;
+}
+
+.fwl-pricing-box {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 40px;
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(123, 47, 247, 0.1) 100%);
+    border: 2px solid rgba(0, 212, 255, 0.3);
+    border-radius: 20px;
+}
+
+.fwl-pricing-main {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+}
+
+.fwl-pricing-label {
+    font-size: 20px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.fwl-pricing-amount {
+    font-size: clamp(56px, 10vw, 80px);
+    font-weight: 900;
+    background: linear-gradient(135deg, #00d4ff 0%, #7b2ff7 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+}
+
+.fwl-pricing-period {
+    font-size: 28px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.fwl-pricing-sub {
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.fwl-benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 16px;
+    max-width: 800px;
+    margin: 40px auto;
+}
+
+.fwl-benefit {
+    padding: 16px;
+    background: rgba(0, 255, 127, 0.05);
+    border: 1px solid rgba(0, 255, 127, 0.2);
+    border-radius: 12px;
+    font-size: 15px;
+    transition: all 0.3s ease;
+}
+
+.fwl-benefit:hover {
+    background: rgba(0, 255, 127, 0.1);
+    border-color: rgba(0, 255, 127, 0.4);
+    transform: translateY(-2px);
+}
+
+.fwl-trust {
+    display: flex;
+    gap: 32px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 40px;
+    padding-top: 32px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.fwl-trust strong {
+    color: #00d4ff;
+    font-size: 20px;
+    margin-right: 4px;
+}
+
+/* Pain Points Section */
+.fwl-pain {
+    padding: 80px 20px;
+    background: linear-gradient(135deg, rgba(220, 38, 38, 0.1) 0%, rgba(153, 27, 27, 0.1) 100%);
+}
+
+.fwl-section-title {
+    font-size: clamp(28px, 6vw, 48px);
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.fwl-pain-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 32px;
+    max-width: 1200px;
+    margin: 0 auto 60px;
+}
+
+.fwl-pain-item {
+    padding: 32px;
+    background: rgba(220, 38, 38, 0.1);
+    border: 2px solid rgba(220, 38, 38, 0.3);
+    border-radius: 16px;
+    text-align: center;
+}
+
+.fwl-pain-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+}
+
+.fwl-pain-item h3 {
+    font-size: 20px;
+    margin-bottom: 12px;
+    color: #ff6b6b;
+}
+
+.fwl-pain-item p {
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.6;
+}
+
+.fwl-stat-highlight {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 32px;
+    background: rgba(220, 38, 38, 0.2);
+    border: 2px solid rgba(220, 38, 38, 0.5);
+    border-radius: 16px;
+    text-align: center;
+    font-size: 18px;
+}
+
+.fwl-stat-highlight strong {
+    font-size: 36px;
+    color: #ff6b6b;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.fwl-stat-highlight span {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 16px;
+}
+
+/* Solution Section */
+.fwl-solution {
+    padding: 80px 20px;
+}
+
+.fwl-solution-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 32px;
+    max-width: 1000px;
+    margin: 0 auto 60px;
+}
+
+.fwl-solution-card {
+    padding: 40px;
+    background: rgba(0, 212, 255, 0.05);
+    border: 2px solid rgba(0, 212, 255, 0.2);
+    border-radius: 20px;
+    text-align: center;
+}
+
+.fwl-solution-featured {
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(123, 47, 247, 0.1) 100%);
+    border-color: #00d4ff;
+    transform: scale(1.05);
+}
+
+.fwl-solution-badge {
+    display: inline-block;
+    padding: 8px 20px;
+    background: linear-gradient(135deg, #00d4ff 0%, #7b2ff7 100%);
+    border-radius: 50px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+}
+
+.fwl-solution-card h3 {
+    font-size: 24px;
+    margin-bottom: 16px;
+}
+
+.fwl-solution-price {
+    font-size: 48px;
+    font-weight: 900;
+    background: linear-gradient(135deg, #00d4ff 0%, #7b2ff7 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 24px;
+}
+
+.fwl-solution-list {
+    list-style: none;
+    padding: 0;
+    text-align: left;
+}
+
+.fwl-solution-list li {
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 15px;
+}
+
+/* Comparison Table */
+.fwl-comparison {
+    max-width: 800px;
+    margin: 60px auto;
+    padding: 40px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 20px;
+}
+
+.fwl-comparison h3 {
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 32px;
+}
+
+.fwl-comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.fwl-comparison-table th,
+.fwl-comparison-table td {
+    padding: 16px;
+    text-align: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.fwl-comparison-table th {
+    background: rgba(0, 212, 255, 0.1);
+    font-weight: 700;
+}
+
+.fwl-highlight {
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.2) 0%, rgba(123, 47, 247, 0.2) 100%);
+    color: #00d4ff;
+}
+
+.fwl-old-price {
+    color: #ff6b6b;
+    text-decoration: line-through;
+}
+
+.fwl-new-price {
+    color: #00ff7f;
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.fwl-total-row {
+    background: rgba(0, 212, 255, 0.05);
+}
+
+/* Why Choose Us */
+.fwl-why {
+    padding: 80px 20px;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.fwl-why-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 32px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.fwl-why-card {
+    padding: 32px;
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.05) 0%, rgba(123, 47, 247, 0.05) 100%);
+    border: 2px solid rgba(0, 212, 255, 0.2);
+    border-radius: 16px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.fwl-why-card:hover {
+    transform: translateY(-8px);
+    border-color: #00d4ff;
+    box-shadow: 0 8px 32px rgba(0, 212, 255, 0.3);
+}
+
+.fwl-why-icon {
+    font-size: 56px;
+    margin-bottom: 16px;
+}
+
+.fwl-why-card h3 {
+    font-size: 20px;
+    margin-bottom: 12px;
+    color: #00d4ff;
+}
+
+.fwl-why-card p {
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.6;
+}
+
+/* FAQ Section */
+.fwl-faq {
+    padding: 80px 20px;
+}
+
+.fwl-faq-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.fwl-faq-item {
+    padding: 24px;
+    background: rgba(0, 212, 255, 0.05);
+    border-left: 4px solid #00d4ff;
+    border-radius: 8px;
+}
+
+.fwl-faq-item h3 {
+    font-size: 18px;
+    margin-bottom: 12px;
+    color: #00d4ff;
+}
+
+.fwl-faq-item p {
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.6;
+}
+
+/* Final CTA Section */
+.fwl-final-cta {
+    padding: 80px 20px;
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(123, 47, 247, 0.1) 100%);
+}
+
+.fwl-final-box {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 60px 40px;
+    background: rgba(0, 0, 0, 0.4);
+    border: 3px solid #00d4ff;
+    border-radius: 24px;
+    text-align: center;
+}
+
+.fwl-urgency-badge {
+    display: inline-block;
+    padding: 16px 32px;
+    background: linear-gradient(135deg, #ff6b6b 0%, #ff4757 100%);
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+.fwl-final-box h2 {
+    font-size: clamp(28px, 6vw, 42px);
+    margin-bottom: 32px;
+}
+
+.fwl-bonuses {
+    margin: 40px 0;
+    padding: 32px;
+    background: rgba(0, 255, 127, 0.05);
+    border: 2px solid rgba(0, 255, 127, 0.2);
+    border-radius: 16px;
+}
+
+.fwl-bonuses h3 {
+    font-size: 24px;
+    color: #00ff7f;
+    margin-bottom: 20px;
+}
+
+.fwl-bonuses ul {
+    list-style: none;
+    padding: 0;
+    text-align: left;
+}
+
+.fwl-bonuses li {
+    padding: 12px 0;
+    font-size: 18px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.fwl-guarantee {
+    margin-top: 24px;
+    font-size: 16px;
+    color: #00ff7f;
+}
+
+/* CTA Buttons */
+.fwl-cta-primary,
+.fwl-cta-final {
+    display: inline-block;
+    padding: 20px 48px;
+    background: linear-gradient(135deg, #00d4ff 0%, #7b2ff7 100%);
+    color: #fff;
+    font-size: 20px;
+    font-weight: 800;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 50px;
+    margin: 32px auto;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 32px rgba(0, 212, 255, 0.4);
+}
+
+.fwl-cta-primary:hover,
+.fwl-cta-final:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 48px rgba(0, 212, 255, 0.6);
+}
+
+.fwl-cta-final {
+    font-size: 22px;
+    padding: 24px 56px;
+    background: linear-gradient(135deg, #00ff7f 0%, #00d4ff 100%);
+    animation: pulse 2s ease-in-out infinite;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .fwl-hero {
+        padding: 120px 20px 60px;
+    }
+
+    .fwl-pricing-box {
+        padding: 24px;
+    }
+
+    .fwl-benefits-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .fwl-solution-featured {
+        transform: scale(1);
+    }
+
+    .fwl-comparison-table {
+        font-size: 14px;
+    }
+
+    .fwl-comparison-table th,
+    .fwl-comparison-table td {
+        padding: 12px 8px;
+    }
+
+    .fwl-final-box {
+        padding: 40px 24px;
+    }
+
+    .fwl-cta-primary,
+    .fwl-cta-final {
+        width: 100%;
+        font-size: 16px;
+        padding: 18px 24px;
+    }
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(1.05);
+        opacity: 0.9;
+    }
+}

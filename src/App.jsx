@@ -41,6 +41,7 @@ import PendingPaymentsPage from './pages/PendingPaymentsPage';
 import SettingsPage from './pages/SettingsPage';
 import RegistroPage from './pages/RegistroPage';
 import SitioBloqueadoPage from './pages/SitioBloqueadoPage';
+import FreeWebsiteLanding from './pages/FreeWebsiteLanding';
 import ProtectedRoute from './components/admin/ProtectedRoute';
 
 // Import Demo Pages normally for fast loading
@@ -128,6 +129,7 @@ function AppContent({ isDelayedLoaded, isPromoActive }) {
           <Route path="/terminos" element={<TermsPage />} />
           <Route path="/agendar" element={<BookingPage />} />
           <Route path="/registro" element={<RegistroPage />} />
+          <Route path="/gratis" element={<FreeWebsiteLanding />} />
 
           {/* Demo Pages */}
           <Route path="/demo/ecotienda" element={<EcoTiendaDemo />} />

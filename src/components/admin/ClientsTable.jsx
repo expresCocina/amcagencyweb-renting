@@ -22,6 +22,49 @@ const ClientsTable = ({ clients, onUpdate }) => {
         return badges[status] || badges.active;
     };
 
+    const getPaymentStatusBadge = (estadoPago) => {
+        const badges = {
+            activo: { label: 'Pagado', icon: '💰', class: 'payment-active' },
+            pendiente: { label: 'Pendiente', icon: '⏳', class: 'payment-pending' },
+        };
+        return badges[estadoPago] || badges.pendiente;
+    };
+
+    const activatePayment = async (client) => {
+        if (!window.confirm(`¿Confirmas que el pago de ${client.name} por $80,000 COP ha sido recibido?`)) {
+            return;
+        }
+
+        try {
+            // Calculate next payment date (1 month from today)
+            const today = new Date();
+            const nextPaymentDate = new Date(today);
+            nextPaymentDate.setMonth(nextPaymentDate.getMonth() + 1);
+
+            // Format as YYYY-MM-DD
+            const year = nextPaymentDate.getFullYear();
+            const month = String(nextPaymentDate.getMonth() + 1).padStart(2, '0');
+            const day = String(nextPaymentDate.getDate()).padStart(2, '0');
+            const nextPayment = `${year}-${month}-${day}`;
+
+            const { error } = await supabase
+                .from('clients')
+                .update({
+                    estado_pago: 'activo',
+                    status: 'active',
+                    next_payment: nextPayment
+                })
+                .eq('id', client.id);
+
+            if (error) throw error;
+
+            if (onUpdate) onUpdate();
+        } catch (err) {
+            console.error('Error activating payment:', err);
+            alert('Error al activar el pago');
+        }
+    };
+
     const getInitials = (name) => {
         return name
             .split(' ')
@@ -142,6 +185,7 @@ const ClientsTable = ({ clients, onUpdate }) => {
                             <th>Dominio</th>
                             <th>Plan</th>
                             <th>Estado</th>
+                            <th>Estado Pago</th>
                             <th>Próximo Pago</th>
                             <th>Acciones</th>
                         </tr>
@@ -183,9 +227,28 @@ const ClientsTable = ({ clients, onUpdate }) => {
                                             {statusBadge.icon} {statusBadge.label}
                                         </span>
                                     </td>
+                                    <td data-label="Estado Pago">
+                                        {(() => {
+                                            const paymentBadge = getPaymentStatusBadge(client.estado_pago);
+                                            return (
+                                                <span className={`status-badge ${paymentBadge.class}`}>
+                                                    {paymentBadge.icon} {paymentBadge.label}
+                                                </span>
+                                            );
+                                        })()}
+                                    </td>
                                     <td data-label="Próximo Pago" className="payment-date">{client.next_payment}</td>
                                     <td data-label="Acciones">
                                         <div className="action-buttons">
+                                            {client.estado_pago === 'pendiente' && (
+                                                <button
+                                                    className="btn-activate-payment"
+                                                    onClick={() => activatePayment(client)}
+                                                    title="Marcar pago como recibido"
+                                                >
+                                                    ✅ Activar
+                                                </button>
+                                            )}
                                             <button
                                                 className="btn-whatsapp"
                                                 onClick={() => handleWhatsApp(client)}

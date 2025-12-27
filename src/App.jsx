@@ -39,6 +39,7 @@ import Login from './pages/Login';
 import AddClientPage from './pages/AddClientPage';
 import PendingPaymentsPage from './pages/PendingPaymentsPage';
 import SettingsPage from './pages/SettingsPage';
+import RegistroPage from './pages/RegistroPage';
 import ProtectedRoute from './components/admin/ProtectedRoute';
 
 // Import Demo Pages normally for fast loading
@@ -122,6 +123,7 @@ function AppContent({ isDelayedLoaded, isPromoActive }) {
           <Route path="/privacidad" element={<PrivacyPolicyPage />} />
           <Route path="/terminos" element={<TermsPage />} />
           <Route path="/agendar" element={<BookingPage />} />
+          <Route path="/registro" element={<RegistroPage />} />
 
           {/* Demo Pages */}
           <Route path="/demo/ecotienda" element={<EcoTiendaDemo />} />

@@ -191,6 +191,39 @@
     color: #ef4444;
 }
 
+/* Payment Status Badges */
+.payment-active {
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    color: #10b981;
+}
+
+.payment-pending {
+    background: rgba(251, 146, 60, 0.1);
+    border: 1px solid rgba(251, 146, 60, 0.3);
+    color: #fb923c;
+}
+
+/* Activate Payment Button */
+.btn-activate-payment {
+    padding: 6px 12px;
+    background: rgba(16, 185, 129, 0.15);
+    border: 1px solid rgba(16, 185, 129, 0.4);
+    border-radius: 6px;
+    color: #10b981;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.btn-activate-payment:hover {
+    background: rgba(16, 185, 129, 0.25);
+    transform: scale(1.02);
+    box-shadow: 0 0 12px rgba(16, 185, 129, 0.3);
+}
+
 .payment-date {
     font-variant-numeric: tabular-nums;
     color: #94a3b8;

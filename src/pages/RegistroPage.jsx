@@ -51,6 +51,7 @@ const RegistroPage = () => {
                 email: formData.email,
                 password: formData.password,
                 options: {
+                    emailRedirectTo: window.location.origin + '/dashboard',
                     data: {
                         nombre_representante: formData.nombre_representante,
                         nombre_negocio: formData.nombre_negocio,

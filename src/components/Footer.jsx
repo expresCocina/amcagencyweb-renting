@@ -40,7 +40,7 @@ const Footer = () => {
                                 </a>
                             </li>
                             <li>
-                                <a href="https://calendly.com/amc-agency" target="_blank" rel="noopener noreferrer">
+                                <a href="https://calendly.com/salcristhi5411/30min" target="_blank" rel="noopener noreferrer">
                                     <FaCalendarAlt className="contact-icon" /> Agendar Llamada
                                 </a>
                             </li>

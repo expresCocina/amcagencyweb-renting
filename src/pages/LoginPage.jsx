@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+import { supabase } from '../supabaseClient';
 import './SharedPageStyles.css';
 import './LoginPage.css';
 
@@ -9,20 +10,62 @@ const LoginPage = () => {
     const [password, setPassword] = useState('');
     const [rememberMe, setRememberMe] = useState(false);
     const [error, setError] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        setIsLoading(true);
+        setError('');
 
-        // Demo login validation
-        if (email === 'demo@amc.com' && password === 'demo123') {
-            // Store demo session
+        try {
+            // Authenticate with Supabase
+            const { data, error: authError } = await supabase.auth.signInWithPassword({
+                email: email,
+                password: password,
+            });
+
+            if (authError) {
+                throw new Error(authError.message);
+            }
+
+            if (!data.user) {
+                throw new Error('No se pudo iniciar sesión. Por favor intenta de nuevo.');
+            }
+
+            // Fetch client data from clients table
+            const { data: clientData, error: clientError } = await supabase
+                .from('clients')
+                .select('*')
+                .eq('user_id', data.user.id)
+                .single();
+
+            if (clientError || !clientData) {
+                console.warn('No client data found:', clientError);
+            }
+
+            // Store session info
             localStorage.setItem('isLoggedIn', 'true');
-            localStorage.setItem('userName', 'Juan Pérez');
+            localStorage.setItem('userName', clientData?.name || data.user.email);
+            localStorage.setItem('userEmail', data.user.email);
+            localStorage.setItem('clientId', clientData?.id || '');
 
             // Redirect to dashboard
             navigate('/dashboard');
-        } else {
-            setError('Credenciales incorrectas. Usa: demo@amc.com / demo123');
+
+        } catch (err) {
+            console.error('Login error:', err);
+
+            // Translate common errors to Spanish
+            let errorMessage = err.message;
+            if (err.message.includes('Invalid login credentials')) {
+                errorMessage = 'Credenciales incorrectas. Verifica tu email y contraseña.';
+            } else if (err.message.includes('Email not confirmed')) {
+                errorMessage = 'Tu email no ha sido confirmado. Revisa tu bandeja de entrada.';
+            }
+
+            setError(errorMessage);
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -46,12 +89,6 @@ const LoginPage = () => {
                             </div>
                         )}
 
-                        <div className="demo-credentials">
-                            <strong>🎯 Credenciales Demo:</strong>
-                            <div>Email: <code>demo@amc.com</code></div>
-                            <div>Password: <code>demo123</code></div>
-                        </div>
-
                         <div className="form-group">
                             <label htmlFor="email">Email</label>
                             <input
@@ -61,6 +98,7 @@ const LoginPage = () => {
                                 onChange={(e) => setEmail(e.target.value)}
                                 placeholder="tu@email.com"
                                 required
+                                disabled={isLoading}
                             />
                         </div>
 
@@ -73,6 +111,7 @@ const LoginPage = () => {
                                 onChange={(e) => setPassword(e.target.value)}
                                 placeholder="••••••••"
                                 required
+                                disabled={isLoading}
                             />
                         </div>
 
@@ -88,13 +127,17 @@ const LoginPage = () => {
                             <a href="#" className="forgot-password">¿Olvidaste tu contraseña?</a>
                         </div>
 
-                        <button type="submit" className="btn btn-primary btn-block">
-                            Ingresar al Portal
+                        <button
+                            type="submit"
+                            className="btn btn-primary btn-block"
+                            disabled={isLoading}
+                        >
+                            {isLoading ? 'Ingresando...' : 'Ingresar al Portal'}
                         </button>
                     </form>
 
                     <div className="login-footer">
-                        <p>¿No tienes una cuenta? <a href="/#contacto">Contacta con ventas</a></p>
+                        <p>¿No tienes una cuenta? <Link to="/registro">Registrarse</Link></p>
                     </div>
                 </div>
             </div>

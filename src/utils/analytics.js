@@ -367,6 +367,41 @@ export const trackCalculatorClick = (source, details = {}) => {
     });
 };
 
+// Track Purchase - SENDS TO CAPI automatically
+export const trackPurchase = (value, currency = 'COP', contentName, details = {}) => {
+    const purchaseData = {
+        value: value,
+        currency: currency,
+        content_name: contentName,
+        content_type: 'product',
+        ...details
+    };
+
+    // Facebook Pixel Purchase Event (Standard Event)
+    if (typeof window !== 'undefined' && window.fbq) {
+        window.fbq('track', 'Purchase', purchaseData);
+    }
+
+    // Google Analytics 4
+    if (typeof window !== 'undefined' && window.gtag) {
+        window.gtag('event', 'purchase', {
+            value: value,
+            currency: currency,
+            items: [{
+                item_name: contentName,
+                price: value
+            }]
+        });
+    }
+
+    // Send to Server CAPI (for deduplication)
+    if (typeof window !== 'undefined') {
+        sendToServerCAPI('Purchase', purchaseData, details);
+    }
+
+    console.log('📊 Purchase Tracked:', purchaseData);
+};
+
 // Initialize tracking on page load
 export const initializeTracking = () => {
     if (typeof window === 'undefined') return;
@@ -419,5 +454,6 @@ export default {
     trackContactClick,
     trackBookingClick,
     trackCalculatorClick,
+    trackPurchase,
     initializeTracking
 };

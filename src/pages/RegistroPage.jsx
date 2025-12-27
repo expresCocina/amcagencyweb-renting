@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
+import { trackPurchase } from '../utils/analytics';
 import './SharedPageStyles.css';
 import './RegistroPage.css';
 
@@ -74,7 +75,14 @@ const RegistroPage = () => {
                 throw new Error('Error al guardar los datos. Por favor intenta de nuevo.');
             }
 
-            // Step 3: Show success and redirect to payment
+            // Step 3: Track Purchase event for Facebook Pixel
+            trackPurchase(80000, 'COP', 'Plan Onboarding', {
+                email: formData.email,
+                business_name: formData.nombre_negocio,
+                source: 'registro_page'
+            });
+
+            // Step 4: Show success and redirect to payment
             setSuccess(true);
 
             // Wait a moment to show success message, then redirect to Nequi

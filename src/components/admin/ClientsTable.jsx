@@ -26,6 +26,7 @@ const ClientsTable = ({ clients, onUpdate }) => {
         const badges = {
             activo: { label: 'Pagado', icon: '💰', class: 'payment-active' },
             pendiente: { label: 'Pendiente', icon: '⏳', class: 'payment-pending' },
+            suspendido: { label: 'Suspendido', icon: '🚫', class: 'payment-suspended' },
         };
         return badges[estadoPago] || badges.pendiente;
     };
@@ -108,6 +109,7 @@ const ClientsTable = ({ clients, onUpdate }) => {
             plan: client.plan,
             next_payment: client.next_payment,
             status: client.status,
+            estado_pago: client.estado_pago || 'pendiente',
         });
     };
 
@@ -379,7 +381,7 @@ const ClientsTable = ({ clients, onUpdate }) => {
 
                                 <div className="form-row">
                                     <div className="form-group">
-                                        <label htmlFor="edit-status">Estado</label>
+                                        <label htmlFor="edit-status">Estado del Sitio</label>
                                         <select
                                             id="edit-status"
                                             name="status"
@@ -389,8 +391,23 @@ const ClientsTable = ({ clients, onUpdate }) => {
                                             disabled={updating}
                                         >
                                             <option value="active">Activo</option>
-                                            <option value="pending">Pendiente Pago</option>
+                                            <option value="pending">Pendiente</option>
                                             <option value="suspended">Suspendido</option>
+                                        </select>
+                                    </div>
+                                    <div className="form-group">
+                                        <label htmlFor="edit-estado_pago">Estado de Pago</label>
+                                        <select
+                                            id="edit-estado_pago"
+                                            name="estado_pago"
+                                            value={editFormData.estado_pago}
+                                            onChange={handleEditChange}
+                                            required
+                                            disabled={updating}
+                                        >
+                                            <option value="activo">✅ Activo (Pagado)</option>
+                                            <option value="pendiente">⏳ Pendiente de Pago</option>
+                                            <option value="suspendido">🚫 Suspendido</option>
                                         </select>
                                     </div>
                                 </div>

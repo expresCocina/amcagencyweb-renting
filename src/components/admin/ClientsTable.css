@@ -224,6 +224,45 @@
     box-shadow: 0 0 12px rgba(16, 185, 129, 0.3);
 }
 
+/* Block/Unblock Site Buttons */
+.btn-block-site {
+    padding: 6px 12px;
+    background: rgba(239, 68, 68, 0.15);
+    border: 1px solid rgba(239, 68, 68, 0.4);
+    border-radius: 6px;
+    color: #ef4444;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.btn-block-site:hover {
+    background: rgba(239, 68, 68, 0.25);
+    transform: scale(1.02);
+    box-shadow: 0 0 12px rgba(239, 68, 68, 0.3);
+}
+
+.btn-unblock-site {
+    padding: 6px 12px;
+    background: rgba(16, 185, 129, 0.15);
+    border: 1px solid rgba(16, 185, 129, 0.4);
+    border-radius: 6px;
+    color: #10b981;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.btn-unblock-site:hover {
+    background: rgba(16, 185, 129, 0.25);
+    transform: scale(1.02);
+    box-shadow: 0 0 12px rgba(16, 185, 129, 0.3);
+}
+
 .payment-date {
     font-variant-numeric: tabular-nums;
     color: #94a3b8;

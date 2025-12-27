@@ -99,6 +99,48 @@ const ClientsTable = ({ clients, onUpdate }) => {
         }
     };
 
+    const toggleBlockSite = async (client) => {
+        const isSuspended = client.estado_pago === 'suspendido';
+        const action = isSuspended ? 'desbloquear' : 'bloquear';
+        const newStatus = isSuspended ? 'activo' : 'suspendido';
+
+        if (!window.confirm(`¿Confirmas que deseas ${action} el sitio de ${client.company}?`)) {
+            return;
+        }
+
+        try {
+            const updateData = {
+                estado_pago: newStatus,
+            };
+
+            // Si se está activando, establecer próximo pago a +30 días
+            if (newStatus === 'activo') {
+                const today = new Date();
+                const nextPaymentDate = new Date(today);
+                nextPaymentDate.setMonth(nextPaymentDate.getMonth() + 1);
+                const year = nextPaymentDate.getFullYear();
+                const month = String(nextPaymentDate.getMonth() + 1).padStart(2, '0');
+                const day = String(nextPaymentDate.getDate()).padStart(2, '0');
+                updateData.next_payment = `${year}-${month}-${day}`;
+                updateData.status = 'active';
+            } else {
+                updateData.status = 'suspended';
+            }
+
+            const { error } = await supabase
+                .from('clients')
+                .update(updateData)
+                .eq('id', client.id);
+
+            if (error) throw error;
+
+            if (onUpdate) onUpdate();
+        } catch (err) {
+            console.error('Error toggling site block:', err);
+            alert('Error al cambiar el estado del sitio');
+        }
+    };
+
     const handleEditClick = (client) => {
         setEditingClient(client);
         setEditFormData({
@@ -251,6 +293,13 @@ const ClientsTable = ({ clients, onUpdate }) => {
                                                     ✅ Activar
                                                 </button>
                                             )}
+                                            <button
+                                                className={client.estado_pago === 'suspendido' ? 'btn-unblock-site' : 'btn-block-site'}
+                                                onClick={() => toggleBlockSite(client)}
+                                                title={client.estado_pago === 'suspendido' ? 'Desbloquear sitio' : 'Bloquear sitio'}
+                                            >
+                                                {client.estado_pago === 'suspendido' ? '🔓 Desbloquear' : '🚫 Bloquear'}
+                                            </button>
                                             <button
                                                 className="btn-whatsapp"
                                                 onClick={() => handleWhatsApp(client)}

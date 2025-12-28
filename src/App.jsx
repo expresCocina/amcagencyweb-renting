@@ -22,13 +22,9 @@ import HomePage from './pages/HomePage';
 import SEOPage from './pages/SEOPage';
 import WebDevPage from './pages/WebDevPage';
 import FunnelsPage from './pages/FunnelsPage';
-import AcademyPage from './pages/AcademyPage';
-import CreditPage from './pages/CreditPage';
 import CasesPage from './pages/CasesPage';
 import AboutPage from './pages/AboutPage';
-import BlogPage from './pages/BlogPage';
 import ResourcesPage from './pages/ResourcesPage';
-import BudgetCalculatorPage from './pages/BudgetCalculatorPage';
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 import TermsPage from './pages/TermsPage';
 import BookingPage from './pages/BookingPage';
@@ -54,14 +50,7 @@ import AcademiaDemo from './pages/demos/AcademiaDemo';
 import BoutiqueDemo from './pages/demos/BoutiqueDemo';
 import ConsultoraDemo from './pages/demos/ConsultoraDemo';
 
-// Lazy Load Only Promo (less critical)
-const PromoLandingPage = lazy(() => import('./pages/PromoLandingPage'));
-const DemoGeneratorPage = lazy(() => import('./pages/DemoGeneratorPage'));
 
-// Lazy Load Resource Pages
-const GuiaSEOPage = lazy(() => import('./pages/recursos/GuiaSEOPage'));
-const ChecklistMarketingPage = lazy(() => import('./pages/recursos/ChecklistMarketingPage'));
-const TemplateOptimizacionPage = lazy(() => import('./pages/recursos/TemplateOptimizacionPage'));
 
 function App() {
   const [isDelayedLoaded, setIsDelayedLoaded] = useState(false);
@@ -113,19 +102,15 @@ function AppContent({ isDelayedLoaded, isPromoActive }) {
       <Suspense fallback={<LoadingSpinner />}>
         <Routes>
           {/* Promotional Landing Page - Active during Dec 14, 2025 - Feb 28, 2026 */}
-          <Route path="/" element={isPromoActive() ? <PromoLandingPage /> : <HomePage />} />
+          <Route path="/" element={<HomePage />} />
           <Route path="/home" element={<HomePage />} />
           <Route path="/seo" element={<SEOPage />} />
           <Route path="/desarrollo-web" element={<WebDevPage />} />
           <Route path="/embudos" element={<FunnelsPage />} />
-          <Route path="/cursos" element={<AcademyPage />} />
-          <Route path="/credito" element={<CreditPage />} />
           <Route path="/casos" element={<CasesPage />} />
           <Route path="/sobre-nosotros" element={<AboutPage />} />
-          <Route path="/blog" element={<BlogPage />} />
           <Route path="/recursos" element={<ResourcesPage />} />
-          <Route path="/calculadora" element={<BudgetCalculatorPage />} />
-          <Route path="/generador-demos" element={<DemoGeneratorPage />} />
+
           <Route path="/privacidad" element={<PrivacyPolicyPage />} />
           <Route path="/terminos" element={<TermsPage />} />
           <Route path="/agendar" element={<BookingPage />} />
@@ -169,10 +154,7 @@ function AppContent({ isDelayedLoaded, isPromoActive }) {
             </ProtectedRoute>
           } />
 
-          {/* Resource Pages */}
-          <Route path="/recursos/guia-seo-2024" element={<GuiaSEOPage />} />
-          <Route path="/recursos/checklist-marketing" element={<ChecklistMarketingPage />} />
-          <Route path="/recursos/template-optimizacion" element={<TemplateOptimizacionPage />} />
+
 
         </Routes>
       </Suspense>

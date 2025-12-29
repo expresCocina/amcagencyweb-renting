@@ -3,12 +3,12 @@ import { Resend } from 'resend';
 const resend = new Resend(import.meta.env.VITE_RESEND_API_KEY);
 
 export const sendWelcomeEmail = async (clientData) => {
-    try {
-        const { data, error } = await resend.emails.send({
-            from: 'AMC Agency <bienvenida@amcagencyweb.com>',
-            to: [clientData.email],
-            subject: '🎉 ¡Bienvenido a AMC Agency!',
-            html: `
+  try {
+    const { data, error } = await resend.emails.send({
+      from: 'AMC Agency <onboarding@resend.dev>',
+      to: [clientData.email],
+      subject: '🎉 ¡Bienvenido a AMC Agency!',
+      html: `
         <!DOCTYPE html>
         <html>
         <head>
@@ -151,28 +151,28 @@ export const sendWelcomeEmail = async (clientData) => {
         </body>
         </html>
       `
-        });
+    });
 
-        if (error) {
-            console.error('Error sending welcome email:', error);
-            return { success: false, error };
-        }
-
-        console.log('Welcome email sent successfully:', data);
-        return { success: true, data };
-    } catch (error) {
-        console.error('Email service error:', error);
-        return { success: false, error };
+    if (error) {
+      console.error('Error sending welcome email:', error);
+      return { success: false, error };
     }
+
+    console.log('Welcome email sent successfully:', data);
+    return { success: true, data };
+  } catch (error) {
+    console.error('Email service error:', error);
+    return { success: false, error };
+  }
 };
 
 export const sendPaymentReminderEmail = async (clientData) => {
-    try {
-        const { data, error } = await resend.emails.send({
-            from: 'AMC Agency <recordatorio@amcagencyweb.com>',
-            to: [clientData.email],
-            subject: '⏰ Recordatorio: Completa tu pago - AMC Agency',
-            html: `
+  try {
+    const { data, error } = await resend.emails.send({
+      from: 'AMC Agency <onboarding@resend.dev>',
+      to: [clientData.email],
+      subject: '⏰ Recordatorio: Completa tu pago - AMC Agency',
+      html: `
         <!DOCTYPE html>
         <html>
         <head>
@@ -277,17 +277,17 @@ export const sendPaymentReminderEmail = async (clientData) => {
         </body>
         </html>
       `
-        });
+    });
 
-        if (error) {
-            console.error('Error sending reminder email:', error);
-            return { success: false, error };
-        }
-
-        console.log('Reminder email sent successfully:', data);
-        return { success: true, data };
-    } catch (error) {
-        console.error('Email service error:', error);
-        return { success: false, error };
+    if (error) {
+      console.error('Error sending reminder email:', error);
+      return { success: false, error };
     }
+
+    console.log('Reminder email sent successfully:', data);
+    return { success: true, data };
+  } catch (error) {
+    console.error('Email service error:', error);
+    return { success: false, error };
+  }
 };

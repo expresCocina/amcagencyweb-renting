@@ -88,20 +88,13 @@ const RegistroPage = () => {
                 throw new Error('Error al guardar los datos. Por favor intenta de nuevo.');
             }
 
-            // Step 3: Track Purchase event for Facebook Pixel
-            trackPurchase(80000, 'COP', 'Plan Onboarding', {
-                email: formData.email,
-                business_name: formData.nombre_negocio,
-                source: 'registro_page'
-            });
-
-            // Step 4: Show success and redirect to payment
+            // Step 3: Show success message
             setSuccess(true);
 
-            // Wait a moment to show success message, then redirect to Nequi
+            // Wait a moment to show success message, then redirect to login
             setTimeout(() => {
-                window.location.href = NEQUI_PAYMENT_LINK;
-            }, 2000);
+                navigate('/login');
+            }, 3000);
 
         } catch (err) {
             console.error('Registration error:', err);
@@ -270,9 +263,9 @@ const RegistroPage = () => {
                                     Registrando...
                                 </>
                             ) : success ? (
-                                'Redirigiendo a Nequi...'
+                                '✅ ¡Registro exitoso!'
                             ) : (
-                                '🚀 Registrar y Pagar'
+                                '🚀 Registrar'
                             )}
                         </button>
                     </form>

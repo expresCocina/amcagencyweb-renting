@@ -20,7 +20,7 @@ export default async function handler(req, res) {
 
     if (type === 'welcome') {
       emailConfig = {
-        from: 'AMC Agency <onboarding@resend.dev>',
+        from: 'AMC Agency <bienvenida@amcagencyweb.com>',
         to: [clientData.email],
         subject: '🎉 ¡Bienvenido a AMC Agency!',
         html: `
@@ -169,7 +169,7 @@ export default async function handler(req, res) {
       };
     } else if (type === 'reminder') {
       emailConfig = {
-        from: 'AMC Agency <onboarding@resend.dev>',
+        from: 'AMC Agency <recordatorios@amcagencyweb.com>',
         to: [clientData.email],
         subject: '⏰ Recordatorio: Completa tu pago - AMC Agency',
         html: `

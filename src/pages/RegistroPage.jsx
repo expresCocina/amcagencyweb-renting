@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
 import { trackPurchase } from '../utils/analytics';
+import { sendWelcomeEmail } from '../utils/emailService';
 import './SharedPageStyles.css';
 import './RegistroPage.css';
 
@@ -88,7 +89,20 @@ const RegistroPage = () => {
                 throw new Error('Error al guardar los datos. Por favor intenta de nuevo.');
             }
 
-            // Step 3: Show success message
+            // Step 3: Send welcome email
+            try {
+                await sendWelcomeEmail({
+                    email: formData.email,
+                    nombre_representante: formData.nombre_representante,
+                    nombre_negocio: formData.nombre_negocio
+                });
+                console.log('Welcome email sent successfully');
+            } catch (emailError) {
+                // Don't fail registration if email fails
+                console.error('Failed to send welcome email:', emailError);
+            }
+
+            // Step 4: Show success message
             setSuccess(true);
 
             // Wait a moment to show success message, then redirect to login

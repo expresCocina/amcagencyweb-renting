@@ -278,6 +278,163 @@ export default async function handler(req, res) {
         </html>
       `
       };
+    } else if (type === 'payment_confirmation') {
+      emailConfig = {
+        from: 'AMC Agency <pagos@amcagencyweb.com>',
+        to: [clientData.email],
+        subject: '✅ ¡Pago Confirmado! - AMC Agency',
+        html: `
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <style>
+            body { 
+              font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+              line-height: 1.6; 
+              color: #333; 
+              margin: 0;
+              padding: 0;
+              background-color: #f4f4f4;
+            }
+            .container { 
+              max-width: 600px; 
+              margin: 20px auto; 
+              background: white;
+              border-radius: 10px;
+              overflow: hidden;
+              box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            }
+            .header { 
+              background: linear-gradient(135deg, #10b981 0%, #059669 100%); 
+              color: white; 
+              padding: 40px 30px; 
+              text-align: center;
+            }
+            .header h1 {
+              margin: 0;
+              font-size: 28px;
+            }
+            .content { 
+              padding: 40px 30px;
+            }
+            .button { 
+              display: inline-block; 
+              background: #10b981; 
+              color: white !important; 
+              padding: 15px 30px; 
+              text-decoration: none; 
+              border-radius: 5px; 
+              margin: 20px 0;
+              font-weight: bold;
+            }
+            .success-box {
+              background: #d1fae5;
+              padding: 20px;
+              border-left: 4px solid #10b981;
+              margin: 20px 0;
+              border-radius: 5px;
+            }
+            .info-box {
+              background: #f9f9f9;
+              padding: 20px;
+              border-radius: 10px;
+              margin: 20px 0;
+            }
+            .info-row {
+              display: flex;
+              justify-content: space-between;
+              padding: 10px 0;
+              border-bottom: 1px solid #eee;
+            }
+            .info-row:last-child {
+              border-bottom: none;
+            }
+            .footer { 
+              text-align: center; 
+              padding: 30px; 
+              color: #666;
+              background: #f9f9f9;
+            }
+          </style>
+        </head>
+        <body>
+          <div class="container">
+            <div class="header">
+              <h1>✅ ¡Pago Confirmado!</h1>
+              <p>Tu sitio web ya está activo</p>
+            </div>
+            
+            <div class="content">
+              <p>Hola <strong>${clientData.nombre_representante}</strong>,</p>
+              
+              <div class="success-box">
+                <p style="margin: 0; font-size: 18px;"><strong>🎉 ¡Excelente noticia!</strong></p>
+                <p style="margin: 10px 0 0 0;">Hemos recibido tu pago exitosamente y tu sitio web de <strong>${clientData.nombre_negocio}</strong> ya está activo.</p>
+              </div>
+              
+              <h2 style="color: #10b981;">📋 Detalles del Pago:</h2>
+              <div class="info-box">
+                <div class="info-row">
+                  <span><strong>Monto:</strong></span>
+                  <span>$${clientData.monto.toLocaleString('es-CO')} COP</span>
+                </div>
+                <div class="info-row">
+                  <span><strong>Fecha de pago:</strong></span>
+                  <span>${clientData.fecha_pago}</span>
+                </div>
+                <div class="info-row">
+                  <span><strong>Próximo pago:</strong></span>
+                  <span>${clientData.proximo_pago}</span>
+                </div>
+                <div class="info-row">
+                  <span><strong>Estado:</strong></span>
+                  <span style="color: #10b981; font-weight: bold;">✅ ACTIVO</span>
+                </div>
+              </div>
+              
+              <h2 style="color: #10b981;">🚀 Próximos Pasos:</h2>
+              <ol>
+                <li><strong>Accede a tu panel:</strong> Inicia sesión para ver el progreso de tu sitio web</li>
+                <li><strong>Recibe tu sitio:</strong> Lo tendrás listo en 7-10 días hábiles</li>
+                <li><strong>Disfruta los beneficios:</strong> Hosting, dominio, logo y más incluidos</li>
+              </ol>
+              
+              <center>
+                <a href="https://amcagencyweb.com/login" class="button">
+                  🚀 Ir a Mi Panel
+                </a>
+              </center>
+              
+              <div class="info-box">
+                <h3 style="margin-top: 0; color: #10b981;">🎁 Tu Plan Incluye:</h3>
+                <p>✅ Sitio web profesional 100% GRATIS<br>
+                ✅ Hosting premium incluido<br>
+                ✅ Dominio .com gratis<br>
+                ✅ Logo profesional GRATIS ($150 valor)<br>
+                ✅ SSL (HTTPS) incluido<br>
+                ✅ Mantenimiento mensual<br>
+                ✅ Soporte técnico 24/7</p>
+              </div>
+              
+              <h3 style="color: #10b981;">¿Tienes dudas?</h3>
+              <p>Estamos aquí para ayudarte:</p>
+              <p>📱 WhatsApp: <a href="https://wa.me/573138537261" style="color: #10b981;">+57 313 853 7261</a></p>
+              <p>🌐 Web: <a href="https://amcagencyweb.com" style="color: #10b981;">amcagencyweb.com</a></p>
+              
+              <p style="margin-top: 30px;"><strong>¡Gracias por confiar en AMC Agency! 🚀</strong></p>
+            </div>
+            
+            <div class="footer">
+              <p><strong>El equipo de AMC Agency</strong></p>
+              <p>© 2025 AMC Agency. Todos los derechos reservados.</p>
+            </div>
+          </div>
+        </body>
+        </html>
+      `
+      };
     } else {
       return res.status(400).json({ error: 'Invalid email type' });
     }

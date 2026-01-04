@@ -100,6 +100,10 @@ export default async function handler(req, res) {
         const transaction = event.data?.transaction || event.data;
 
         console.log('📋 Transaction status:', transaction.status);
+        console.log('📋 FULL TRANSACTION DATA:', JSON.stringify(transaction, null, 2));
+        console.log('📧 Customer email from transaction.customer_email:', transaction.customer_email);
+        console.log('📧 Customer email from transaction.customer_data?.email:', transaction.customer_data?.email);
+        console.log('📧 Customer email from transaction.payment_method?.user_email:', transaction.payment_method?.user_email);
 
         // Only process APPROVED transactions
         if (transaction.status !== 'APPROVED') {
@@ -108,7 +112,14 @@ export default async function handler(req, res) {
         }
 
         console.log('💰 Processing approved transaction');
-        console.log('📧 Customer email:', transaction.customer_email);
+
+        // Try to get email from multiple possible fields
+        const customerEmail = transaction.customer_email ||
+            transaction.customer_data?.email ||
+            transaction.payment_method?.user_email ||
+            transaction.customer_data?.full_name;
+
+        console.log('📧 Final customer email to search:', customerEmail);
         console.log('💵 Amount:', transaction.amount_in_cents / 100, 'COP');
         console.log('🆔 Transaction ID:', transaction.id);
 
@@ -116,7 +127,7 @@ export default async function handler(req, res) {
         const { data: client, error: findError } = await supabase
             .from('clients')
             .select('*')
-            .eq('email', transaction.customer_email)
+            .eq('email', customerEmail) // Use the consolidated customerEmail
             .single();
 
         if (findError || !client) {

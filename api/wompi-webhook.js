@@ -1,12 +1,23 @@
 import crypto from 'crypto';
 import { createClient } from '@supabase/supabase-js';
 
-// Initialize Supabase client
-// In Vercel serverless functions, use non-VITE_ prefixed variables
+// Initialize Supabase client with SERVICE ROLE KEY for admin access
+// This bypasses Row Level Security (RLS) policies
 const supabaseUrl = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL;
-const supabaseKey = process.env.SUPABASE_ANON_KEY || process.env.VITE_SUPABASE_ANON_KEY;
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
-const supabase = createClient(supabaseUrl, supabaseKey);
+if (!supabaseUrl || !supabaseServiceKey) {
+    console.error('❌ Missing Supabase credentials!');
+    console.error('SUPABASE_URL:', supabaseUrl ? 'Set' : 'Missing');
+    console.error('SUPABASE_SERVICE_ROLE_KEY:', supabaseServiceKey ? 'Set' : 'Missing');
+}
+
+const supabase = createClient(supabaseUrl, supabaseServiceKey, {
+    auth: {
+        autoRefreshToken: false,
+        persistSession: false
+    }
+});
 
 // Verify Wompi signature
 function verifySignature(payload, signature, secret) {

@@ -43,8 +43,8 @@ async function sendPaymentConfirmationEmail(clientData, transactionData) {
                 type: 'payment_confirmation',
                 clientData: {
                     email: clientData.email,
-                    nombre_representante: clientData.nombre_representante,
-                    nombre_negocio: clientData.nombre_negocio,
+                    nombre_representante: clientData.nombre_representante || clientData.name,
+                    nombre_negocio: clientData.nombre_negocio || clientData.company,
                     monto: transactionData.amount_in_cents / 100,
                     fecha_pago: new Date().toLocaleDateString('es-CO'),
                     proximo_pago: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toLocaleDateString('es-CO')
@@ -52,10 +52,18 @@ async function sendPaymentConfirmationEmail(clientData, transactionData) {
             })
         });
 
-        return await response.json();
+        // Check if response is JSON before parsing
+        const contentType = response.headers.get('content-type');
+        if (contentType && contentType.includes('application/json')) {
+            return await response.json();
+        } else {
+            const text = await response.text();
+            console.error('Non-JSON response from email API:', text.substring(0, 200));
+            return { success: false, error: 'Invalid response from email API' };
+        }
     } catch (error) {
         console.error('Error sending payment confirmation email:', error);
-        return { success: false, error };
+        return { success: false, error: error.message };
     }
 }
 

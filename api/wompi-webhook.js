@@ -114,7 +114,7 @@ export default async function handler(req, res) {
 
         // Find client by email
         const { data: client, error: findError } = await supabase
-            .from('clientes')
+            .from('clients')
             .select('*')
             .eq('email', transaction.customer_email)
             .single();
@@ -125,7 +125,7 @@ export default async function handler(req, res) {
 
             // Try to find by most recent pending client (fallback)
             const { data: recentClient, error: recentError } = await supabase
-                .from('clientes')
+                .from('clients')
                 .select('*')
                 .eq('estado_pago', 'pendiente')
                 .order('created_at', { ascending: false })
@@ -154,11 +154,13 @@ export default async function handler(req, res) {
 
         // Update client status
         const { data: updatedClient, error: updateError } = await supabase
-            .from('clientes')
+            .from('clients')
             .update({
                 estado_pago: 'activo',
+                status: 'active',
                 fecha_pago: now.toISOString(),
-                proximo_pago: nextPayment.toISOString()
+                proximo_pago: nextPayment.toISOString(),
+                next_payment: nextPayment.toISOString()
             })
             .eq('id', client.id)
             .select()

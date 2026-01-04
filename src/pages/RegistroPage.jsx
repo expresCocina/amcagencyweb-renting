@@ -68,19 +68,20 @@ const RegistroPage = () => {
                 throw new Error('No se pudo crear el usuario. Por favor intenta de nuevo.');
             }
 
-            // Step 2: Insert client data into clientes table
+            // Step 2: Insert client data into clients table
             const { error: insertError } = await supabase
-                .from('clientes')
+                .from('clients')
                 .insert([{
                     user_id: authData.user.id,
                     email: formData.email,  // ← AGREGADO: guardar email
-                    nombre_negocio: formData.nombre_negocio,
-                    nombre_representante: formData.nombre_representante,
-                    dominio: formData.dominio || null,
+                    company: formData.nombre_negocio,
+                    name: formData.nombre_representante,
+                    domain: formData.dominio || null,
                     whatsapp: formData.whatsapp,
-                    telefono: formData.whatsapp, // Also store in phone for compatibility
+                    phone: formData.whatsapp,
                     estado_pago: 'pendiente',
-                    plan: '80000', // Default plan amount
+                    status: 'pending',
+                    plan: '80000',
                 }]);
 
             if (insertError) {

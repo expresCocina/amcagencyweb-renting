@@ -180,9 +180,7 @@ export default async function handler(req, res) {
             .update({
                 estado_pago: 'activo',
                 status: 'active',
-                fecha_pago: now.toISOString(),
-                proximo_pago: nextPayment.toISOString(),
-                next_payment: nextPayment.toISOString()
+                next_payment: nextPayment.toISOString().split('T')[0] // Format as YYYY-MM-DD for date column
             })
             .eq('id', client.id)
             .select()

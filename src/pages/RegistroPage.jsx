@@ -68,20 +68,25 @@ const RegistroPage = () => {
                 throw new Error('No se pudo crear el usuario. Por favor intenta de nuevo.');
             }
 
+            // Calculate next payment date (30 days from now)
+            const nextPaymentDate = new Date();
+            nextPaymentDate.setDate(nextPaymentDate.getDate() + 30);
+
             // Step 2: Insert client data into clients table
             const { error: insertError } = await supabase
                 .from('clients')
                 .insert([{
                     user_id: authData.user.id,
-                    email: formData.email,  // ← AGREGADO: guardar email
+                    email: formData.email,
                     company: formData.nombre_negocio,
                     name: formData.nombre_representante,
                     domain: formData.dominio || null,
                     whatsapp: formData.whatsapp,
                     phone: formData.whatsapp,
-                    estado_pago: 'pendiente',
-                    status: 'pending',
+                    estado_pago: 'activo', // Active immediately for free trial
+                    status: 'active',      // Active immediately
                     plan: '80000',
+                    next_payment: nextPaymentDate.toISOString().split('T')[0] // Set next payment to 30 days
                 }]);
 
             if (insertError) {
@@ -105,10 +110,10 @@ const RegistroPage = () => {
             // Step 4: Show success message
             setSuccess(true);
 
-            // Wait a moment to show success message, then redirect to login
+            // Wait a moment to show success message, then redirect to login (or dashboard)
             setTimeout(() => {
-                navigate('/login');
-            }, 3000);
+                navigate('/dashboard'); // Direct to dashboard since it's active
+            }, 2000);
 
         } catch (err) {
             console.error('Registration error:', err);
@@ -150,14 +155,14 @@ const RegistroPage = () => {
 
                         {success && (
                             <div className="registro-success">
-                                ✅ ¡Registro exitoso! Redirigiendo al pago...
+                                ✅ ¡Cuenta creada! Tu primer mes es gratis. Redirigiendo...
                             </div>
                         )}
 
                         <div className="payment-notice">
-                            <span className="icon">💳</span>
+                            <span className="icon">🎁</span>
                             <div>
-                                Al completar el registro, serás redirigido a <strong>Nequi</strong> para realizar el pago de <strong>$80,000 COP</strong> y activar tu servicio.
+                                <strong>¡Tu primer mes es GRATIS!</strong> Regístrate ahora y disfruta de todos nuestros servicios sin costo por 30 días. Sin tarjetas de crédito, sin compromisos.
                             </div>
                         </div>
 

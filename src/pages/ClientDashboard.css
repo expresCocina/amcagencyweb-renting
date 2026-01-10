@@ -93,6 +93,25 @@
     box-shadow: 0 8px 24px rgba(0, 240, 255, 0.3);
 }
 
+.service-card.service-active .service-status {
+    background: rgba(0, 255, 136, 0.1);
+    color: #00ff88;
+}
+
+.service-card.service-pending {
+    border-color: rgba(255, 193, 7, 0.3);
+}
+
+.service-card.service-pending .service-status {
+    background: rgba(255, 193, 7, 0.1);
+    color: #ffc107;
+}
+
+.service-card.service-inactive {
+    opacity: 0.6;
+    border-color: rgba(255, 255, 255, 0.05);
+}
+
 .btn-secondary {
     background: rgba(255, 255, 255, 0.1);
     color: white;
@@ -509,10 +528,7 @@
         font-size: 1.5rem;
     }
 
-    .services-grid {
-        grid-template-columns: 1fr;
-    }
-
+    .services-grid,
     .support-grid {
         grid-template-columns: 1fr;
     }

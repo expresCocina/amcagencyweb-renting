@@ -152,6 +152,16 @@ const ClientsTable = ({ clients, onUpdate }) => {
             next_payment: client.next_payment,
             status: client.status,
             estado_pago: client.estado_pago || 'pendiente',
+            services: client.services || {
+                sitio_web: 'active',
+                hosting: 'active',
+                ssl: 'active',
+                responsive: 'active',
+                design: 'active',
+                analytics: 'active',
+                seo: 'active',
+                support: 'active'
+            }
         });
     };
 
@@ -458,6 +468,41 @@ const ClientsTable = ({ clients, onUpdate }) => {
                                             <option value="pendiente">⏳ Pendiente de Pago</option>
                                             <option value="suspendido">🚫 Suspendido</option>
                                         </select>
+                                    </div>
+                                </div>
+
+                                <div className="form-section">
+                                    <h3>Gestión de Servicios</h3>
+                                    <div className="services-toggles">
+                                        {Object.entries({
+                                            sitio_web: 'Sitio Web',
+                                            hosting: 'Hosting',
+                                            ssl: 'Certificado SSL',
+                                            responsive: 'Diseño Responsive',
+                                            design: 'Diseño Personalizado',
+                                            analytics: 'Google Analytics',
+                                            seo: 'SEO Básico',
+                                            support: 'Soporte 24/7'
+                                        }).map(([key, label]) => (
+                                            <label key={key} className="service-toggle">
+                                                <input
+                                                    type="checkbox"
+                                                    checked={editFormData.services?.[key] === 'active'}
+                                                    onChange={(e) => {
+                                                        const newStatus = e.target.checked ? 'active' : 'inactive';
+                                                        setEditFormData(prev => ({
+                                                            ...prev,
+                                                            services: {
+                                                                ...prev.services,
+                                                                [key]: newStatus
+                                                            }
+                                                        }));
+                                                    }}
+                                                    disabled={updating}
+                                                />
+                                                <span className="toggle-label">{label}</span>
+                                            </label>
+                                        ))}
                                     </div>
                                 </div>
 

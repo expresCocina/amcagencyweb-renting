@@ -544,6 +544,51 @@
     box-shadow: 0 8px 24px rgba(59, 130, 246, 0.4);
 }
 
+/* Services Toggles */
+.form-section {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 15px;
+}
+
+.form-section h3 {
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+    color: var(--text-color);
+}
+
+.services-toggles {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+.service-toggle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.service-toggle:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.service-toggle input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--primary-color);
+}
+
+.toggle-label {
+    font-size: 0.9rem;
+}
+
 /* Mobile Responsive Styles */
 @media (max-width: 768px) {
     .clients-table-container {

@@ -80,54 +80,79 @@ const ClientDashboard = () => {
     };
 
     // Servicios incluidos en el plan
+    const servicesStatus = clientData?.services || {
+        sitio_web: 'active',
+        hosting: 'active',
+        ssl: 'active',
+        responsive: 'active',
+        design: 'active',
+        analytics: 'active',
+        seo: 'active',
+        support: 'active'
+    };
+
+    const getServiceStatusLabel = (key) => {
+        const status = servicesStatus[key];
+        if (status === 'active') return 'Activo';
+        if (status === 'pending') return 'Pendiente de activar';
+        return 'Inactivo';
+    };
+
+    const getServiceStatusClass = (key) => {
+        const status = servicesStatus[key];
+        if (status === 'active') return 'service-active';
+        if (status === 'pending') return 'service-pending';
+        return 'service-inactive';
+    };
+
     const planServices = [
         {
+            key: 'sitio_web',
             icon: '🌐',
             title: 'Sitio Web Profesional',
-            description: 'Diseño y desarrollo de tu sitio web',
-            status: clientData?.status === 'active' ? 'Activo' : 'En desarrollo'
+            description: 'Diseño y desarrollo de tu sitio web'
         },
         {
+            key: 'hosting',
             icon: '🚀',
             title: 'Hosting Incluido',
-            description: 'Alojamiento web de alta velocidad',
-            status: 'Incluido'
+            description: 'Alojamiento web de alta velocidad'
         },
         {
+            key: 'ssl',
             icon: '🔒',
             title: 'Certificado SSL',
-            description: 'Seguridad HTTPS para tu sitio',
-            status: 'Incluido'
+            description: 'Seguridad HTTPS para tu sitio'
         },
         {
+            key: 'responsive',
             icon: '📱',
             title: 'Diseño Responsive',
-            description: 'Adaptado a móviles y tablets',
-            status: 'Incluido'
+            description: 'Adaptado a móviles y tablets'
         },
         {
+            key: 'design',
             icon: '🎨',
             title: 'Diseño Personalizado',
-            description: 'Colores y estilo de tu marca',
-            status: 'Incluido'
+            description: 'Colores y estilo de tu marca'
         },
         {
+            key: 'analytics',
             icon: '📊',
             title: 'Google Analytics',
-            description: 'Seguimiento de visitas y métricas',
-            status: 'Incluido'
+            description: 'Seguimiento de visitas y métricas'
         },
         {
+            key: 'seo',
             icon: '🔍',
             title: 'SEO Básico',
-            description: 'Optimización para buscadores',
-            status: 'Incluido'
+            description: 'Optimización para buscadores'
         },
         {
+            key: 'support',
             icon: '🎧',
             title: 'Soporte 24/7',
-            description: 'Asistencia técnica permanente',
-            status: 'Incluido'
+            description: 'Asistencia técnica permanente'
         }
     ];
 
@@ -257,12 +282,14 @@ const ClientDashboard = () => {
                         <h2>✨ Servicios Incluidos en tu Plan</h2>
                         <div className="services-grid">
                             {planServices.map((service, index) => (
-                                <div key={index} className="service-card">
+                                <div key={index} className={`service-card ${getServiceStatusClass(service.key)}`}>
                                     <div className="service-icon">{service.icon}</div>
                                     <div className="service-content">
                                         <h3>{service.title}</h3>
                                         <p>{service.description}</p>
-                                        <span className="service-status">{service.status}</span>
+                                        <span className="service-status">
+                                            {getServiceStatusLabel(service.key)}
+                                        </span>
                                     </div>
                                 </div>
                             ))}

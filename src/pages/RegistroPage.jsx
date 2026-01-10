@@ -86,7 +86,17 @@ const RegistroPage = () => {
                     estado_pago: 'activo', // Active immediately for free trial
                     status: 'active',      // Active immediately
                     plan: '80000',
-                    next_payment: nextPaymentDate.toISOString().split('T')[0] // Set next payment to 30 days
+                    next_payment: nextPaymentDate.toISOString().split('T')[0], // Set next payment to 30 days
+                    services: {
+                        sitio_web: 'pending',
+                        hosting: 'pending',
+                        ssl: 'pending',
+                        responsive: 'pending',
+                        design: 'pending',
+                        analytics: 'pending',
+                        seo: 'pending',
+                        support: 'pending'
+                    }
                 }]);
 
             if (insertError) {

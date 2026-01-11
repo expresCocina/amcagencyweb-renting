@@ -179,7 +179,7 @@ export default async function handler(req, res) {
             
             <div class="footer">
               <p><strong>El equipo de AMC Agency</strong></p>
-              <p>© 2025 AMC Agency. Todos los derechos reservados.</p>
+              <p>© 2026 AMC Agency. Todos los derechos reservados.</p>
             </div>
           </div>
         </body>
@@ -290,7 +290,7 @@ export default async function handler(req, res) {
             
             <div class="footer">
               <p><strong>El equipo de AMC Agency</strong></p>
-              <p>© 2025 AMC Agency</p>
+              <p>© 2026 AMC Agency</p>
             </div>
           </div>
         </body>
@@ -447,7 +447,7 @@ export default async function handler(req, res) {
             
             <div class="footer">
               <p><strong>El equipo de AMC Agency</strong></p>
-              <p>© 2025 AMC Agency. Todos los derechos reservados.</p>
+              <p>© 2026 AMC Agency. Todos los derechos reservados.</p>
             </div>
           </div>
         </body>

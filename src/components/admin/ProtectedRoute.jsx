@@ -2,14 +2,29 @@ import { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { supabase } from '../../supabaseClient';
 
+// Lista de emails de administradores autorizados
+const ADMIN_EMAILS = [
+    'salcri4110@gmail.com',
+    'admin@amcagencyweb.com',
+    'cristhian@amcagencyweb.com'
+];
+
 const ProtectedRoute = ({ children }) => {
     const [loading, setLoading] = useState(true);
     const [session, setSession] = useState(null);
+    const [isAdmin, setIsAdmin] = useState(false);
 
     useEffect(() => {
         // Check current session
         supabase.auth.getSession().then(({ data: { session } }) => {
             setSession(session);
+
+            // Check if user is admin
+            if (session?.user?.email) {
+                const userIsAdmin = ADMIN_EMAILS.includes(session.user.email.toLowerCase());
+                setIsAdmin(userIsAdmin);
+            }
+
             setLoading(false);
         });
 
@@ -18,6 +33,14 @@ const ProtectedRoute = ({ children }) => {
             data: { subscription },
         } = supabase.auth.onAuthStateChange((_event, session) => {
             setSession(session);
+
+            // Check if user is admin
+            if (session?.user?.email) {
+                const userIsAdmin = ADMIN_EMAILS.includes(session.user.email.toLowerCase());
+                setIsAdmin(userIsAdmin);
+            } else {
+                setIsAdmin(false);
+            }
         });
 
         return () => subscription.unsubscribe();
@@ -50,10 +73,17 @@ const ProtectedRoute = ({ children }) => {
         );
     }
 
+    // No session - redirect to login
     if (!session) {
         return <Navigate to="/admin/login" replace />;
     }
 
+    // Session exists but user is not admin - redirect to client dashboard
+    if (!isAdmin) {
+        return <Navigate to="/dashboard" replace />;
+    }
+
+    // User is authenticated and is admin
     return children;
 };
 

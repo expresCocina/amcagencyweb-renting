@@ -22,7 +22,7 @@ export default async function handler(req, res) {
       emailConfig = {
         from: 'AMC Agency <bienvenida@amcagencyweb.com>',
         to: [clientData.email],
-        subject: '🎉 ¡Bienvenido a AMC Agency!',
+        subject: '🎁 ¡Bienvenido a AMC Agency - Tu primer mes es GRATIS!',
         html: `
         <!DOCTYPE html>
         <html>
@@ -90,6 +90,19 @@ export default async function handler(req, res) {
             .feature-item:last-child {
               border-bottom: none;
             }
+            .highlight-box {
+              background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+              border: 2px solid #ffc107;
+              padding: 20px;
+              border-radius: 10px;
+              margin: 20px 0;
+              text-align: center;
+            }
+            .highlight-box h2 {
+              margin: 0;
+              color: #333;
+              font-size: 24px;
+            }
             .footer { 
               text-align: center; 
               padding: 30px; 
@@ -111,43 +124,50 @@ export default async function handler(req, res) {
           <div class="container">
             <div class="header">
               <h1>🎉 ¡Bienvenido a AMC Agency!</h1>
-              <p>Tu transformación digital comienza aquí</p>
+              <p>Tu transformación digital comienza HOY - ¡GRATIS!</p>
             </div>
             
             <div class="content">
               <p>Hola <strong>${clientData.nombre_representante}</strong>,</p>
               
+              <div class="highlight-box">
+                <h2>🎁 ¡Tu primer mes es GRATIS!</h2>
+                <p style="margin: 10px 0 0 0; color: #333;">Disfruta de todos nuestros servicios sin costo por 30 días.</p>
+              </div>
+              
               <p>¡Gracias por registrarte en AMC Agency! Estamos emocionados de ayudar a <strong>${clientData.nombre_negocio}</strong> a tener una presencia digital profesional.</p>
               
-              <h2 style="color: #667eea;">📋 Próximos Pasos:</h2>
+              <h2 style="color: #667eea;">📋 ¿Qué Sigue?</h2>
               <ol>
-                <li><strong>Inicia sesión</strong> en tu panel de control</li>
-                <li><strong>Completa tu pago</strong> de $80,000 COP</li>
-                <li><strong>Recibe tu sitio</strong> en 7-10 días hábiles</li>
+                <li><strong>Accede a tu panel:</strong> Inicia sesión para ver el estado de tus servicios</li>
+                <li><strong>Servicios en preparación:</strong> Nuestro equipo está activando tus servicios (aparecerán como "Pendiente de activar")</li>
+                <li><strong>Recibe tu sitio:</strong> Lo tendrás listo en 7-10 días hábiles</li>
+                <li><strong>Disfruta sin costo:</strong> No pagarás nada durante los primeros 30 días</li>
               </ol>
               
               <center>
-                <a href="https://amcagencyweb.com/login" class="button">
+                <a href="https://amcagencyweb.com/dashboard" class="button">
                   🚀 Ir a Mi Panel
                 </a>
               </center>
               
               <div class="features">
-                <h3>🎁 Tu Plan Incluye:</h3>
-                <div class="feature-item">✅ Sitio web profesional 100% GRATIS</div>
+                <h3>🎁 Tu Plan Incluye (TODO GRATIS el primer mes):</h3>
+                <div class="feature-item">✅ Sitio web profesional</div>
                 <div class="feature-item">✅ Hosting premium incluido</div>
                 <div class="feature-item">✅ Dominio .com gratis</div>
                 <div class="feature-item">✅ SSL (HTTPS) incluido</div>
-                <div class="feature-item">✅ Mantenimiento mensual</div>
+                <div class="feature-item">✅ Diseño responsive (móvil y tablet)</div>
+                <div class="feature-item">✅ Google Analytics</div>
+                <div class="feature-item">✅ SEO básico</div>
                 <div class="feature-item">✅ Soporte técnico 24/7</div>
               </div>
               
               <div class="features">
-                <h3>🎁 Bonos Especiales:</h3>
-                <div class="feature-item">🎨 Logo profesional GRATIS ($150 valor)</div>
-                <div class="feature-item">💰 3 meses al precio de 2 (ahorra $20)</div>
-                <div class="feature-item">📱 Configuración redes sociales GRATIS</div>
-                <div class="feature-item">🔍 Consultoría SEO inicial GRATIS</div>
+                <h3>📱 ¿Cómo funciona?</h3>
+                <p><strong>Mes 1 (Hoy - Próximos 30 días):</strong> 100% GRATIS<br>
+                <strong>Desde el Mes 2:</strong> Solo $80,000 COP/mes<br>
+                <strong>Puedes cancelar:</strong> En cualquier momento, sin compromisos</p>
               </div>
               
               <h3 style="color: #667eea;">¿Tienes dudas?</h3>

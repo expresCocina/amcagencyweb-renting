@@ -4,9 +4,7 @@ import { supabase } from '../../supabaseClient';
 
 // Lista de emails de administradores autorizados
 const ADMIN_EMAILS = [
-    'salcri4110@gmail.com',
-    'admin@amcagencyweb.com',
-    'cristhian@amcagencyweb.com'
+    'info@amcagencyweb.com'
 ];
 
 const ProtectedRoute = ({ children }) => {

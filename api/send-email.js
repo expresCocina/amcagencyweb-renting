@@ -155,7 +155,6 @@ export default async function handler(req, res) {
                 <h3>🎁 Tu Plan Incluye (TODO GRATIS el primer mes):</h3>
                 <div class="feature-item">✅ Sitio web profesional</div>
                 <div class="feature-item">✅ Hosting premium incluido</div>
-                <div class="feature-item">✅ Dominio .com gratis</div>
                 <div class="feature-item">✅ SSL (HTTPS) incluido</div>
                 <div class="feature-item">✅ Diseño responsive (móvil y tablet)</div>
                 <div class="feature-item">✅ Google Analytics</div>

@@ -34,7 +34,7 @@ const AdminSidebar = () => {
 
             <div className={`admin-sidebar ${mobileOpen ? 'mobile-open' : ''}`}>
                 <div className="sidebar-logo">
-                    <h2>AMC Agency</h2>
+                    <h2>AMC Agency & Vida Digital CO</h2>
                     <p>Admin Panel</p>
                 </div>
 

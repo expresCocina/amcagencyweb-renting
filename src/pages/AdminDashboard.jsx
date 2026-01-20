@@ -107,7 +107,7 @@ const AdminDashboard = () => {
                 <div className="admin-header">
                     <div>
                         <h1>Dashboard de Administración</h1>
-                        <p className="admin-subtitle">Gestión de clientes WaaS</p>
+                        <p className="admin-subtitle">AMC Agency & Vida Digital CO - Gestión de clientes WaaS</p>
                     </div>
                     <div className="header-actions">
                         <button

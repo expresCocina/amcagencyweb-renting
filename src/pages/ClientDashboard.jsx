@@ -177,7 +177,7 @@ const ClientDashboard = () => {
                     <div className="dashboard-header-content">
                         <div className="dashboard-welcome">
                             <h1>👋 Hola, {userName}</h1>
-                            <p>Panel de Control - {clientData?.company || 'Mi Negocio'}</p>
+                            <p>Panel de Control AMC Agency & Vida Digital CO - {clientData?.company || 'Mi Negocio'}</p>
                         </div>
                         <button onClick={handleLogout} className="btn btn-secondary">
                             Cerrar Sesión

@@ -20,9 +20,9 @@ export default async function handler(req, res) {
 
     if (type === 'welcome') {
       emailConfig = {
-        from: 'AMC Agency <bienvenida@amcagencyweb.com>',
+        from: 'AMC Agency & Vida Digital CO <bienvenida@amcagencyweb.com>',
         to: [clientData.email],
-        subject: '🎁 ¡Bienvenido a AMC Agency - Tu primer mes es GRATIS!',
+        subject: '🎁 ¡Bienvenido a AMC Agency & Vida Digital CO - Tu primer mes es GRATIS!',
         html: `
         <!DOCTYPE html>
         <html>
@@ -123,7 +123,7 @@ export default async function handler(req, res) {
         <body>
           <div class="container">
             <div class="header">
-              <h1>🎉 ¡Bienvenido a AMC Agency!</h1>
+              <h1>🎉 ¡Bienvenido a AMC Agency & Vida Digital CO!</h1>
               <p>Tu transformación digital comienza HOY - ¡GRATIS!</p>
             </div>
             
@@ -135,7 +135,7 @@ export default async function handler(req, res) {
                 <p style="margin: 10px 0 0 0; color: #333;">Disfruta de todos nuestros servicios sin costo por 30 días.</p>
               </div>
               
-              <p>¡Gracias por registrarte en AMC Agency! Estamos emocionados de ayudar a <strong>${clientData.nombre_negocio}</strong> a tener una presencia digital profesional.</p>
+              <p>¡Gracias por registrarte en AMC Agency & Vida Digital CO! Estamos emocionados de ayudar a <strong>${clientData.nombre_negocio}</strong> a tener una presencia digital profesional.</p>
               
               <h2 style="color: #667eea;">📋 ¿Qué Sigue?</h2>
               <ol>
@@ -178,8 +178,8 @@ export default async function handler(req, res) {
             </div>
             
             <div class="footer">
-              <p><strong>El equipo de AMC Agency</strong></p>
-              <p>© 2026 AMC Agency. Todos los derechos reservados.</p>
+              <p><strong>El equipo de AMC Agency & Vida Digital CO</strong></p>
+              <p>© 2026 AMC Agency & Vida Digital CO. Todos los derechos reservados.</p>
             </div>
           </div>
         </body>
@@ -188,9 +188,9 @@ export default async function handler(req, res) {
       };
     } else if (type === 'reminder') {
       emailConfig = {
-        from: 'AMC Agency <recordatorios@amcagencyweb.com>',
+        from: 'AMC Agency & Vida Digital CO <recordatorios@amcagencyweb.com>',
         to: [clientData.email],
-        subject: '⏰ Recordatorio: Completa tu pago - AMC Agency',
+        subject: '⏰ Recordatorio: Completa tu pago - AMC Agency & Vida Digital CO',
         html: `
         <!DOCTYPE html>
         <html>
@@ -289,8 +289,8 @@ export default async function handler(req, res) {
             </div>
             
             <div class="footer">
-              <p><strong>El equipo de AMC Agency</strong></p>
-              <p>© 2026 AMC Agency</p>
+              <p><strong>El equipo de AMC Agency & Vida Digital CO</strong></p>
+              <p>© 2026 AMC Agency & Vida Digital CO</p>
             </div>
           </div>
         </body>
@@ -299,9 +299,9 @@ export default async function handler(req, res) {
       };
     } else if (type === 'payment_confirmation') {
       emailConfig = {
-        from: 'AMC Agency <pagos@amcagencyweb.com>',
+        from: 'AMC Agency & Vida Digital CO <pagos@amcagencyweb.com>',
         to: [clientData.email],
-        subject: '✅ ¡Pago Confirmado! - AMC Agency',
+        subject: '✅ ¡Pago Confirmado! - AMC Agency & Vida Digital CO',
         html: `
         <!DOCTYPE html>
         <html>
@@ -442,12 +442,12 @@ export default async function handler(req, res) {
               <p>📱 WhatsApp: <a href="https://wa.me/573138537261" style="color: #10b981;">+57 313 853 7261</a></p>
               <p>🌐 Web: <a href="https://amcagencyweb.com" style="color: #10b981;">amcagencyweb.com</a></p>
               
-              <p style="margin-top: 30px;"><strong>¡Gracias por confiar en AMC Agency! 🚀</strong></p>
+              <p style="margin-top: 30px;"><strong>¡Gracias por confiar en AMC Agency & Vida Digital CO! 🚀</strong></p>
             </div>
             
             <div class="footer">
-              <p><strong>El equipo de AMC Agency</strong></p>
-              <p>© 2026 AMC Agency. Todos los derechos reservados.</p>
+              <p><strong>El equipo de AMC Agency & Vida Digital CO</strong></p>
+              <p>© 2026 AMC Agency & Vida Digital CO. Todos los derechos reservados.</p>
             </div>
           </div>
         </body>
@@ -457,9 +457,9 @@ export default async function handler(req, res) {
     } else if (type === 'admin_notification') {
       // Email to notify admin about new registration
       emailConfig = {
-        from: 'AMC Agency <notificaciones@amcagencyweb.com>',
+        from: 'AMC Agency & Vida Digital CO <notificaciones@amcagencyweb.com>',
         to: ['salcristhi5411@gmail.com'],
-        subject: '🎉 Nuevo Cliente Registrado - AMC Agency',
+        subject: '🎉 Nuevo Cliente Registrado - AMC Agency & Vida Digital CO',
         html: `
         <!DOCTYPE html>
         <html>
@@ -593,8 +593,8 @@ export default async function handler(req, res) {
             </div>
             
             <div class="footer">
-              <p><strong>Sistema de Notificaciones - AMC Agency</strong></p>
-              <p>© 2026 AMC Agency. Todos los derechos reservados.</p>
+              <p><strong>Sistema de Notificaciones - AMC Agency & Vida Digital CO</strong></p>
+              <p>© 2026 AMC Agency & Vida Digital CO. Todos los derechos reservados.</p>
             </div>
           </div>
         </body>

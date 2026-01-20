@@ -117,7 +117,31 @@ const RegistroPage = () => {
                 console.error('Failed to send welcome email:', emailError);
             }
 
-            // Step 4: Show success message
+            // Step 4: Send admin notification email
+            try {
+                await fetch('/api/send-email', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        type: 'admin_notification',
+                        clientData: {
+                            email: formData.email,
+                            nombre_representante: formData.nombre_representante,
+                            nombre_negocio: formData.nombre_negocio,
+                            whatsapp: formData.whatsapp,
+                            dominio: formData.dominio
+                        }
+                    })
+                });
+                console.log('Admin notification sent successfully');
+            } catch (emailError) {
+                // Don't fail registration if email fails
+                console.error('Failed to send admin notification:', emailError);
+            }
+
+            // Step 5: Show success message
             setSuccess(true);
 
             // Wait a moment to show success message, then redirect to login (or dashboard)

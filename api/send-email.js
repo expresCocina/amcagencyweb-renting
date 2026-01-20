@@ -452,6 +452,153 @@ export default async function handler(req, res) {
           </div>
         </body>
         </html>
+      `;
+      };
+    } else if (type === 'admin_notification') {
+      // Email to notify admin about new registration
+      emailConfig = {
+        from: 'AMC Agency <notificaciones@amcagencyweb.com>',
+        to: ['info@amcagencyweb.com'],
+        subject: '🎉 Nuevo Cliente Registrado - AMC Agency',
+        html: `
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <style>
+            body { 
+              font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+              line-height: 1.6; 
+              color: #333; 
+              margin: 0;
+              padding: 0;
+              background-color: #f4f4f4;
+            }
+            .container { 
+              max-width: 600px; 
+              margin: 20px auto; 
+              background: white;
+              border-radius: 10px;
+              overflow: hidden;
+              box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            }
+            .header { 
+              background: linear-gradient(135deg, #10b981 0%, #059669 100%); 
+              color: white; 
+              padding: 40px 30px; 
+              text-align: center;
+            }
+            .header h1 {
+              margin: 0;
+              font-size: 28px;
+            }
+            .content { 
+              padding: 40px 30px;
+            }
+            .info-box {
+              background: #f9fafb;
+              border-left: 4px solid #10b981;
+              padding: 20px;
+              margin: 20px 0;
+              border-radius: 5px;
+            }
+            .info-row {
+              display: flex;
+              padding: 10px 0;
+              border-bottom: 1px solid #e5e7eb;
+            }
+            .info-row:last-child {
+              border-bottom: none;
+            }
+            .info-label {
+              font-weight: bold;
+              min-width: 150px;
+              color: #6b7280;
+            }
+            .info-value {
+              color: #111827;
+            }
+            .button { 
+              display: inline-block; 
+              background: #10b981; 
+              color: white !important; 
+              padding: 15px 30px; 
+              text-decoration: none; 
+              border-radius: 5px; 
+              margin: 20px 0;
+              font-weight: bold;
+            }
+            .footer { 
+              text-align: center; 
+              padding: 30px; 
+              color: #666;
+              background: #f9f9f9;
+            }
+          </style>
+        </head>
+        <body>
+          <div class="container">
+            <div class="header">
+              <h1>🎉 Nuevo Cliente Registrado</h1>
+            </div>
+            
+            <div class="content">
+              <p>¡Hola! Un nuevo cliente se ha registrado en la plataforma.</p>
+              
+              <div class="info-box">
+                <h3 style="margin-top: 0; color: #10b981;">Información del Cliente</h3>
+                <div class="info-row">
+                  <span class="info-label">Nombre:</span>
+                  <span class="info-value">${clientData.nombre_representante}</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">Empresa:</span>
+                  <span class="info-value">${clientData.nombre_negocio}</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">Email:</span>
+                  <span class="info-value">${clientData.email}</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">WhatsApp:</span>
+                  <span class="info-value">${clientData.whatsapp || 'No proporcionado'}</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">Dominio:</span>
+                  <span class="info-value">${clientData.dominio || 'No proporcionado'}</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">Plan:</span>
+                  <span class="info-value">$80,000 COP/mes (Primer mes GRATIS)</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">Estado:</span>
+                  <span class="info-value">Activo - Servicios pendientes de activación</span>
+                </div>
+              </div>
+              
+              <center>
+                <a href="https://amcagencyweb.com/admin" class="button">
+                  🚀 Ir al Panel de Admin
+                </a>
+              </center>
+              
+              <p style="margin-top: 30px; color: #6b7280; font-size: 14px;">
+                <strong>Próximos pasos:</strong><br>
+                1. Revisar la información del cliente en el panel de admin<br>
+                2. Activar los servicios según sea necesario<br>
+                3. Contactar al cliente para iniciar el proyecto
+              </p>
+            </div>
+            
+            <div class="footer">
+              <p><strong>Sistema de Notificaciones - AMC Agency</strong></p>
+              <p>© 2026 AMC Agency. Todos los derechos reservados.</p>
+            </div>
+          </div>
+        </body>
+        </html>
       `
       };
     } else {

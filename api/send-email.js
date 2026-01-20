@@ -22,7 +22,9 @@ export default async function handler(req, res) {
       emailConfig = {
         from: 'AMC Agency & Vida Digital CO <bienvenida@amcagencyweb.com>',
         to: [clientData.email],
-        subject: '🎁 ¡Bienvenido a AMC Agency & Vida Digital CO - Tu primer mes es GRATIS!',
+        subject: '🎁 ¡Bienvenido a AMC Agency & Vida Digital CO!
+
+',
         html: `
         <!DOCTYPE html>
         <html>
@@ -124,16 +126,13 @@ export default async function handler(req, res) {
           <div class="container">
             <div class="header">
               <h1>🎉 ¡Bienvenido a AMC Agency & Vida Digital CO!</h1>
-              <p>Tu transformación digital comienza HOY - ¡GRATIS!</p>
+              <p>Tu transformación digital comienza HOY</p>
             </div>
             
             <div class="content">
               <p>Hola <strong>${clientData.nombre_representante}</strong>,</p>
               
-              <div class="highlight-box">
-                <h2>🎁 ¡Tu primer mes es GRATIS!</h2>
-                <p style="margin: 10px 0 0 0; color: #333;">Disfruta de todos nuestros servicios sin costo por 30 días.</p>
-              </div>
+
               
               <p>¡Gracias por registrarte en AMC Agency & Vida Digital CO! Estamos emocionados de ayudar a <strong>${clientData.nombre_negocio}</strong> a tener una presencia digital profesional.</p>
               
@@ -152,7 +151,7 @@ export default async function handler(req, res) {
               </center>
               
               <div class="features">
-                <h3>🎁 Tu Plan Incluye (TODO GRATIS el primer mes):</h3>
+                <h3>🎁 Tu Plan Incluye:</h3>
                 <div class="feature-item">✅ Sitio web profesional</div>
                 <div class="feature-item">✅ Hosting premium incluido</div>
                 <div class="feature-item">✅ SSL (HTTPS) incluido</div>
@@ -164,8 +163,7 @@ export default async function handler(req, res) {
               
               <div class="features">
                 <h3>📱 ¿Cómo funciona?</h3>
-                <p><strong>Mes 1 (Hoy - Próximos 30 días):</strong> 100% GRATIS<br>
-                <strong>Desde el Mes 2:</strong> Solo $80,000 COP/mes<br>
+                <p><strong>Plan Mensual:</strong> $80,000 COP/mes<br>
                 <strong>Puedes cancelar:</strong> En cualquier momento, sin compromisos</p>
               </div>
               
@@ -185,13 +183,13 @@ export default async function handler(req, res) {
         </body>
         </html>
       `
-      };
-    } else if (type === 'reminder') {
-      emailConfig = {
-        from: 'AMC Agency & Vida Digital CO <recordatorios@amcagencyweb.com>',
-        to: [clientData.email],
-        subject: '⏰ Recordatorio: Completa tu pago - AMC Agency & Vida Digital CO',
-        html: `
+    };
+  } else if (type === 'reminder') {
+    emailConfig = {
+      from: 'AMC Agency & Vida Digital CO <recordatorios@amcagencyweb.com>',
+      to: [clientData.email],
+      subject: '⏰ Recordatorio: Completa tu pago - AMC Agency & Vida Digital CO',
+      html: `
         <!DOCTYPE html>
         <html>
         <head>
@@ -296,13 +294,13 @@ export default async function handler(req, res) {
         </body>
         </html>
       `
-      };
-    } else if (type === 'payment_confirmation') {
-      emailConfig = {
-        from: 'AMC Agency & Vida Digital CO <pagos@amcagencyweb.com>',
-        to: [clientData.email],
-        subject: '✅ ¡Pago Confirmado! - AMC Agency & Vida Digital CO',
-        html: `
+    };
+  } else if (type === 'payment_confirmation') {
+    emailConfig = {
+      from: 'AMC Agency & Vida Digital CO <pagos@amcagencyweb.com>',
+      to: [clientData.email],
+      subject: '✅ ¡Pago Confirmado! - AMC Agency & Vida Digital CO',
+      html: `
         <!DOCTYPE html>
         <html>
         <head>
@@ -453,14 +451,14 @@ export default async function handler(req, res) {
         </body>
         </html>
       `;
-      };
-    } else if (type === 'admin_notification') {
-      // Email to notify admin about new registration
-      emailConfig = {
-        from: 'AMC Agency & Vida Digital CO <notificaciones@amcagencyweb.com>',
-        to: ['salcristhi5411@gmail.com'],
-        subject: '🎉 Nuevo Cliente Registrado - AMC Agency & Vida Digital CO',
-        html: `
+    };
+  } else if (type === 'admin_notification') {
+    // Email to notify admin about new registration
+    emailConfig = {
+      from: 'AMC Agency & Vida Digital CO <notificaciones@amcagencyweb.com>',
+      to: ['salcristhi5411@gmail.com'],
+      subject: '🎉 Nuevo Cliente Registrado - AMC Agency & Vida Digital CO',
+      html: `
         <!DOCTYPE html>
         <html>
         <head>
@@ -570,7 +568,7 @@ export default async function handler(req, res) {
                 </div>
                 <div class="info-row">
                   <span class="info-label">Plan:</span>
-                  <span class="info-value">$80,000 COP/mes (Primer mes GRATIS)</span>
+                  <span class="info-value">$80,000 COP/mes</span>
                 </div>
                 <div class="info-row">
                   <span class="info-label">Estado:</span>
@@ -600,23 +598,23 @@ export default async function handler(req, res) {
         </body>
         </html>
       `
-      };
-    } else {
-      return res.status(400).json({ error: 'Invalid email type' });
-    }
-
-    const { data, error } = await resend.emails.send(emailConfig);
-
-    if (error) {
-      console.error('Resend error:', error);
-      return res.status(500).json({ error: 'Failed to send email', details: error });
-    }
-
-    console.log('Email sent successfully:', data);
-    return res.status(200).json({ success: true, data });
-
-  } catch (error) {
-    console.error('Server error:', error);
-    return res.status(500).json({ error: 'Internal server error', details: error.message });
+    };
+  } else {
+    return res.status(400).json({ error: 'Invalid email type' });
   }
+
+  const { data, error } = await resend.emails.send(emailConfig);
+
+  if (error) {
+    console.error('Resend error:', error);
+    return res.status(500).json({ error: 'Failed to send email', details: error });
+  }
+
+  console.log('Email sent successfully:', data);
+  return res.status(200).json({ success: true, data });
+
+} catch (error) {
+  console.error('Server error:', error);
+  return res.status(500).json({ error: 'Internal server error', details: error.message });
+}
 }

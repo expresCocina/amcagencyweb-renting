@@ -189,14 +189,14 @@ const RegistroPage = () => {
 
                         {success && (
                             <div className="registro-success">
-                                ✅ ¡Bienvenido a AMC Agency & Vida Digital CO! Tu primer mes es gratis. Redirigiendo...
+                                ✅ ¡Bienvenido a AMC Agency & Vida Digital CO! Redirigiendo a tu panel...
                             </div>
                         )}
 
                         <div className="payment-notice">
-                            <span className="icon">🎁</span>
+                            <span className="icon">💳</span>
                             <div>
-                                <strong>¡Tu primer mes es GRATIS!</strong> Regístrate ahora y disfruta de todos nuestros servicios sin costo por 30 días. Sin tarjetas de crédito, sin compromisos.
+                                <strong>Plan Mensual: $80,000 COP</strong> Regístrate ahora y comienza tu transformación digital. Sin compromisos, cancela cuando quieras.
                             </div>
                         </div>
 

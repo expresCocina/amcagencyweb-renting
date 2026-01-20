@@ -458,7 +458,7 @@ export default async function handler(req, res) {
       // Email to notify admin about new registration
       emailConfig = {
         from: 'AMC Agency <notificaciones@amcagencyweb.com>',
-        to: ['info@amcagencyweb.com'],
+        to: ['salcristhi5411@gmail.com'],
         subject: '🎉 Nuevo Cliente Registrado - AMC Agency',
         html: `
         <!DOCTYPE html>

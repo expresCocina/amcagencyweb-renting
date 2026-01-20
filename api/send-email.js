@@ -163,7 +163,7 @@ export default async function handler(req, res) {
               
               <div class="features">
                 <h3>📱 ¿Cómo funciona?</h3>
-                <p><strong>Plan Mensual:</strong> $80,000 COP/mes<br>
+                <p><strong>Plan Mensual:</strong> Pago mensual fijo<br>
                 <strong>Puedes cancelar:</strong> En cualquier momento, sin compromisos</p>
               </div>
               
@@ -262,7 +262,7 @@ export default async function handler(req, res) {
               <p>Notamos que aún no has completado el pago para activar tu sitio web de <strong>${clientData.nombre_negocio}</strong>.</p>
               
               <div class="highlight">
-                <p style="margin: 0;"><strong>💰 Monto pendiente:</strong> $80,000 COP</p>
+                <p style="margin: 0;"><strong>💰 Monto pendiente:</strong> Pago mensual</p>
               </div>
               
               <p>Una vez realices el pago, activaremos tu sitio web en menos de 48 horas y podrás disfrutar de todos los beneficios:</p>
@@ -568,7 +568,7 @@ export default async function handler(req, res) {
                 </div>
                 <div class="info-row">
                   <span class="info-label">Plan:</span>
-                  <span class="info-value">$80,000 COP/mes</span>
+                  <span class="info-value">Plan Mensual</span>
                 </div>
                 <div class="info-row">
                   <span class="info-label">Estado:</span>

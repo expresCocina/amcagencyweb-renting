@@ -196,7 +196,7 @@ const RegistroPage = () => {
                         <div className="payment-notice">
                             <span className="icon">💳</span>
                             <div>
-                                <strong>Plan Mensual: $80,000 COP</strong> Regístrate ahora y comienza tu transformación digital. Sin compromisos, cancela cuando quieras.
+                                <strong>Plan Mensual</strong> Regístrate ahora y comienza tu transformación digital. Sin compromisos, cancela cuando quieras.
                             </div>
                         </div>
 

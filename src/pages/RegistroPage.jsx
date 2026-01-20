@@ -161,7 +161,7 @@ const RegistroPage = () => {
             <div className="registro-container">
                 <div className="registro-hero">
                     <div className="registro-branding">
-                        <h1>🚀 ¡Bienvenido a AMC Agency!</h1>
+                        <h1>🚀 ¡Bienvenido a AMC Agency & Vida Digital CO!</h1>
                         <p>
                             Estás a un paso de tener tu presencia digital profesional.
                             Regístrate ahora y comienza tu transformación digital.
@@ -189,7 +189,7 @@ const RegistroPage = () => {
 
                         {success && (
                             <div className="registro-success">
-                                ✅ ¡Cuenta creada! Tu primer mes es gratis. Redirigiendo...
+                                ✅ ¡Bienvenido a AMC Agency & Vida Digital CO! Tu primer mes es gratis. Redirigiendo...
                             </div>
                         )}
 

@@ -67,7 +67,7 @@ const Footer = () => {
                 </div>
 
                 <div className="footer-bottom">
-                    <p>&copy; 2025 AMC Agency Web. Todos los derechos reservados.</p>
+                    <p>&copy; 2026 AMC Agency Web. Todos los derechos reservados.</p>
                 </div>
             </div>
         </footer>

@@ -85,7 +85,7 @@ const RegistroPage = () => {
                     phone: formData.whatsapp,
                     estado_pago: 'activo', // Active immediately for free trial
                     status: 'active',      // Active immediately
-                    plan: '80000',
+                    plan: null,
                     next_payment: nextPaymentDate.toISOString().split('T')[0], // Set next payment to 30 days
                     services: {
                         sitio_web: 'pending',

@@ -75,7 +75,7 @@ const ClientDashboard = () => {
     };
 
     const formatPlan = (plan) => {
-        if (!plan) return '$0';
+        if (!plan || plan === 'null' || plan === '0') return 'Por asignar';
         return `$${parseInt(plan).toLocaleString('es-CO')} COP`;
     };
 

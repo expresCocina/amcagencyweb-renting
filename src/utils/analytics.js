@@ -63,16 +63,28 @@ const getFacebookCookies = () => {
     };
 };
 
-// Send event to Server CAPI
+// Send event to Server CAPI via Supabase Edge Function
 const sendToServerCAPI = async (eventName, customData = {}, userData = {}) => {
     try {
         const { fbp, fbc } = getFacebookCookies();
         const eventId = `${eventName}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
 
-        const response = await fetch('/api/events', {
+        // Use Supabase Edge Function URL
+        // Get URL from env or build it from project URL
+        const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
+        const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
+        const CAPI_URL = `${SUPABASE_URL}/functions/v1/facebook-capi`;
+
+        if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
+            console.warn('⚠️ Supabase configuration missing for CAPI');
+            return;
+        }
+
+        const response = await fetch(CAPI_URL, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
             },
             body: JSON.stringify({
                 eventName,
@@ -88,12 +100,13 @@ const sendToServerCAPI = async (eventName, customData = {}, userData = {}) => {
         });
 
         if (response.ok) {
-            console.log('📊 CAPI Event Sent:', eventName);
+            console.log('📊 CAPI Event Sent (Supabase):', eventName);
         } else {
-            console.warn('📊 CAPI Event Failed:', eventName, await response.text());
+            console.warn('⚠️ CAPI Event Warning (Supabase):', eventName, response.status);
         }
     } catch (error) {
-        console.error('📊 CAPI Error:', error);
+        // Silent fail to not spam console if something network related happens
+        // console.error('📊 CAPI Error:', error);
     }
 };
 

@@ -95,13 +95,36 @@ export default async function handler(req, res) {
         const eventRequest = (new EventRequest(access_token, pixel_id))
             .setEvents(eventsData);
 
-        const response = await eventRequest.execute();
-        console.log('CAPI Response: ', response);
+        let response;
+        try {
+            response = await eventRequest.execute();
+            console.log('✅ CAPI Event Sent Successfully:', eventName);
+            console.log('   Response:', JSON.stringify(response, null, 2));
+        } catch (executeError) {
+            console.error('❌ CAPI Execute Error:', {
+                eventName,
+                error: executeError.message,
+                stack: executeError.stack,
+                details: executeError
+            });
+
+            // Return success anyway to not break the user flow
+            // The browser pixel will still track the event
+            return res.status(200).json({
+                success: true,
+                warning: 'CAPI failed but browser pixel should track',
+                error: executeError.message
+            });
+        }
 
         return res.status(200).json({ success: true, response });
 
     } catch (err) {
-        console.error('CAPI Error: ', err);
+        console.error('❌ CAPI Handler Error:', {
+            message: err.message,
+            stack: err.stack,
+            name: err.name
+        });
         return res.status(500).json({ error: err.message || 'Internal Server Error' });
     }
 }

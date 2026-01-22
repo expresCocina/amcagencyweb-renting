@@ -718,6 +718,7 @@
         font-size: 1.25rem;
     }
 }
+
 /* Email Reminder Button */
 .btn-email {
     padding: 8px 12px;
@@ -736,4 +737,174 @@
     background: rgba(59, 130, 246, 0.2);
     transform: scale(1.05);
     box-shadow: 0 0 12px rgba(59, 130, 246, 0.3);
+}
+
+/* Mobile Responsive Styles - Improved Card Layout */
+@media (max-width: 1024px) {
+    .table-wrapper {
+        overflow-x: auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .clients-table-container {
+        padding: 16px;
+        margin: 0 -10px;
+        /* Expand to edges slightly on small screens */
+    }
+
+    .table-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 16px;
+    }
+
+    .table-header h2 {
+        font-size: 1.25rem;
+        text-align: center;
+    }
+
+    .search-bar {
+        max-width: 100%;
+        min-width: 100%;
+    }
+
+    /* Convert Table to Cards */
+    .clients-table thead {
+        display: none;
+    }
+
+    .clients-table,
+    .clients-table tbody,
+    .clients-table tr,
+    .clients-table td {
+        display: block;
+        width: 100%;
+    }
+
+    .clients-table tbody tr {
+        background: rgba(15, 23, 42, 0.4);
+        border: 1px solid rgba(148, 163, 184, 0.1);
+        border-radius: 12px;
+        padding: 16px;
+        margin-bottom: 16px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+
+    .clients-table tbody tr:hover {
+        transform: none;
+        background: rgba(15, 23, 42, 0.6);
+    }
+
+    .clients-table td {
+        padding: 8px 0;
+        border: none;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        text-align: right;
+    }
+
+    .clients-table td:before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: #94a3b8;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-right: 12px;
+        text-align: left;
+    }
+
+    /* Special handling for Client Info row */
+    .clients-table td:first-child {
+        justify-content: flex-start;
+        padding-bottom: 12px;
+        border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+        margin-bottom: 8px;
+    }
+
+    .clients-table td:first-child:before {
+        display: none;
+    }
+
+    /* Action buttons row */
+    .clients-table td:last-child {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+        margin-top: 12px;
+        padding-top: 12px;
+        border-top: 1px solid rgba(148, 163, 184, 0.1);
+    }
+
+    .clients-table td:last-child:before {
+        display: none;
+    }
+
+    .action-buttons {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        width: 100%;
+    }
+
+    .btn-whatsapp,
+    .btn-edit,
+    .btn-email {
+        justify-content: center;
+        height: 40px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+    }
+
+    .status-badge,
+    .plan-badge {
+        font-size: 0.8rem;
+    }
+
+    .client-avatar {
+        width: 40px;
+        height: 40px;
+        font-size: 0.9rem;
+    }
+
+    .client-name {
+        font-size: 1rem;
+    }
+
+    /* Modal responsive updates */
+    .demo-modal {
+        padding: 10px;
+        align-items: flex-end;
+        /* Slide up on mobile */
+    }
+
+    .edit-modal-content {
+        max-height: 85vh;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    .modal-body {
+        padding: 20px;
+    }
+
+    .modal-close {
+        top: 12px;
+        right: 12px;
+        width: 32px;
+        height: 32px;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .services-toggles {
+        grid-template-columns: 1fr;
+    }
 }

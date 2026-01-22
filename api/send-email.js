@@ -1,4 +1,3 @@
-// import { Resend } from 'resend'; // Dynamic import used instead
 
 // Use RESEND_API_KEY for Vercel serverless functions
 // Initialized inside handler to prevent top-level crashes if key is missing
@@ -9,13 +8,27 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  // Init Resend inside handler for safety
-  if (!process.env.RESEND_API_KEY) {
-    console.error('Missing RESEND_API_KEY environment variable');
-    return res.status(500).json({ error: 'Configuration Error: Missing RESEND_API_KEY in Vercel' });
-  }
+  let resend;
+  try {
+    // Dynamic import to handle missing dependency gracefully
+    const module = await import('resend');
+    const Resend = module.Resend;
 
-  const resend = new Resend(process.env.RESEND_API_KEY);
+    // Init Resend inside handler for safety
+    if (!process.env.RESEND_API_KEY) {
+      console.error('Missing RESEND_API_KEY environment variable');
+      return res.status(500).json({ error: 'Configuration Error: Missing RESEND_API_KEY in Vercel' });
+    }
+
+    resend = new Resend(process.env.RESEND_API_KEY);
+  } catch (err) {
+    console.error('Failed to load Resend module or init:', err);
+    return res.status(500).json({
+      error: 'Dependency Error: Could not load "resend" module.',
+      details: err.message,
+      hint: 'Please ensure "resend" is in package.json dependencies and npm install ran.'
+    });
+  }
 
   try {
     const { type, clientData } = req.body;
@@ -30,9 +43,7 @@ export default async function handler(req, res) {
       emailConfig = {
         from: 'AMC Agency & Vida Digital CO <bienvenida@amcagencyweb.com>',
         to: [clientData.email],
-        subject: '🎁 ¡Bienvenido a AMC Agency & Vida Digital CO!
-
-',
+        subject: '🎁 ¡Bienvenido a AMC Agency & Vida Digital CO!',
         html: `
         <!DOCTYPE html>
         <html>
@@ -140,8 +151,6 @@ export default async function handler(req, res) {
             <div class="content">
               <p>Hola <strong>${clientData.nombre_representante}</strong>,</p>
               
-
-              
               <p>¡Gracias por registrarte en AMC Agency & Vida Digital CO! Estamos emocionados de ayudar a <strong>${clientData.nombre_negocio}</strong> a tener una presencia digital profesional.</p>
               
               <h2 style="color: #667eea;">📋 ¿Qué Sigue?</h2>
@@ -203,13 +212,13 @@ export default async function handler(req, res) {
         </body>
         </html>
       `
-    };
-  } else if (type === 'reminder') {
-    emailConfig = {
-      from: 'AMC Agency & Vida Digital CO <recordatorios@amcagencyweb.com>',
-      to: [clientData.email],
-      subject: '⏰ Recordatorio: Completa tu pago - AMC Agency & Vida Digital CO',
-      html: `
+      };
+    } else if (type === 'reminder') {
+      emailConfig = {
+        from: 'AMC Agency & Vida Digital CO <recordatorios@amcagencyweb.com>',
+        to: [clientData.email],
+        subject: '⏰ Recordatorio: Completa tu pago - AMC Agency & Vida Digital CO',
+        html: `
         <!DOCTYPE html>
         <html>
         <head>
@@ -314,13 +323,13 @@ export default async function handler(req, res) {
         </body>
         </html>
       `
-    };
-  } else if (type === 'payment_confirmation') {
-    emailConfig = {
-      from: 'AMC Agency & Vida Digital CO <pagos@amcagencyweb.com>',
-      to: [clientData.email],
-      subject: '✅ ¡Pago Confirmado! - AMC Agency & Vida Digital CO',
-      html: `
+      };
+    } else if (type === 'payment_confirmation') {
+      emailConfig = {
+        from: 'AMC Agency & Vida Digital CO <pagos@amcagencyweb.com>',
+        to: [clientData.email],
+        subject: '✅ ¡Pago Confirmado! - AMC Agency & Vida Digital CO',
+        html: `
         <!DOCTYPE html>
         <html>
         <head>
@@ -471,14 +480,13 @@ export default async function handler(req, res) {
         </body>
         </html>
       `;
-    };
-  } else if (type === 'admin_notification') {
-    // Email to notify admin about new registration
-    emailConfig = {
-      from: 'AMC Agency & Vida Digital CO <notificaciones@amcagencyweb.com>',
-      to: ['salcristhi5411@gmail.com'],
-      subject: '🎉 Nuevo Cliente Registrado - AMC Agency & Vida Digital CO',
-      html: `
+      } else if (type === 'admin_notification') {
+        // Email to notify admin about new registration
+        emailConfig = {
+          from: 'AMC Agency & Vida Digital CO <notificaciones@amcagencyweb.com>',
+          to: ['salcristhi5411@gmail.com'],
+          subject: '🎉 Nuevo Cliente Registrado - AMC Agency & Vida Digital CO',
+          html: `
         <!DOCTYPE html>
         <html>
         <head>
@@ -618,23 +626,23 @@ export default async function handler(req, res) {
         </body>
         </html>
       `
-    };
-  } else {
-    return res.status(400).json({ error: 'Invalid email type' });
+        };
+      } else {
+        return res.status(400).json({ error: 'Invalid email type' });
+      }
+
+      const { data, error } = await resend.emails.send(emailConfig);
+
+      if (error) {
+        console.error('Resend error:', error);
+        return res.status(500).json({ error: 'Failed to send email', details: error });
+      }
+
+      console.log('Email sent successfully:', data);
+      return res.status(200).json({ success: true, data });
+
+    } catch (error) {
+      console.error('Server error:', error);
+      return res.status(500).json({ error: 'Internal server error', details: error.message });
+    }
   }
-
-  const { data, error } = await resend.emails.send(emailConfig);
-
-  if (error) {
-    console.error('Resend error:', error);
-    return res.status(500).json({ error: 'Failed to send email', details: error });
-  }
-
-  console.log('Email sent successfully:', data);
-  return res.status(200).json({ success: true, data });
-
-} catch (error) {
-  console.error('Server error:', error);
-  return res.status(500).json({ error: 'Internal server error', details: error.message });
-}
-}

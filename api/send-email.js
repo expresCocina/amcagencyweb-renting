@@ -150,6 +150,18 @@ export default async function handler(req, res) {
                 </a>
               </center>
               
+              <div class="highlight-box" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 25px; border-radius: 12px; margin: 30px 0; text-align: center;">
+                <h2 style="color: white; margin: 0 0 15px 0;">💳 Completa Tu Pago Ahora</h2>
+                <p style="margin: 0 0 20px 0; font-size: 16px; line-height: 1.6;">
+                  Activa todos tus servicios completando el pago mensual desde tu panel de cliente.
+                </p>
+                <center>
+                  <a href="https://amcagencyweb.com/dashboard" class="button" style="background: white; color: #667eea; font-weight: bold; font-size: 18px; padding: 15px 40px;">
+                    🚀 Ir a Pagar Ahora
+                  </a>
+                </center>
+              </div>
+              
               <div class="features">
                 <h3>🎁 Tu Plan Incluye:</h3>
                 <div class="feature-item">✅ Sitio web profesional</div>

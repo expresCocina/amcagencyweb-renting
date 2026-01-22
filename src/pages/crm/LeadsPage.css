@@ -280,6 +280,8 @@
     border-radius: 8px;
     font-size: 14px;
     transition: border-color 0.2s;
+    background: white;
+    color: #111827;
 }
 
 .form-group input:focus,
@@ -287,6 +289,12 @@
 .form-group textarea:focus {
     outline: none;
     border-color: #4f46e5;
+    background: white;
+}
+
+.form-group select option {
+    background: white;
+    color: #111827;
 }
 
 .modal-actions {

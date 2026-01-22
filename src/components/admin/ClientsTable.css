@@ -718,3 +718,22 @@
         font-size: 1.25rem;
     }
 }
+/* Email Reminder Button */
+.btn-email {
+    padding: 8px 12px;
+    background: rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    border-radius: 6px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: #3b82f6;
+    white-space: nowrap;
+}
+
+.btn-email:hover {
+    background: rgba(59, 130, 246, 0.2);
+    transform: scale(1.05);
+    box-shadow: 0 0 12px rgba(59, 130, 246, 0.3);
+}

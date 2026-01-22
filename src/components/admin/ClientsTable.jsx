@@ -81,6 +81,38 @@ const ClientsTable = ({ clients, onUpdate }) => {
         window.open(url, '_blank');
     };
 
+    const handleEmailReminder = async (client) => {
+        if (!window.confirm(`¿Enviar recordatorio de pago por email a ${client.email}?`)) {
+            return;
+        }
+
+        try {
+            const response = await fetch('/api/send-email', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    type: 'reminder',
+                    clientData: {
+                        email: client.email,
+                        nombre_representante: client.name,
+                        nombre_negocio: client.company
+                    }
+                })
+            });
+
+            if (response.ok) {
+                alert(`✅ Recordatorio enviado a ${client.email}`);
+            } else {
+                throw new Error('Error al enviar email');
+            }
+        } catch (error) {
+            console.error('Error sending email reminder:', error);
+            alert('❌ Error al enviar el recordatorio por email. Verifica la configuración de correo.');
+        }
+    };
+
     const toggleSiteStatus = async (client) => {
         try {
             const newStatus = client.status === 'active' ? 'suspended' : 'active';
@@ -315,7 +347,14 @@ const ClientsTable = ({ clients, onUpdate }) => {
                                                 onClick={() => handleWhatsApp(client)}
                                                 title="Enviar mensaje por WhatsApp"
                                             >
-                                                💬
+                                                💬 WhatsApp
+                                            </button>
+                                            <button
+                                                className="btn-email"
+                                                onClick={() => handleEmailReminder(client)}
+                                                title="Enviar recordatorio por email"
+                                            >
+                                                📧 Email
                                             </button>
                                             <button
                                                 className="btn-edit"

@@ -1,0 +1,190 @@
+.crm-clients-page {
+    max-width: 1400px;
+}
+
+.clients-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 24px;
+}
+
+.clients-header h1 {
+    margin: 0 0 8px 0;
+    font-size: 32px;
+    font-weight: 700;
+    color: #1e293b;
+}
+
+.clients-header p {
+    margin: 0;
+    color: #64748b;
+    font-size: 14px;
+}
+
+.clients-filters {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 32px;
+}
+
+.clients-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 24px;
+}
+
+.client-card {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s;
+    border: 1px solid #f1f5f9;
+}
+
+.client-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.client-card-header {
+    padding: 20px;
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.client-icon {
+    width: 56px;
+    height: 56px;
+    background: white;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.client-badges {
+    display: flex;
+    gap: 8px;
+}
+
+.client-card-body {
+    padding: 20px;
+}
+
+.client-card-body h3 {
+    margin: 0 0 4px 0;
+    font-size: 20px;
+    font-weight: 700;
+    color: #1e293b;
+}
+
+.client-rep {
+    margin: 0 0 16px 0;
+    color: #64748b;
+    font-size: 14px;
+}
+
+.client-info {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.info-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.info-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.info-label {
+    font-size: 13px;
+    color: #64748b;
+    font-weight: 500;
+}
+
+.info-value {
+    font-size: 13px;
+    color: #1e293b;
+    font-weight: 600;
+    text-align: right;
+    max-width: 60%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.badge-active {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.badge-pending {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.badge-suspended {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.plan-basic {
+    background: #e0e7ff;
+    color: #4338ca;
+}
+
+.plan-pro {
+    background: #dbeafe;
+    color: #1e40af;
+}
+
+.plan-enterprise {
+    background: #fce7f3;
+    color: #9f1239;
+}
+
+.client-card-footer {
+    padding: 16px 20px;
+    background: #f8fafc;
+    border-top: 1px solid #f1f5f9;
+}
+
+.btn-link {
+    color: #4f46e5;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    transition: color 0.2s;
+}
+
+.btn-link:hover {
+    color: #4338ca;
+}
+
+@media (max-width: 768px) {
+    .clients-header {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .clients-filters {
+        flex-direction: column;
+    }
+
+    .clients-grid {
+        grid-template-columns: 1fr;
+    }
+}

@@ -50,6 +50,15 @@ import AcademiaDemo from './pages/demos/AcademiaDemo';
 import BoutiqueDemo from './pages/demos/BoutiqueDemo';
 import ConsultoraDemo from './pages/demos/ConsultoraDemo';
 
+// CRM Pages
+import CRMLayout from './pages/crm/CRMLayout';
+import CRMDashboard from './pages/crm/CRMDashboard';
+import LeadsPage from './pages/crm/LeadsPage';
+import PipelinePage from './pages/crm/PipelinePage';
+import CRMClientsPage from './pages/crm/CRMClientsPage';
+import ProjectsPage from './pages/crm/ProjectsPage';
+import TasksPage from './pages/crm/TasksPage';
+import ReportsPage from './pages/crm/ReportsPage';
 
 
 function App() {
@@ -92,7 +101,8 @@ function AppContent({ isDelayedLoaded, isPromoActive }) {
   const isLoginPage = location.pathname === '/login';
   const isClientDashboard = location.pathname === '/dashboard';
   const isFreeWebsiteLanding = location.pathname === '/gratis';
-  const hideNavigation = isAdminPage || isRegistroPage || isLoginPage || isClientDashboard || isFreeWebsiteLanding;
+  const isCRMPage = location.pathname.startsWith('/crm');
+  const hideNavigation = isAdminPage || isRegistroPage || isLoginPage || isClientDashboard || isFreeWebsiteLanding || isCRMPage;
 
   return (
     <div className="App">
@@ -154,6 +164,20 @@ function AppContent({ isDelayedLoaded, isPromoActive }) {
             </ProtectedRoute>
           } />
 
+          {/* CRM Routes - Protected */}
+          <Route path="/crm" element={
+            <ProtectedRoute>
+              <CRMLayout />
+            </ProtectedRoute>
+          }>
+            <Route index element={<CRMDashboard />} />
+            <Route path="leads" element={<LeadsPage />} />
+            <Route path="pipeline" element={<PipelinePage />} />
+            <Route path="clients" element={<CRMClientsPage />} />
+            <Route path="projects" element={<ProjectsPage />} />
+            <Route path="tasks" element={<TasksPage />} />
+            <Route path="reports" element={<ReportsPage />} />
+          </Route>
 
 
         </Routes>

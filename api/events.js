@@ -6,15 +6,21 @@ import { FacebookAdsApi, ServerEvent, EventRequest, UserData, CustomData } from 
 const access_token = process.env.FACEBOOK_ACCESS_TOKEN || process.env.VITE_FACEBOOK_ACCESS_TOKEN;
 const pixel_id = process.env.FACEBOOK_PIXEL_ID || process.env.VITE_FACEBOOK_PIXEL_ID;
 
-if (access_token) {
+console.log('🔍 Facebook CAPI Configuration Check:');
+console.log('  - Access Token:', access_token ? `✅ Present (${access_token.substring(0, 10)}...)` : '❌ Missing');
+console.log('  - Pixel ID:', pixel_id ? `✅ Present (${pixel_id})` : '❌ Missing');
+
+if (access_token && pixel_id) {
     try {
         FacebookAdsApi.init(access_token);
-        console.log('Facebook Ads API Initialized');
+        console.log('✅ Facebook Ads API Initialized Successfully');
     } catch (e) {
-        console.error('Error initializing Facebook Ads API', e);
+        console.error('❌ Error initializing Facebook Ads API:', e.message);
     }
 } else {
-    console.error('SERVER ERROR: FACEBOOK_ACCESS_TOKEN is missing');
+    console.warn('⚠️ Facebook CAPI will not work - Missing credentials');
+    if (!access_token) console.warn('  - Missing: FACEBOOK_ACCESS_TOKEN');
+    if (!pixel_id) console.warn('  - Missing: FACEBOOK_PIXEL_ID');
 }
 
 export default async function handler(req, res) {
@@ -43,10 +49,15 @@ export default async function handler(req, res) {
     }
 
     if (!access_token || !pixel_id) {
-        console.error('Missing Facebook Credentials in Environment Variables');
+        const missingVars = [];
+        if (!access_token) missingVars.push('FACEBOOK_ACCESS_TOKEN');
+        if (!pixel_id) missingVars.push('FACEBOOK_PIXEL_ID');
+
+        console.error('❌ Missing Facebook Credentials:', missingVars.join(', '));
         return res.status(500).json({
             error: 'Server Configuration Error: Missing Facebook Credentials',
-            details: 'Please check Vercel Environment Variables'
+            missing: missingVars,
+            hint: 'Check Vercel Environment Variables settings'
         });
     }
 

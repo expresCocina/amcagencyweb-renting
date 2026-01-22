@@ -34,97 +34,131 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-            z-index: 999999999;
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            z-index: 2147483647; /* Max z-index */
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            color: #fff;
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             text-align: center;
             padding: 20px;
+            box-sizing: border-box;
+            opacity: 0;
+            animation: waas-fade-in 0.5s forwards;
+        }
+
+        @keyframes waas-fade-in {
+            to { opacity: 1; }
         }
 
         #waas-lock-container {
-            background: rgba(30, 41, 59, 0.5);
-            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
             padding: 40px;
-            border-radius: 20px;
-            border: 1px solid rgba(148, 163, 184, 0.1);
-            max-width: 500px;
-            width: 90%;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            max-width: 480px;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        @media (min-width: 640px) {
+             #waas-lock-container {
+                padding: 60px 40px;
+             }
+        }
+
+        #waas-lock-icon-container {
+            width: 80px;
+            height: 80px;
+            background: #e0f2fe;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.15);
         }
 
         #waas-lock-icon {
-            font-size: 64px;
-            margin-bottom: 20px;
-            display: block;
+            font-size: 40px;
+            line-height: 1;
         }
 
         #waas-lock-title {
-            font-size: 24px;
+            font-size: 26px;
             font-weight: 700;
-            margin-bottom: 15px;
-            color: #f8fafc;
+            margin: 0 0 12px;
+            color: #1e293b;
+            letter-spacing: -0.5px;
         }
 
         #waas-lock-message {
             font-size: 16px;
             line-height: 1.6;
-            color: #cbd5e1;
-            margin-bottom: 30px;
+            color: #64748b;
+            margin: 0 auto 32px;
+            max-width: 400px;
+        }
+
+        .waas-btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
 
         .waas-btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 12px 24px;
-            border-radius: 8px;
+            padding: 14px 24px;
+            border-radius: 12px;
             font-weight: 600;
+            font-size: 16px;
             text-decoration: none;
-            transition: all 0.2s;
-            margin: 0 8px 10px;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
             border: none;
             cursor: pointer;
             width: 100%;
             box-sizing: border-box;
         }
 
-        @media (min-width: 640px) {
-            .waas-btn {
-                width: auto;
-            }
+        .waas-btn:active {
+            transform: scale(0.98);
         }
 
         .waas-btn-primary {
-            background: #3b82f6;
+            background: linear-gradient(to right, #2563eb, #1d4ed8);
             color: white;
-            box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.5);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
         }
         
         .waas-btn-primary:hover {
-            background: #2563eb;
-            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(37, 99, 235, 0.4);
+            transform: translateY(-1px);
         }
 
         .waas-btn-whatsapp {
-            background: #22c55e;
-            color: white;
-            box-shadow: 0 4px 6px -1px rgba(34, 197, 94, 0.5);
+            background: #ffffff;
+            color: #334155;
+            border: 1px solid #e2e8f0;
         }
 
         .waas-btn-whatsapp:hover {
-            background: #16a34a;
-            transform: translateY(-2px);
+            background: #f8fafc;
+            border-color: #cbd5e1;
+            color: #0f172a;
         }
 
         #waas-lock-brand {
-            margin-top: 30px;
+            margin-top: 32px;
             font-size: 12px;
-            color: #64748b;
+            color: #94a3b8;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         body.waas-locked {
@@ -155,25 +189,26 @@
 
         overlay.innerHTML = `
             <div id="waas-lock-container">
-                <span id="waas-lock-icon">🔒</span>
-                <h1 id="waas-lock-title">Servicio Suspendido</h1>
+                <div id="waas-lock-icon-container">
+                    <span id="waas-lock-icon">👋</span>
+                </div>
+                <h1 id="waas-lock-title">Hola, ${data.clientData?.name || 'Cliente'}</h1>
                 <p id="waas-lock-message">
-                    El servicio de <strong>${data.clientData?.name || domain}</strong> se encuentra temporalmente suspendido por pagos pendientes.
-                    <br><br>
-                    Para restaurar el acceso inmediatamente, por favor realiza el pago o contacta a soporte.
+                    Notamos que tu suscripción para <strong>${domain}</strong> requiere atención. 
+                    Reactiva tu servicio en segundos para continuar disfrutando de tu sitio web sin interrupciones.
                 </p>
                 
-                <div style="display: flex; flex-wrap: wrap; justify-content: center;">
+                <div class="waas-btn-group">
                     <a href="${data.redirectUrl}" class="waas-btn waas-btn-primary" target="_blank">
-                        💳 Realizar Pago
+                        💳 Pagar Ahora y Reactivar
                     </a>
-                    <a href="https://wa.me/57${data.whatsappNumber}?text=${encodeURIComponent('Hola, quiero reactivar mi servicio web: ' + domain)}" class="waas-btn waas-btn-whatsapp" target="_blank">
-                        💬 Contactar Soporte
+                    <a href="https://wa.me/57${data.whatsappNumber}?text=${encodeURIComponent('Hola, necesito ayuda con la reactivación de mi sitio: ' + domain)}" class="waas-btn waas-btn-whatsapp" target="_blank">
+                        💬 Hablar con Soporte
                     </a>
                 </div>
 
                 <div id="waas-lock-brand">
-                    Powered by AMC Agency & Vida Digital CO
+                    Powered by AMC Agency
                 </div>
             </div>
         `;

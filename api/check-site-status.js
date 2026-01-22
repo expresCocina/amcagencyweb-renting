@@ -66,8 +66,8 @@ export default async function handler(req, res) {
                 plan: client.plan,
                 phone: client.phone // Return phone for WhatsApp link
             },
-            redirectUrl: 'https://amcagencyweb.com/pagos', // General payment page
-            whatsappNumber: '3157508492' // Your support number
+            redirectUrl: 'https://checkout.nequi.wompi.co/l/xQ1z3t', // Direct Wompi payment link
+            whatsappNumber: '3138537261' // Updated support number
         });
 
     } catch (error) {

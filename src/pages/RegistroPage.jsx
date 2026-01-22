@@ -291,7 +291,7 @@ const RegistroPage = () => {
 
                         <div className="form-group">
                             <label htmlFor="dominio">
-                                ¿Ya tienes dominio? <span className="optional">(opcional)</span>
+                                Dominio del Sitio Web *
                             </label>
                             <input
                                 type="text"
@@ -299,10 +299,14 @@ const RegistroPage = () => {
                                 name="dominio"
                                 value={formData.dominio}
                                 onChange={handleChange}
-                                placeholder="Ej: www.tunegocio.com (si ya lo tienes)"
+                                placeholder="Ej: www.tunegocio.com"
+                                required
                                 disabled={isSubmitting || success}
                             />
-                            <small className="field-hint">Si no tienes dominio, déjalo en blanco y te ayudamos a elegir uno.</small>
+                            <small className="field-hint">
+                                Es obligatorio para activar la protección de tu sitio.
+                                ¿No tienes dominio? <a href="https://wa.me/573157508492?text=Hola,%20me%20estoy%20registrando%20y%20necesito%20ayuda%20con%20el%20dominio" target="_blank" rel="noopener noreferrer" style={{ color: '#3b82f6', textDecoration: 'underline' }}>Contactar a soporte</a> para asignarte uno temporal.
+                            </small>
                         </div>
 
                         <button

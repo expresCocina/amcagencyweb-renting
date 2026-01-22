@@ -1,4 +1,4 @@
-import { Resend } from 'resend';
+// import { Resend } from 'resend'; // Dynamic import used instead
 
 // Use RESEND_API_KEY for Vercel serverless functions
 // Initialized inside handler to prevent top-level crashes if key is missing

@@ -102,14 +102,17 @@ const ClientsTable = ({ clients, onUpdate }) => {
                 })
             });
 
+            const data = await response.json();
+
             if (response.ok) {
                 alert(`✅ Recordatorio enviado a ${client.email}`);
             } else {
-                throw new Error('Error al enviar email');
+                console.error('Server error details:', data);
+                throw new Error(data.error || data.details || JSON.stringify(data) || 'Error desconocido al enviar email');
             }
         } catch (error) {
             console.error('Error sending email reminder:', error);
-            alert('❌ Error al enviar el recordatorio por email. Verifica la configuración de correo.');
+            alert(`❌ Error al enviar el recordatorio: ${error.message}`);
         }
     };
 

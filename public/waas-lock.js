@@ -2,8 +2,29 @@
     // Configuration
     const API_URL = 'https://amcagencyweb.com/api/check-site-status';
 
-    // Get current domain
-    const domain = window.location.hostname;
+    // Helper to get script tag params
+    const scriptTag = document.currentScript;
+    let debugMode = false;
+    let domainOverride = null;
+
+    if (scriptTag) {
+        const srcParts = scriptTag.src.split('?');
+        if (srcParts.length > 1) {
+            const urlParams = new URLSearchParams(srcParts[1]);
+            debugMode = urlParams.get('debug') === 'true';
+            domainOverride = urlParams.get('domain');
+        }
+    }
+
+    // Get current domain or override for testing
+    // Usage: <script src=".../waas-lock.js?domain=example.com&debug=true"></script>
+    const domain = domainOverride || window.location.hostname;
+
+    if (debugMode) {
+        console.log('🔒 WaaS Lock: Initializing...');
+        console.log('🔒 WaaS Lock: Checking status for domain:', domain);
+        console.log('🔒 WaaS Lock: API URL:', API_URL);
+    }
 
     // Styles for the lock screen
     const styles = `
@@ -121,6 +142,8 @@
 
     // Create and show lock screen
     function showLockScreen(data) {
+        if (document.getElementById('waas-lock-overlay')) return; // Prevent duplicates
+
         injectStyles();
         document.body.classList.add('waas-locked');
 
@@ -157,36 +180,32 @@
 
         document.body.appendChild(overlay);
 
-        // Nuke existing content (optional, aggressive mode)
-        // document.body.innerHTML = ''; 
-        // document.body.appendChild(overlay);
+        if (debugMode) console.log('🔒 WaaS Lock: Screen activated!');
     }
 
     // Main check function
     async function checkStatus() {
         try {
-            // Check if already locked locally to avoid flash
-            if (sessionStorage.getItem('waas_locked') === 'true') {
-                // showLockScreen({ ...JSON.parse(sessionStorage.getItem('waas_lock_data') || '{}') });
-            }
+            if (debugMode) console.log('🔒 WaaS Lock: Fetching status for ' + domain + '...');
 
             const response = await fetch(`${API_URL}?domain=${domain}`);
-            if (!response.ok) return;
+
+            if (!response.ok) {
+                if (debugMode) console.error('🔒 WaaS Lock: API Error', response.status, response.statusText);
+                return;
+            }
 
             const data = await response.json();
+            if (debugMode) console.log('🔒 WaaS Lock: API Response', data);
 
             if (data.isLocked) {
-                // Save state
-                sessionStorage.setItem('waas_locked', 'true');
-                sessionStorage.setItem('waas_lock_data', JSON.stringify(data));
-
-                // Show lock screen
+                if (debugMode) console.warn('🔒 WaaS Lock: SITE IS LOCKED ⛔');
                 showLockScreen(data);
 
-                // Stop other scripts
-                window.stop();
+                // Try stop
+                try { window.stop(); } catch (e) { }
             } else {
-                sessionStorage.removeItem('waas_locked');
+                if (debugMode) console.log('🔒 WaaS Lock: Site is active ✅');
             }
 
         } catch (error) {

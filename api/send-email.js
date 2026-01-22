@@ -1,3 +1,4 @@
+import { Resend } from 'resend';
 
 // Use RESEND_API_KEY for Vercel serverless functions
 // Initialized inside handler to prevent top-level crashes if key is missing
@@ -8,27 +9,13 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  let resend;
-  try {
-    // Dynamic import to handle missing dependency gracefully
-    const module = await import('resend');
-    const Resend = module.Resend;
-
-    // Init Resend inside handler for safety
-    if (!process.env.RESEND_API_KEY) {
-      console.error('Missing RESEND_API_KEY environment variable');
-      return res.status(500).json({ error: 'Configuration Error: Missing RESEND_API_KEY in Vercel' });
-    }
-
-    resend = new Resend(process.env.RESEND_API_KEY);
-  } catch (err) {
-    console.error('Failed to load Resend module or init:', err);
-    return res.status(500).json({
-      error: 'Dependency Error: Could not load "resend" module.',
-      details: err.message,
-      hint: 'Please ensure "resend" is in package.json dependencies and npm install ran.'
-    });
+  // Init Resend inside handler for safety
+  if (!process.env.RESEND_API_KEY) {
+    console.error('Missing RESEND_API_KEY environment variable');
+    return res.status(500).json({ error: 'Configuration Error: Missing RESEND_API_KEY in Vercel' });
   }
+
+  const resend = new Resend(process.env.RESEND_API_KEY);
 
   try {
     const { type, clientData } = req.body;

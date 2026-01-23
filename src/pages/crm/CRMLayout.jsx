@@ -2,6 +2,7 @@ import { Link, Outlet, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { supabase } from '../../supabaseClient';
 import NotificationBell from '../../components/common/NotificationBell';
+import GlobalSearch from '../../components/crm/GlobalSearch';
 import './CRMLayout.css';
 
 const CRMLayout = () => {
@@ -96,8 +97,7 @@ const CRMLayout = () => {
             {/* Main Content */}
             <main className="crm-main">
                 {/* Desktop Header */}
-                import GlobalSearch from '../../components/crm/GlobalSearch';
-                // ...
+
                 <header className="crm-top-header">
                     <div className="header-left">
                         <GlobalSearch />

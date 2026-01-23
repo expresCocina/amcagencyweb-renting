@@ -6,6 +6,7 @@ import './CRMLayout.css';
 const CRMLayout = () => {
     const location = useLocation();
     const [userProfile, setUserProfile] = useState(null);
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
     useEffect(() => {
         loadUserProfile();

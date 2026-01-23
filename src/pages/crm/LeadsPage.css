@@ -174,6 +174,18 @@
     transform: translateY(-1px);
 }
 
+.btn-whatsapp {
+    color: #25D366;
+    border-color: rgba(37, 211, 102, 0.2);
+    background: rgba(37, 211, 102, 0.1);
+    text-decoration: none;
+}
+
+.btn-whatsapp:hover {
+    background: #25D366;
+    color: white;
+}
+
 /* Modal specific overrides (most structure from Global) */
 .lead-form {
     padding: 24px;

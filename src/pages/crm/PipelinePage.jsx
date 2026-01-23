@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../../supabaseClient';
+import { getWhatsAppUrl, getWhatsAppMessage } from '../../utils/whatsappUtils';
 import './CRMPipeline.css';
 
 const PipelinePage = () => {
@@ -41,8 +42,8 @@ const PipelinePage = () => {
             .from('deals')
             .select(`
         *,
-        leads:lead_id (nombre, empresa),
-        clients:cliente_id (nombre_negocio),
+        leads:lead_id (nombre, empresa, telefono),
+        clients:cliente_id (nombre_negocio, nombre_representante, telefono),
         user_profiles:asignado_a (nombre_completo)
       `)
             .order('created_at', { ascending: false });
@@ -182,6 +183,25 @@ const PipelinePage = () => {
                                             </div>
                                             {deal.user_profiles?.nombre_completo && (
                                                 <p className="deal-assigned">👤 {deal.user_profiles.nombre_completo}</p>
+                                            )}
+
+                                            {/* Contact Actions */}
+                                            {(deal.leads?.telefono || deal.clients?.telefono) && (
+                                                <div className="deal-contact-actions">
+                                                    <a
+                                                        href={getWhatsAppUrl(
+                                                            deal.leads?.telefono || deal.clients?.telefono,
+                                                            getWhatsAppMessage('deal', deal.leads?.nombre || deal.clients?.nombre_representante || '')
+                                                        )}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        className="btn-icon btn-whatsapp-sm"
+                                                        title="Chat WhatsApp"
+                                                        onClick={(e) => e.stopPropagation()}
+                                                    >
+                                                        💬 WhatsApp
+                                                    </a>
+                                                </div>
                                             )}
 
                                             {/* Stage navigation */}

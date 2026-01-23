@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../../supabaseClient';
 import { Link } from 'react-router-dom';
+import { getWhatsAppUrl, getWhatsAppMessage } from '../../utils/whatsappUtils';
 import './CRMClientsPage.css';
 
 const CRMClientsPage = () => {
@@ -141,7 +142,18 @@ const CRMClientsPage = () => {
                                         </div>
                                         <div className="info-item">
                                             <span className="info-label">📱 WhatsApp:</span>
-                                            <span className="info-value">{client.whatsapp || 'N/A'}</span>
+                                            {client.whatsapp ? (
+                                                <a
+                                                    href={getWhatsAppUrl(client.whatsapp, getWhatsAppMessage('client', client.nombre_representante || ''))}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="info-value link-whatsapp"
+                                                >
+                                                    {client.whatsapp} ↗
+                                                </a>
+                                            ) : (
+                                                <span className="info-value">N/A</span>
+                                            )}
                                         </div>
                                         <div className="info-item">
                                             <span className="info-label">🌐 Dominio:</span>

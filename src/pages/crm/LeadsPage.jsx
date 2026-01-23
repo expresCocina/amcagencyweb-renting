@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../../supabaseClient';
 import ActivityTimeline from '../../components/crm/ActivityTimeline';
+import { getWhatsAppUrl, getWhatsAppMessage } from '../../utils/whatsappUtils';
 import './LeadsPage.css';
 
 const LeadsPage = () => {
@@ -278,6 +279,17 @@ const LeadsPage = () => {
                                         <td>${lead.valor_estimado?.toLocaleString() || 0}</td>
                                         <td>{lead.user_profiles?.nombre_completo || 'Sin asignar'}</td>
                                         <td className="actions">
+                                            {lead.telefono && (
+                                                <a
+                                                    href={getWhatsAppUrl(lead.telefono, getWhatsAppMessage('lead', lead.nombre || ''))}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="btn-icon btn-whatsapp"
+                                                    title="Chat WhatsApp"
+                                                >
+                                                    💬
+                                                </a>
+                                            )}
                                             <button onClick={() => handleEdit(lead)} className="btn-icon" title="Editar">
                                                 ✏️
                                             </button>

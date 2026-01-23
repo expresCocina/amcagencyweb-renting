@@ -67,11 +67,17 @@ const PipelinePage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const { error } = await supabase.from('deals').insert([{
+            const payload = {
                 ...formData,
                 valor: parseFloat(formData.valor) || 0,
                 probabilidad: parseInt(formData.probabilidad) || 10,
-            }]);
+                lead_id: formData.lead_id || null,
+                cliente_id: formData.cliente_id || null,
+                asignado_a: formData.asignado_a || null,
+                fecha_estimada_cierre: formData.fecha_estimada_cierre || null
+            };
+
+            const { error } = await supabase.from('deals').insert([payload]);
 
             if (error) throw error;
 

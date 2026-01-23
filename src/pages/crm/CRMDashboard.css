@@ -240,8 +240,167 @@
     color: white;
 }
 
+/* ============================================
+   MOBILE RESPONSIVENESS
+   ============================================ */
+
+/* Tablets and below (1024px) */
 @media (max-width: 1024px) {
+    .crm-dashboard {
+        padding: 24px 16px;
+    }
+
     .crm-dashboard-sections {
         grid-template-columns: 1fr;
+    }
+
+    .crm-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+}
+
+/* Mobile devices (768px) */
+@media (max-width: 768px) {
+    .crm-dashboard {
+        padding: 20px 12px;
+    }
+
+    .crm-dashboard-header h1 {
+        font-size: 28px;
+    }
+
+    .crm-dashboard-header p {
+        font-size: 14px;
+    }
+
+    /* Stats Grid: 1 column on mobile */
+    .crm-stats-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        margin-bottom: 24px;
+    }
+
+    .crm-stat-card {
+        padding: 20px;
+        gap: 16px;
+    }
+
+    .crm-stat-icon {
+        width: 48px;
+        height: 48px;
+        font-size: 20px;
+    }
+
+    .crm-stat-content h3 {
+        font-size: 28px;
+    }
+
+    .crm-stat-content p {
+        font-size: 13px;
+    }
+
+    /* Sections */
+    .crm-section {
+        padding: 20px;
+    }
+
+    .crm-section h2 {
+        font-size: 18px;
+        margin-bottom: 16px;
+    }
+
+    /* Activity List - Compact */
+    .crm-activity-item {
+        gap: 12px;
+        padding: 12px 0;
+    }
+
+    .crm-activity-icon {
+        width: 36px;
+        height: 36px;
+        font-size: 16px;
+    }
+
+    .crm-activity-title {
+        font-size: 13px;
+    }
+
+    .crm-activity-desc {
+        font-size: 12px;
+    }
+
+    .crm-activity-time {
+        font-size: 11px;
+    }
+
+    /* Quick Actions - 2x2 Grid */
+    .crm-quick-actions {
+        gap: 12px;
+    }
+
+    .crm-quick-action {
+        padding: 20px 16px;
+        min-height: 100px;
+    }
+
+    .crm-quick-action span {
+        font-size: 24px;
+        margin-bottom: 8px;
+    }
+
+    .crm-quick-action p {
+        font-size: 13px;
+    }
+}
+
+/* Small mobile devices (480px) */
+@media (max-width: 480px) {
+    .crm-dashboard {
+        padding: 16px 8px;
+    }
+
+    .crm-dashboard-header {
+        margin-bottom: 24px;
+    }
+
+    .crm-dashboard-header h1 {
+        font-size: 24px;
+    }
+
+    .crm-stat-card {
+        padding: 16px;
+    }
+
+    .crm-stat-content h3 {
+        font-size: 24px;
+    }
+
+    .crm-section {
+        padding: 16px;
+    }
+
+    /* Make activity list scrollable if too long */
+    .crm-activity-list {
+        max-height: 400px;
+        overflow-y: auto;
+    }
+
+    /* Ensure touch targets are at least 44px */
+    .crm-quick-action {
+        min-height: 88px;
+        padding: 16px;
+    }
+}
+
+/* Landscape mobile optimization */
+@media (max-width: 768px) and (orientation: landscape) {
+    .crm-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .crm-dashboard-sections {
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
     }
 }

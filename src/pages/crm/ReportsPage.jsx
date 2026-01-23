@@ -4,6 +4,15 @@ import './ReportsPage.css';
 import { FaChartLine, FaUsers, FaMoneyBillWave, FaPercentage } from 'react-icons/fa';
 
 const ReportsPage = () => {
+    const [stats, setStats] = useState({
+        totalLeads: 0,
+        convertedLeads: 0,
+        totalSalesVolume: 0,
+        potentialValue: 0,
+        wonDeals: 0,
+        lostDeals: 0,
+    });
+    const [loading, setLoading] = useState(true);
     const [monthlyData, setMonthlyData] = useState([]);
 
     useEffect(() => {

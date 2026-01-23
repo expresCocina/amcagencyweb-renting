@@ -2,9 +2,11 @@ import { useState, useEffect } from 'react';
 import { supabase } from '../../supabaseClient';
 import ActivityTimeline from '../../components/crm/ActivityTimeline';
 import { getWhatsAppUrl, getWhatsAppMessage } from '../../utils/whatsappUtils';
+import { useNotifications } from '../../context/NotificationContext';
 import './LeadsPage.css';
 
 const LeadsPage = () => {
+    const { createNotification } = useNotifications();
     const [leads, setLeads] = useState([]);
     const [filteredLeads, setFilteredLeads] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -115,6 +117,18 @@ const LeadsPage = () => {
                     relacionado_id: editingLead.id,
                     usuario_id: payload.asignado_a
                 });
+
+                // Notify assignee if changed
+                if (payload.asignado_a && payload.asignado_a !== editingLead.asignado_a) {
+                    createNotification(
+                        payload.asignado_a,
+                        'Lead Asignado',
+                        `Se te ha asignado el lead: ${formData.nombre}`,
+                        'info',
+                        '/crm/leads'
+                    );
+                }
+
             } else {
                 // Create
                 const { data, error } = await supabase
@@ -133,6 +147,17 @@ const LeadsPage = () => {
                     relacionado_con: 'lead',
                     relacionado_id: data.id,
                 });
+
+                // Notify assignee
+                if (payload.asignado_a) {
+                    createNotification(
+                        payload.asignado_a,
+                        'Nuevo Lead',
+                        `Se te ha asignado un nuevo lead: ${formData.nombre}`,
+                        'success',
+                        '/crm/leads'
+                    );
+                }
             }
 
             setShowModal(false);

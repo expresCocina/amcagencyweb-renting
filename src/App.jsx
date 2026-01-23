@@ -11,7 +11,9 @@ import AnnouncementBanner from './components/AnnouncementBanner';
 
 // Contexts
 import { LanguageProvider } from './contexts/LanguageContext';
+import { LanguageProvider } from './contexts/LanguageContext';
 import { CurrencyProvider } from './contexts/CurrencyContext';
+import { NotificationProvider } from './context/NotificationContext';
 
 // Lazy Load Floating Components
 const WhatsAppButton = lazy(() => import('./components/WhatsAppButton'));
@@ -81,11 +83,13 @@ function App() {
   return (
     <LanguageProvider>
       <CurrencyProvider>
-        <Router>
-          <ScrollToTop />
-          <AnalyticsTracker />
-          <AppContent isDelayedLoaded={isDelayedLoaded} isPromoActive={isPromoActive} />
-        </Router>
+        <NotificationProvider>
+          <Router>
+            <ScrollToTop />
+            <AnalyticsTracker />
+            <AppContent isDelayedLoaded={isDelayedLoaded} isPromoActive={isPromoActive} />
+          </Router>
+        </NotificationProvider>
       </CurrencyProvider>
     </LanguageProvider>
   );

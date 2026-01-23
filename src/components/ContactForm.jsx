@@ -27,17 +27,22 @@ const ContactForm = () => {
             // Save lead to CRM database
             const { supabase } = await import('../supabaseClient');
 
-            const { error: leadError } = await supabase
+            const leadData = {
+                nombre: formData.name,
+                empresa: formData.company,
+                email: formData.email,
+                telefono: formData.phone,
+                fuente: 'Formulario de Contacto Web',
+                estado: 'nuevo',
+                notas: `Servicio solicitado: ${formData.service}`
+            };
+
+            console.log('DEBUG: Attempting to save lead with data:', leadData);
+
+            const { data, error: leadError } = await supabase
                 .from('leads')
-                .insert([{
-                    nombre: formData.name,
-                    empresa: formData.company,
-                    email: formData.email,
-                    telefono: formData.phone,
-                    fuente: 'Formulario de Contacto Web',
-                    estado: 'nuevo',
-                    notas: `Servicio solicitado: ${formData.service}`
-                }]);
+                .insert([leadData])
+                .select();
 
             if (leadError) {
                 console.error('Error saving lead:', leadError);

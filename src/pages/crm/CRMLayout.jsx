@@ -59,7 +59,8 @@ const CRMLayout = () => {
                         <span>CRM</span>
                     </div>
                 </div>
-                <div className="mobile-right">
+                <div className="mobile-right" style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                    <GlobalSearch />
                     <NotificationBell />
                 </div>
             </div>

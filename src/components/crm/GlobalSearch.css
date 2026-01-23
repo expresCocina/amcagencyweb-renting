@@ -141,7 +141,95 @@
 /* Responsive */
 @media (max-width: 768px) {
     .global-search-wrapper {
-        display: none;
-        /* Hide on mobile? Or show icon only */
+        width: auto;
+        position: static;
+        /* Allow expansion */
+    }
+
+    .search-input-group {
+        width: 36px;
+        height: 36px;
+        overflow: hidden;
+        transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        background: transparent;
+        border-radius: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* Icon placement for collapsed state */
+    .search-input-group .search-icon {
+        position: relative;
+        left: auto;
+        font-size: 16px;
+        color: var(--crm-text-primary);
+        z-index: 2;
+        pointer-events: none;
+    }
+
+    .global-search-input {
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 36px !important;
+        height: 36px !important;
+        padding: 0 !important;
+        background: transparent !important;
+        border: 1px solid transparent !important;
+        border-radius: 50% !important;
+        cursor: pointer;
+        color: transparent !important;
+        z-index: 1;
+    }
+
+    /* Expanded State (Focus) */
+    .global-search-wrapper:focus-within .search-input-group {
+        position: fixed;
+        top: 10px;
+        left: 10px;
+        right: 10px;
+        width: calc(100% - 20px);
+        height: 44px;
+        background: var(--crm-panel-bg);
+        z-index: 2000;
+        border: 1px solid var(--crm-primary);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .global-search-wrapper:focus-within .search-icon {
+        position: absolute;
+        left: 16px;
+        color: var(--crm-primary);
+    }
+
+    .global-search-wrapper:focus-within .global-search-input {
+        width: 100% !important;
+        height: 100% !important;
+        position: relative;
+        top: 0;
+        transform: none;
+        border-radius: 20px !important;
+        background: transparent !important;
+        border: none !important;
+        padding: 0 16px 0 40px !important;
+        color: var(--crm-text-primary) !important;
+        font-size: 16px !important;
+    }
+
+    /* Spinner adjustment for mobile */
+    .global-search-wrapper:focus-within .search-spinner {
+        right: 16px;
+    }
+
+    /* Hide results dropdown until focused/expanded */
+    .search-results-dropdown {
+        position: fixed;
+        top: 60px;
+        left: 10px;
+        right: 10px;
+        width: auto;
+        max-height: 60vh;
     }
 }

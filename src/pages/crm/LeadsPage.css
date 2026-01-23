@@ -278,8 +278,8 @@
         min-width: unset;
     }
 
-    /* Hide table, show cards */
-    .leads-table {
+    /* Hide table header, keep tbody visible */
+    .leads-table thead {
         display: none;
     }
 
@@ -288,6 +288,10 @@
         background: transparent;
         border: none;
         box-shadow: none;
+    }
+
+    .leads-table {
+        display: block;
     }
 
     .leads-table tbody {
@@ -330,6 +334,10 @@
 
     .leads-table tbody td:last-child {
         justify-content: flex-end;
+    }
+
+    .leads-table tbody td.actions::before {
+        content: none;
     }
 
     /* Modal full-screen on mobile */

@@ -58,7 +58,8 @@ const LeadsPage = () => {
             const { data } = await supabase
                 .from('user_profiles')
                 .select('id, nombre_completo')
-                .eq('activo', true);
+                .eq('activo', true)
+                .in('rol', ['admin', 'vendedor']); // Only show staff
             setUsers(data || []);
         } catch (error) {
             console.error('Error loading users:', error);

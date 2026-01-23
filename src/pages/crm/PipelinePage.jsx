@@ -60,7 +60,11 @@ const PipelinePage = () => {
     };
 
     const loadUsers = async () => {
-        const { data } = await supabase.from('user_profiles').select('id, nombre_completo').eq('activo', true);
+        const { data } = await supabase
+            .from('user_profiles')
+            .select('id, nombre_completo')
+            .eq('activo', true)
+            .in('rol', ['admin', 'vendedor']); // Only show staff
         setUsers(data || []);
     };
 

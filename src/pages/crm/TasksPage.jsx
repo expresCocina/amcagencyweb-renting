@@ -58,8 +58,10 @@ const TasksPage = () => {
         const [leadsRes, projectsRes, usersRes] = await Promise.all([
             supabase.from('leads').select('id, nombre, empresa'),
             supabase.from('projects').select('id, nombre'),
-            supabase.from('user_profiles').select('id, nombre_completo').eq('activo', true)
-        ]);
+            supabase.from('user_profiles')
+                .select('id, nombre_completo')
+                .eq('activo', true)
+                .in('rol', ['admin', 'vendedor']) // Only show staff
 
         if (leadsRes.data) setLeads(leadsRes.data);
         if (projectsRes.data) setProjects(projectsRes.data);

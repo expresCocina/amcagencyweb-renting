@@ -13,6 +13,7 @@ import AnnouncementBanner from './components/AnnouncementBanner';
 import { LanguageProvider } from './contexts/LanguageContext';
 import { CurrencyProvider } from './contexts/CurrencyContext';
 import { NotificationProvider } from './context/NotificationContext';
+import { Toaster } from 'react-hot-toast';
 
 // Lazy Load Floating Components
 const WhatsAppButton = lazy(() => import('./components/WhatsAppButton'));
@@ -83,6 +84,17 @@ function App() {
     <LanguageProvider>
       <CurrencyProvider>
         <NotificationProvider>
+          <Toaster
+            position="top-right"
+            toastOptions={{
+              className: '',
+              style: {
+                background: '#1e293b',
+                color: '#fff',
+                border: '1px solid #334155',
+              },
+            }}
+          />
           <Router>
             <ScrollToTop />
             <AnalyticsTracker />

@@ -3,6 +3,7 @@ import { supabase } from '../../supabaseClient';
 import ActivityTimeline from '../../components/crm/ActivityTimeline';
 import { getWhatsAppUrl, getWhatsAppMessage } from '../../utils/whatsappUtils';
 import { useNotifications } from '../../context/NotificationContext';
+import toast from 'react-hot-toast';
 import './LeadsPage.css';
 
 const LeadsPage = () => {
@@ -88,12 +89,18 @@ const LeadsPage = () => {
         setFilteredLeads(filtered);
     };
 
+    import toast from 'react-hot-toast';
+
+    // ... (inside component)
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const toastId = toast.loading('Guardando...');
+
         try {
             const payload = {
                 ...formData,
-                asignado_a: formData.asignado_a || null, // Convert empty string to null
+                asignado_a: formData.asignado_a || null,
             };
 
             if (editingLead) {
@@ -129,6 +136,8 @@ const LeadsPage = () => {
                     );
                 }
 
+                toast.success('Lead actualizado correctamente', { id: toastId });
+
             } else {
                 // Create
                 const { data, error } = await supabase
@@ -158,6 +167,8 @@ const LeadsPage = () => {
                         '/crm/leads'
                     );
                 }
+
+                toast.success('Lead creado correctamente', { id: toastId });
             }
 
             setShowModal(false);
@@ -166,7 +177,7 @@ const LeadsPage = () => {
             loadLeads();
         } catch (error) {
             console.error('Error saving lead:', error);
-            alert('Error al guardar el lead');
+            toast.error('Error al guardar el lead', { id: toastId });
         }
     };
 

@@ -87,12 +87,17 @@ const LeadsPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+            const payload = {
+                ...formData,
+                asignado_a: formData.asignado_a || null, // Convert empty string to null
+            };
+
             if (editingLead) {
                 // Update
                 const { error } = await supabase
                     .from('leads')
                     .update({
-                        ...formData,
+                        ...payload,
                         updated_at: new Date().toISOString(),
                     })
                     .eq('id', editingLead.id);
@@ -106,12 +111,13 @@ const LeadsPage = () => {
                     descripcion: `${formData.nombre} fue actualizado`,
                     relacionado_con: 'lead',
                     relacionado_id: editingLead.id,
+                    usuario_id: payload.asignado_a
                 });
             } else {
                 // Create
                 const { data, error } = await supabase
                     .from('leads')
-                    .insert([formData])
+                    .insert([payload])
                     .select()
                     .single();
 

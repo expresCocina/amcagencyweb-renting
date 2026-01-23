@@ -26,7 +26,7 @@
 .form-group label {
     font-size: 0.875rem;
     font-weight: 600;
-    color: #cbd5e1;
+    color: #FFFFFF !important;
 }
 
 .form-group input,
@@ -35,7 +35,7 @@
     background: rgba(15, 23, 42, 0.5);
     border: 1px solid rgba(148, 163, 184, 0.2);
     border-radius: 8px;
-    color: #fff;
+    color: #FFFFFF !important;
     font-size: 1rem;
     transition: all 0.2s ease;
 }
@@ -48,7 +48,12 @@
 }
 
 .form-group input::placeholder {
-    color: #64748b;
+    color: rgba(255, 255, 255, 0.4) !important;
+}
+
+.form-group select option {
+    background: #1e293b !important;
+    color: #FFFFFF !important;
 }
 
 .form-group input:disabled,

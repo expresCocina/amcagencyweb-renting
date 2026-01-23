@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../../supabaseClient';
-import './ProjectsPage.css';
+import './CRMProjects.css';
 import { FaList, FaColumns, FaPlus, FaFileImport } from 'react-icons/fa';
 import DataImport from '../../components/crm/DataImport';
 

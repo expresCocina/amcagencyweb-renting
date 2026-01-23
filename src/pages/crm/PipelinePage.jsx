@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../../supabaseClient';
-import './PipelinePage.css';
+import './CRMPipeline.css';
 
 const PipelinePage = () => {
     const [deals, setDeals] = useState([]);

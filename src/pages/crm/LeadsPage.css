@@ -164,6 +164,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
 }
 
 .btn-icon:hover {
@@ -220,4 +222,151 @@
     padding: 24px;
     height: 500px;
     overflow-y: auto;
+}
+
+/* ============================================
+   MOBILE RESPONSIVENESS
+   ============================================ */
+
+/* Tablets (1024px) */
+@media (max-width: 1024px) {
+    .leads-page {
+        padding: 24px 16px;
+    }
+
+    .leads-filters {
+        flex-wrap: wrap;
+    }
+
+    .filter-select {
+        min-width: 150px;
+    }
+}
+
+/* Mobile devices (768px) */
+@media (max-width: 768px) {
+    .leads-page {
+        padding: 20px 12px;
+    }
+
+    /* Header */
+    .leads-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+        margin-bottom: 24px;
+    }
+
+    .leads-header h1 {
+        font-size: 24px;
+    }
+
+    .leads-header p {
+        font-size: 14px;
+    }
+
+    /* Filters */
+    .leads-filters {
+        flex-direction: column;
+        gap: 12px;
+        padding: 12px;
+    }
+
+    .search-input,
+    .filter-select {
+        width: 100%;
+        min-width: unset;
+    }
+
+    /* Hide table, show cards */
+    .leads-table {
+        display: none;
+    }
+
+    /* Mobile Card View */
+    .leads-table-container {
+        background: transparent;
+        border: none;
+        box-shadow: none;
+    }
+
+    .leads-table tbody {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .leads-table tbody tr {
+        display: flex;
+        flex-direction: column;
+        background: var(--crm-panel-bg);
+        border: 1px solid var(--crm-border);
+        border-radius: var(--crm-radius-lg);
+        padding: 16px;
+        gap: 12px;
+    }
+
+    .leads-table tbody tr:hover {
+        background: var(--crm-panel-bg);
+        border-color: var(--crm-primary);
+    }
+
+    .leads-table tbody td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0;
+        border: none;
+    }
+
+    .leads-table tbody td::before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: var(--crm-text-secondary);
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .leads-table tbody td:last-child {
+        justify-content: flex-end;
+    }
+
+    /* Modal full-screen on mobile */
+    .modal-content {
+        width: 100%;
+        height: 100%;
+        max-width: 100%;
+        max-height: 100%;
+        border-radius: 0;
+        margin: 0;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .lead-history-panel {
+        height: calc(100vh - 200px);
+    }
+}
+
+/* Small mobile (480px) */
+@media (max-width: 480px) {
+    .leads-page {
+        padding: 16px 8px;
+    }
+
+    .leads-header h1 {
+        font-size: 20px;
+    }
+
+    .leads-table tbody tr {
+        padding: 12px;
+    }
+
+    .btn-icon {
+        font-size: 18px;
+    }
 }

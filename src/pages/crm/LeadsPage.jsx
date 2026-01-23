@@ -302,7 +302,11 @@ const LeadsPage = () => {
                             filteredLeads.map((lead) => {
                                 const badge = getEstadoBadge(lead.estado);
                                 return (
-                                    <tr key={lead.id}>
+                                    <tr
+                                        key={lead.id}
+                                        className="lead-row interactive-row"
+                                        onClick={() => handleEdit(lead)}
+                                    >
                                         <td className="lead-name">{lead.nombre}</td>
                                         <td>{lead.empresa || '-'}</td>
                                         <td>{lead.email || '-'}</td>
@@ -312,7 +316,7 @@ const LeadsPage = () => {
                                         </td>
                                         <td>${lead.valor_estimado?.toLocaleString() || 0}</td>
                                         <td>{lead.user_profiles?.nombre_completo || 'Sin asignar'}</td>
-                                        <td className="actions">
+                                        <td className="actions" onClick={(e) => e.stopPropagation()}>
                                             {lead.telefono && (
                                                 <a
                                                     href={getWhatsAppUrl(lead.telefono, getWhatsAppMessage('lead', lead.nombre || ''))}
@@ -324,10 +328,11 @@ const LeadsPage = () => {
                                                     💬
                                                 </a>
                                             )}
-                                            <button onClick={() => handleEdit(lead)} className="btn-icon" title="Editar">
+                                            {/* Edit button redundant if row is clickable but kept for clarity */}
+                                            <button onClick={(e) => { e.stopPropagation(); handleEdit(lead); }} className="btn-icon" title="Editar">
                                                 ✏️
                                             </button>
-                                            <button onClick={() => handleDelete(lead.id)} className="btn-icon" title="Eliminar">
+                                            <button onClick={(e) => { e.stopPropagation(); handleDelete(lead.id); }} className="btn-icon" title="Eliminar">
                                                 🗑️
                                             </button>
                                         </td>

@@ -188,14 +188,13 @@
 @media (max-width: 480px) {
     .notification-dropdown {
         position: fixed;
-        top: 60px;
-        /* Header height */
-        left: 0;
-        right: 0;
-        width: 100%;
-        border-radius: 0;
-        border-left: none;
-        border-right: none;
+        top: 70px;
+        /* Match mobile header height */
+        left: 10px;
+        /* Add some spacing */
+        right: 10px;
+        width: auto;
+        border-radius: 12px;
         margin-top: 0;
     }
 }

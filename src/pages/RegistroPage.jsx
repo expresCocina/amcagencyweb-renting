@@ -82,9 +82,19 @@ const RegistroPage = () => {
                     nombre_representante: formData.nombre_representante,
                     domain: formData.dominio || null,
                     whatsapp: formData.whatsapp,
-                    estado_pago: 'activo', // Active immediately for free trial
+                    estado_pago: 'pendiente', // Pending until admin activates
                     plan: null,
-                    next_payment: nextPaymentDate.toISOString().split('T')[0] // Set next payment to 30 days
+                    next_payment: nextPaymentDate.toISOString().split('T')[0], // Set next payment to 30 days
+                    services: {
+                        sitio_web: 'pending',
+                        hosting: 'pending',
+                        ssl: 'pending',
+                        responsive: 'pending',
+                        design: 'pending',
+                        analytics: 'pending',
+                        seo: 'pending',
+                        support: 'pending'
+                    }
                 }]);
 
             if (insertError) {

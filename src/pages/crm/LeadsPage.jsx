@@ -18,7 +18,10 @@ const LeadsPage = () => {
     const [users, setUsers] = useState([]);
     const [filters, setFilters] = useState({
         estado: 'all',
+        fuente: 'all',
         search: '',
+        dateRange: 'all', // all, today, week, month
+        minValue: '',
     });
 
     const [formData, setFormData] = useState({
@@ -93,6 +96,35 @@ const LeadsPage = () => {
 
         if (filters.estado !== 'all') {
             filtered = filtered.filter(lead => lead.estado === filters.estado);
+        }
+
+        if (filters.fuente !== 'all') {
+            filtered = filtered.filter(lead => lead.fuente === filters.fuente);
+        }
+
+        if (filters.minValue) {
+            filtered = filtered.filter(lead => (lead.valor_estimado || 0) >= Number(filters.minValue));
+        }
+
+        if (filters.dateRange !== 'all') {
+            const now = new Date();
+            const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+            filtered = filtered.filter(lead => {
+                const leadDate = new Date(lead.created_at);
+                if (filters.dateRange === 'today') {
+                    return leadDate >= today;
+                } else if (filters.dateRange === 'week') {
+                    const weekAgo = new Date(today);
+                    weekAgo.setDate(weekAgo.getDate() - 7);
+                    return leadDate >= weekAgo;
+                } else if (filters.dateRange === 'month') {
+                    const monthAgo = new Date(today);
+                    monthAgo.setMonth(monthAgo.getMonth() - 1);
+                    return leadDate >= monthAgo;
+                }
+                return true;
+            });
         }
 
         if (filters.search) {
@@ -293,6 +325,36 @@ const LeadsPage = () => {
                     <option value="ganado">Ganado</option>
                     <option value="perdido">Perdido</option>
                 </select>
+
+                <select
+                    value={filters.fuente}
+                    onChange={(e) => setFilters({ ...filters, fuente: e.target.value })}
+                    className="filter-select"
+                >
+                    <option value="all">Todas las fuentes</option>
+                    <option value="web">Web</option>
+                    <option value="referido">Referido</option>
+                    <option value="redes_sociales">Redes Sociales</option>
+                </select>
+
+                <select
+                    value={filters.dateRange}
+                    onChange={(e) => setFilters({ ...filters, dateRange: e.target.value })}
+                    className="filter-select"
+                >
+                    <option value="all">Cualquier fecha</option>
+                    <option value="today">Hoy</option>
+                    <option value="week">Última semana</option>
+                    <option value="month">Último mes</option>
+                </select>
+
+                <input
+                    type="number"
+                    placeholder="Valor min ($)"
+                    value={filters.minValue}
+                    onChange={(e) => setFilters({ ...filters, minValue: e.target.value })}
+                    className="filter-input-small"
+                />
             </div>
 
             <div className="leads-table-container">

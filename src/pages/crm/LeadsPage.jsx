@@ -41,7 +41,7 @@ const LeadsPage = () => {
         try {
             const { data, error } = await supabase
                 .from('leads')
-                .select('*')
+                .select('*, user_profiles:asignado_a(nombre_completo)')
                 .order('created_at', { ascending: false });
 
             if (error) throw error;

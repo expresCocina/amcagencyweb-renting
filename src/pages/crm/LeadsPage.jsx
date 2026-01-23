@@ -89,9 +89,7 @@ const LeadsPage = () => {
         setFilteredLeads(filtered);
     };
 
-    import toast from 'react-hot-toast';
 
-    // ... (inside component)
 
     const handleSubmit = async (e) => {
         e.preventDefault();

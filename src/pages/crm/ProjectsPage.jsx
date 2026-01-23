@@ -17,7 +17,7 @@ const ProjectsPage = () => {
         descripcion: '',
         cliente_id: '',
         estado: 'planificacion',
-        fecha_fin: '',
+        fecha_entrega_estimada: '',
         presupuesto: 0,
         responsable: ''
     });
@@ -77,7 +77,8 @@ const ProjectsPage = () => {
             const payload = {
                 ...formData,
                 cliente_id: formData.cliente_id || null,
-                responsable: formData.responsable || null
+                responsable: formData.responsable || null,
+                fecha_entrega_estimada: formData.fecha_entrega_estimada || null
             };
 
             if (editingProject) {
@@ -110,7 +111,7 @@ const ProjectsPage = () => {
             descripcion: project.descripcion,
             cliente_id: project.cliente_id,
             estado: project.estado,
-            fecha_fin: project.fecha_fin,
+            fecha_entrega_estimada: project.fecha_entrega_estimada,
             presupuesto: project.presupuesto,
             responsable: project.responsable
         });
@@ -123,7 +124,7 @@ const ProjectsPage = () => {
             descripcion: '',
             cliente_id: '',
             estado: 'planificacion',
-            fecha_fin: '',
+            fecha_entrega_estimada: '',
             presupuesto: 0,
             responsable: ''
         });
@@ -192,7 +193,7 @@ const ProjectsPage = () => {
                                         <th>Nombre Proyecto</th>
                                         <th>Cliente</th>
                                         <th>Estado</th>
-                                        <th>Fecha Fin</th>
+                                        <th>Fecha Fin (Est.)</th>
                                         <th>Presupuesto</th>
                                         <th>Responsable</th>
                                         <th>Acciones</th>
@@ -215,7 +216,7 @@ const ProjectsPage = () => {
                                                             {statusInfo.label}
                                                         </span>
                                                     </td>
-                                                    <td>{project.fecha_fin || '-'}</td>
+                                                    <td>{project.fecha_entrega_estimada || '-'}</td>
                                                     <td>
                                                         {project.presupuesto
                                                             ? `$${project.presupuesto.toLocaleString()}`
@@ -246,7 +247,7 @@ const ProjectsPage = () => {
                                                 <h4>{project.nombre}</h4>
                                                 <p className="client-name">{project.clients?.nombre_negocio}</p>
                                                 <div className="card-footer">
-                                                    <span className="date">{project.fecha_fin}</span>
+                                                    <span className="date">{project.fecha_entrega_estimada}</span>
                                                     {project.user_profiles?.nombre_completo && (
                                                         <span className="avatar" title={project.user_profiles.nombre_completo}>
                                                             {project.user_profiles.nombre_completo.charAt(0)}
@@ -340,11 +341,11 @@ const ProjectsPage = () => {
                                     />
                                 </div>
                                 <div className="form-group">
-                                    <label>Fecha Fin</label>
+                                    <label>Fecha Entrega Estimada</label>
                                     <input
                                         type="date"
-                                        value={formData.fecha_fin}
-                                        onChange={e => setFormData({ ...formData, fecha_fin: e.target.value })}
+                                        value={formData.fecha_entrega_estimada}
+                                        onChange={e => setFormData({ ...formData, fecha_entrega_estimada: e.target.value })}
                                     />
                                 </div>
                             </div>

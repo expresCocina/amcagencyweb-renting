@@ -13,7 +13,8 @@
     margin: 0 0 8px 0;
     font-size: 32px;
     font-weight: 700;
-    color: #1e293b;
+    color: #ffffff;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
 }
 
 .leads-header p {
@@ -65,7 +66,9 @@
 .search-input {
     flex: 1;
     padding: 12px 16px;
-    border: 1px solid #e2e8f0;
+    border: 1px solid #334155;
+    background: #1e293b;
+    color: white;
     border-radius: 8px;
     font-size: 14px;
     transition: border-color 0.2s;
@@ -78,19 +81,21 @@
 
 .filter-select {
     padding: 12px 16px;
-    border: 1px solid #e2e8f0;
+    border: 1px solid #334155;
     border-radius: 8px;
     font-size: 14px;
-    background: white;
+    background: #1e293b;
+    color: white;
     cursor: pointer;
     min-width: 200px;
 }
 
 .leads-table-container {
-    background: white;
+    background: #1e293b;
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    border: 1px solid #334155;
 }
 
 .leads-table {
@@ -99,7 +104,7 @@
 }
 
 .leads-table thead {
-    background: #f8fafc;
+    background: #0f172a;
 }
 
 .leads-table th {
@@ -107,21 +112,21 @@
     text-align: left;
     font-size: 12px;
     font-weight: 600;
-    color: #64748b;
+    color: #94a3b8;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    border-bottom: 1px solid #e2e8f0;
+    border-bottom: 1px solid #334155;
 }
 
 .leads-table td {
     padding: 16px;
-    border-bottom: 1px solid #f1f5f9;
+    border-bottom: 1px solid #334155;
     font-size: 14px;
-    color: #1e293b;
+    color: #f8fafc;
 }
 
 .leads-table tbody tr:hover {
-    background: #f8fafc;
+    background: rgba(255, 255, 255, 0.05);
 }
 
 .lead-name {

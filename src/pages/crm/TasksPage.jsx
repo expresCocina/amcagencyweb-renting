@@ -63,6 +63,7 @@ const TasksPage = () => {
                 .eq('activo', true)
                 .in('rol', ['admin', 'vendedor']) // Only show staff
         ]);
+        if (leadsRes.data) setLeads(leadsRes.data);
         if (projectsRes.data) setProjects(projectsRes.data);
         if (usersRes.data) setUsers(usersRes.data);
     };

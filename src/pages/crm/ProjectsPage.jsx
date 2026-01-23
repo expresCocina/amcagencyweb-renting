@@ -3,7 +3,7 @@ import { supabase } from '../../supabaseClient';
 import KanbanBoard from '../../components/crm/KanbanBoard'; // Reusing or need to adapt?
 import './ProjectsPage.css';
 import { FaList, FaColumns, FaPlus, FaFileImport } from 'react-icons/fa';
-// import DataImport from '../../components/crm/DataImport'; // To be implemented
+import DataImport from '../../components/crm/DataImport';
 
 const ProjectsPage = () => {
     const [viewMode, setViewMode] = useState('list'); // 'list' or 'kanban'

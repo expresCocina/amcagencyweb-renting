@@ -1,0 +1,190 @@
+.import-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1100;
+}
+
+.import-content {
+    background: #1e293b;
+    width: 600px;
+    max-width: 90%;
+    border-radius: 16px;
+    border: 1px solid #334155;
+    display: flex;
+    flex-direction: column;
+    max-height: 90vh;
+}
+
+.import-header {
+    padding: 20px;
+    border-bottom: 1px solid #334155;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.import-header h2 {
+    margin: 0;
+    color: #f8fafc;
+    font-size: 20px;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    color: #94a3b8;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.import-body {
+    padding: 30px;
+    flex: 1;
+    overflow-y: auto;
+}
+
+.drop-zone {
+    border: 2px dashed #475569;
+    border-radius: 12px;
+    padding: 40px;
+    text-align: center;
+    background: #0f172a;
+    position: relative;
+    transition: all 0.3s;
+}
+
+.drop-zone:hover {
+    border-color: #4f46e5;
+    background: #1e293b;
+}
+
+.drop-zone input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.excel-icon {
+    font-size: 48px;
+    color: #22c55e;
+    margin-bottom: 16px;
+}
+
+.drop-zone p {
+    color: #cbd5e1;
+    margin: 0;
+}
+
+.template-info {
+    margin-top: 24px;
+}
+
+.template-info p {
+    color: #94a3b8;
+    font-size: 14px;
+    margin-bottom: 12px;
+}
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.tag {
+    background: #334155;
+    color: #e2e8f0;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+}
+
+.tag.required {
+    background: #4f46e5;
+    color: white;
+}
+
+/* Mapping Step */
+.step-desc {
+    color: #cbd5e1;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.mapping-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.mapping-row {
+    display: grid;
+    grid-template-columns: 1fr 40px 1fr;
+    align-items: center;
+    background: #0f172a;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #334155;
+}
+
+.db-field {
+    color: #f8fafc;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.req {
+    color: #ef4444;
+}
+
+.arrow {
+    color: #64748b;
+    text-align: center;
+}
+
+.excel-field select {
+    width: 100%;
+    padding: 8px;
+    background: #1e293b;
+    color: white;
+    border: 1px solid #475569;
+    border-radius: 6px;
+}
+
+.preview-info {
+    margin-top: 20px;
+    text-align: center;
+    color: #94a3b8;
+    font-size: 14px;
+}
+
+/* Result Step */
+.result-step {
+    text-align: center;
+    padding: 20px;
+}
+
+.success-icon-large {
+    font-size: 64px;
+    color: #22c55e;
+    margin-bottom: 24px;
+}
+
+.import-footer {
+    padding: 20px;
+    border-top: 1px solid #334155;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}

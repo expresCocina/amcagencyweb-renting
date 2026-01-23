@@ -73,16 +73,23 @@ const ProjectsPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+            // Sanitize payload: valid UUID or null
+            const payload = {
+                ...formData,
+                cliente_id: formData.cliente_id || null,
+                responsable: formData.responsable || null
+            };
+
             if (editingProject) {
                 const { error } = await supabase
                     .from('projects')
-                    .update(formData)
+                    .update(payload)
                     .eq('id', editingProject.id);
                 if (error) throw error;
             } else {
                 const { error } = await supabase
                     .from('projects')
-                    .insert([formData]);
+                    .insert([payload]);
                 if (error) throw error;
             }
 

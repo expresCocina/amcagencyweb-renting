@@ -96,9 +96,11 @@ const CRMLayout = () => {
             {/* Main Content */}
             <main className="crm-main">
                 {/* Desktop Header */}
+                import GlobalSearch from '../../components/crm/GlobalSearch';
+                // ...
                 <header className="crm-top-header">
                     <div className="header-left">
-                        {/* Breadcrumb or Title placeholder */}
+                        <GlobalSearch />
                     </div>
                     <div className="header-right">
                         <NotificationBell />

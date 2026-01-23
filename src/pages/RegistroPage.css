@@ -123,10 +123,10 @@
 .form-group input {
     width: 100%;
     padding: 14px 16px;
-    background: var(--bg-base);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(13, 15, 20, 0.8) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
     border-radius: 10px;
-    color: var(--text-primary);
+    color: var(--text-primary) !important;
     font-size: 1rem;
     transition: all 0.3s ease;
     box-sizing: border-box;
@@ -134,12 +134,12 @@
 
 .form-group input:focus {
     outline: none;
-    border-color: var(--accent-cyan);
+    border-color: var(--accent-cyan) !important;
     box-shadow: 0 0 0 3px rgba(0, 240, 255, 0.15);
 }
 
 .form-group input::placeholder {
-    color: rgba(184, 193, 204, 0.5);
+    color: rgba(184, 193, 204, 0.5) !important;
 }
 
 .form-group input:disabled {

@@ -1,12 +1,10 @@
 /* Main Container */
 .pipeline-page {
     height: calc(100vh - 60px);
-    /* Adjust for header/navbar */
     display: flex;
     flex-direction: column;
-    padding: 0 24px 24px 24px;
+    padding: 0 32px 32px 32px;
     background-color: transparent;
-    /* Let Layout bg show through */
 }
 
 /* Header */
@@ -14,40 +12,36 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 24px;
-    padding-top: 24px;
+    margin-bottom: 32px;
+    padding-top: 32px;
 }
 
 .pipeline-header h1 {
-    font-size: 28px;
+    font-size: 32px;
     font-weight: 700;
-    color: #ffffff;
+    color: var(--crm-text-primary);
     margin: 0 0 4px 0;
-    text-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
 }
 
 .pipeline-header p {
-    color: #94a3b8;
+    color: var(--crm-text-secondary);
     margin: 0;
     font-size: 14px;
 }
 
-/* Kanban Board - Horizontal Layout */
+/* Kanban Board */
 .pipeline-board {
     display: flex;
     flex-direction: row;
     gap: 24px;
     overflow-x: auto;
     overflow-y: hidden;
-    padding-bottom: 12px;
+    padding-bottom: 20px;
     flex: 1;
-    /* Fill remaining height */
     align-items: flex-start;
-    /* Align columns to top */
 
-    /* Scrollbar styling */
     scrollbar-width: thin;
-    scrollbar-color: #475569 #1e293b;
+    scrollbar-color: var(--crm-border) var(--crm-bg);
 }
 
 .pipeline-board::-webkit-scrollbar {
@@ -55,14 +49,14 @@
 }
 
 .pipeline-board::-webkit-scrollbar-track {
-    background: #0f172a;
+    background: var(--crm-bg);
     border-radius: 5px;
 }
 
 .pipeline-board::-webkit-scrollbar-thumb {
-    background-color: #334155;
+    background-color: var(--crm-border);
     border-radius: 5px;
-    border: 2px solid #0f172a;
+    border: 2px solid var(--crm-bg);
 }
 
 /* Columns */
@@ -71,31 +65,27 @@
     width: 320px;
     max-width: 320px;
     flex-shrink: 0;
-    /* Prevent shrinking */
-    background: #1e293b;
-    border-radius: 12px;
-    border: 1px solid #334155;
+    background: var(--crm-panel-bg);
+    border-radius: var(--crm-radius-lg);
+    border: 1px solid var(--crm-border);
     display: flex;
     flex-direction: column;
     max-height: 100%;
-    /* Don't exceed board height */
 }
 
 .column-header {
     padding: 16px;
-    background: #0f172a;
-    /* Darker header */
-    border-bottom: 1px solid #334155;
-    border-top-left-radius: 12px;
-    border-top-right-radius: 12px;
-    /* Border top color is set inline creatively */
+    background: rgba(15, 23, 42, 0.4);
+    border-bottom: 1px solid var(--crm-border);
+    border-top-left-radius: var(--crm-radius-lg);
+    border-top-right-radius: var(--crm-radius-lg);
 }
 
 .column-header h3 {
     margin: 0 0 8px 0;
     font-size: 15px;
     font-weight: 600;
-    color: #f8fafc;
+    color: var(--crm-text-primary);
     text-transform: uppercase;
     letter-spacing: 0.05em;
 }
@@ -108,59 +98,50 @@
 }
 
 .deal-count {
-    background: #334155;
-    color: #e2e8f0;
+    background: var(--crm-border);
+    color: var(--crm-text-primary);
     padding: 2px 8px;
     border-radius: 12px;
     font-weight: 600;
 }
 
 .deal-value {
-    color: #94a3b8;
+    color: var(--crm-text-secondary);
     font-weight: 500;
 }
 
-/* Column Content (Vertical Scroll) */
+/* Column Content */
 .column-content {
-    padding: 12px;
+    padding: 16px;
     flex: 1;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
-    gap: 12px;
-
+    gap: 16px;
     scrollbar-width: thin;
-    scrollbar-color: #475569 transparent;
-}
-
-.column-content::-webkit-scrollbar {
-    width: 6px;
-}
-
-.column-content::-webkit-scrollbar-thumb {
-    background-color: #334155;
-    border-radius: 3px;
+    scrollbar-color: var(--crm-border) transparent;
 }
 
 /* Empty State */
 .empty-column {
     text-align: center;
     padding: 32px 16px;
-    color: #64748b;
+    color: var(--crm-text-secondary);
     font-style: italic;
     font-size: 13px;
-    border: 2px dashed #334155;
+    border: 2px dashed var(--crm-border);
     border-radius: 8px;
-    background: rgba(15, 23, 42, 0.3);
+    background: rgba(255, 255, 255, 0.02);
 }
 
 /* Deal Cards */
 .deal-card {
-    background: #0f172a;
-    border: 1px solid #334155;
-    border-radius: 8px;
+    background: var(--crm-bg);
+    /* Darker card against panel bg */
+    border: 1px solid var(--crm-border);
+    border-radius: var(--crm-radius-md);
     padding: 16px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: all 0.2s ease;
     cursor: grab;
     position: relative;
@@ -168,25 +149,20 @@
 
 .deal-card:hover {
     transform: translateY(-2px);
-    border-color: #6366f1;
-    /* Indigo accent on hover */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
-}
-
-.deal-card:active {
-    cursor: grabbing;
+    border-color: var(--crm-primary);
+    box-shadow: var(--crm-glow);
 }
 
 .deal-card h4 {
     margin: 0 0 4px 0;
     font-size: 15px;
     font-weight: 600;
-    color: #f8fafc;
+    color: var(--crm-text-primary);
     line-height: 1.4;
 }
 
 .deal-company {
-    color: #94a3b8;
+    color: var(--crm-text-secondary);
     font-size: 13px;
     margin: 0 0 12px 0;
     display: block;
@@ -198,18 +174,18 @@
     align-items: center;
     margin-bottom: 12px;
     padding-top: 12px;
-    border-top: 1px solid #1e293b;
+    border-top: 1px solid var(--crm-border);
 }
 
 .deal-amount {
     font-weight: 700;
-    color: #e2e8f0;
+    color: var(--crm-success);
     font-size: 14px;
 }
 
 .deal-probability {
-    background: rgba(99, 102, 241, 0.15);
-    color: #818cf8;
+    background: var(--crm-primary-light);
+    color: var(--crm-primary);
     padding: 2px 6px;
     border-radius: 4px;
     font-size: 11px;
@@ -230,36 +206,29 @@
     gap: 8px;
     margin-top: 12px;
     padding-top: 12px;
-    border-top: 1px solid #1e293b;
+    border-top: 1px solid var(--crm-border);
 }
 
 .btn-move {
     flex: 1;
-    background: #1e293b;
-    border: 1px solid #334155;
-    color: #94a3b8;
+    background: transparent;
+    border: 1px solid var(--crm-border);
+    color: var(--crm-text-secondary);
     padding: 4px;
     border-radius: 4px;
     cursor: pointer;
     font-size: 16px;
-    line-height: 1;
     transition: all 0.15s;
 }
 
 .btn-move:hover {
-    background: #334155;
-    color: #f8fafc;
-    border-color: #475569;
+    background: var(--crm-border);
+    color: var(--crm-text-primary);
 }
 
-/* Media Queries */
 @media (max-width: 768px) {
     .pipeline-page {
         padding: 0 16px 16px 16px;
-    }
-
-    .pipeline-board {
-        gap: 16px;
     }
 
     .pipeline-column {

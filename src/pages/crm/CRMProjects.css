@@ -3,7 +3,7 @@
     height: calc(100vh - 60px);
     display: flex;
     flex-direction: column;
-    padding: 0 24px 24px 24px;
+    padding: 0 32px 32px 32px;
     background-color: transparent;
 }
 
@@ -12,20 +12,19 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 24px;
-    padding-top: 24px;
+    margin-bottom: 32px;
+    padding-top: 32px;
 }
 
 .header-title h1 {
-    font-size: 28px;
+    font-size: 32px;
     font-weight: 700;
-    color: #ffffff;
+    color: var(--crm-text-primary);
     margin: 0 0 4px 0;
-    text-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
 }
 
 .header-title p {
-    color: #94a3b8;
+    color: var(--crm-text-secondary);
     margin: 0;
     font-size: 14px;
 }
@@ -36,13 +35,13 @@
     align-items: center;
 }
 
-/* View Toggles & Buttons */
+/* View Toggles */
 .view-toggle {
     display: flex;
-    background: #1e293b;
+    background: var(--crm-panel-bg);
     padding: 4px;
     border-radius: 8px;
-    border: 1px solid #334155;
+    border: 1px solid var(--crm-border);
     margin-right: 12px;
 }
 
@@ -50,7 +49,7 @@
     padding: 8px 12px;
     border: none;
     background: transparent;
-    color: #94a3b8;
+    color: var(--crm-text-secondary);
     cursor: pointer;
     border-radius: 6px;
     display: flex;
@@ -62,30 +61,29 @@
 }
 
 .toggle-btn.active {
-    background: #334155;
-    color: #ffffff;
+    background: var(--crm-border);
+    color: var(--crm-text-primary);
     font-weight: 600;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .toggle-btn:hover:not(.active) {
-    color: #cbd5e1;
-    background: rgba(255, 255, 255, 0.05);
+    color: var(--crm-text-primary);
+    background: rgba(255, 255, 255, 0.03);
 }
 
-/* Kanban Board - Horizontal Layout */
+/* Kanban Board */
 .kanban-board {
     display: flex;
     flex-direction: row;
     gap: 24px;
     overflow-x: auto;
     overflow-y: hidden;
-    padding-bottom: 12px;
+    padding-bottom: 20px;
     flex: 1;
     align-items: flex-start;
 
     scrollbar-width: thin;
-    scrollbar-color: #475569 #1e293b;
+    scrollbar-color: var(--crm-border) var(--crm-bg);
 }
 
 .kanban-board::-webkit-scrollbar {
@@ -93,14 +91,14 @@
 }
 
 .kanban-board::-webkit-scrollbar-track {
-    background: #0f172a;
+    background: var(--crm-bg);
     border-radius: 5px;
 }
 
 .kanban-board::-webkit-scrollbar-thumb {
-    background-color: #334155;
+    background-color: var(--crm-border);
     border-radius: 5px;
-    border: 2px solid #0f172a;
+    border: 2px solid var(--crm-bg);
 }
 
 /* Columns */
@@ -109,9 +107,9 @@
     width: 320px;
     max-width: 320px;
     flex-shrink: 0;
-    background: #1e293b;
-    border-radius: 12px;
-    border: 1px solid #334155;
+    background: var(--crm-panel-bg);
+    border-radius: var(--crm-radius-lg);
+    border: 1px solid var(--crm-border);
     display: flex;
     flex-direction: column;
     max-height: 100%;
@@ -119,10 +117,10 @@
 
 .column-header {
     padding: 16px;
-    background: #0f172a;
-    border-bottom: 1px solid #334155;
-    border-top-left-radius: 12px;
-    border-top-right-radius: 12px;
+    background: rgba(15, 23, 42, 0.4);
+    border-bottom: 1px solid var(--crm-border);
+    border-top-left-radius: var(--crm-radius-lg);
+    border-top-right-radius: var(--crm-radius-lg);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -132,14 +130,14 @@
     margin: 0;
     font-size: 14px;
     font-weight: 700;
-    color: #f8fafc;
+    color: var(--crm-text-primary);
     text-transform: uppercase;
     letter-spacing: 0.05em;
 }
 
 .column-header .count {
-    background: #334155;
-    color: #cbd5e1;
+    background: var(--crm-border);
+    color: var(--crm-text-secondary);
     padding: 2px 8px;
     border-radius: 12px;
     font-size: 12px;
@@ -148,43 +146,42 @@
 
 /* Column Content */
 .column-content {
-    padding: 12px;
+    padding: 16px;
     flex: 1;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 16px;
     scrollbar-width: thin;
-    scrollbar-color: #475569 transparent;
+    scrollbar-color: var(--crm-border) transparent;
 }
 
 /* Cards */
 .kanban-card {
-    background: #0f172a;
-    border: 1px solid #334155;
-    border-radius: 8px;
+    background: var(--crm-bg);
+    border: 1px solid var(--crm-border);
+    border-radius: var(--crm-radius-md);
     padding: 16px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: all 0.2s;
     cursor: pointer;
 }
 
 .kanban-card:hover {
     transform: translateY(-2px);
-    border-color: #3b82f6;
-    /* Blue accent */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+    border-color: var(--crm-primary);
+    box-shadow: var(--crm-glow);
 }
 
 .kanban-card h4 {
     margin: 0 0 6px 0;
     font-size: 16px;
     font-weight: 600;
-    color: #f8fafc;
+    color: var(--crm-text-primary);
 }
 
 .client-name {
-    color: #94a3b8;
+    color: var(--crm-text-secondary);
     font-size: 14px;
     margin: 0 0 12px 0;
 }
@@ -193,28 +190,23 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-top: 1px solid #1e293b;
+    border-top: 1px solid var(--crm-border);
     padding-top: 12px;
     margin-top: 12px;
 }
 
 .date {
     font-size: 12px;
-    color: #64748b;
+    color: var(--crm-text-secondary);
     display: flex;
     align-items: center;
     gap: 4px;
 }
 
-.date::before {
-    content: '📅';
-    font-size: 10px;
-}
-
 .avatar {
     width: 24px;
     height: 24px;
-    background: #4f46e5;
+    background: var(--crm-primary);
     color: white;
     border-radius: 50%;
     display: flex;
@@ -222,54 +214,14 @@
     justify-content: center;
     font-size: 11px;
     font-weight: 700;
-    border: 2px solid #1e293b;
-}
-
-.card-actions {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 12px;
-    padding-top: 12px;
-    border-top: 1px solid #1e293b;
-}
-
-.btn-icon-sm {
-    background: transparent;
-    border: none;
-    color: #64748b;
-    cursor: pointer;
-    font-size: 14px;
-    padding: 4px 8px;
-    border-radius: 4px;
-    transition: all 0.2s;
-}
-
-.btn-icon-sm:hover {
-    color: white;
-    background: #334155;
-}
-
-.status-select-sm {
-    background: #0f172a;
-    color: #cbd5e1;
-    border: 1px solid #334155;
-    border-radius: 4px;
-    padding: 4px 8px;
-    font-size: 12px;
-    outline: none;
-    cursor: pointer;
-}
-
-.status-select-sm:hover {
-    border-color: #64748b;
+    border: 2px solid var(--crm-panel-bg);
 }
 
 /* List Table View */
 .projects-table-container {
-    background: #1e293b;
-    border-radius: 12px;
-    border: 1px solid #334155;
+    background: var(--crm-panel-bg);
+    border-radius: var(--crm-radius-lg);
+    border: 1px solid var(--crm-border);
     overflow: hidden;
     margin-top: 12px;
 }
@@ -280,79 +232,33 @@
 }
 
 .projects-table th {
-    background: #0f172a;
-    padding: 16px;
+    background: var(--crm-bg);
+    padding: 20px;
     text-align: left;
     font-size: 12px;
     font-weight: 600;
-    color: #94a3b8;
+    color: var(--crm-text-secondary);
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    border-bottom: 1px solid #334155;
+    border-bottom: 1px solid var(--crm-border);
 }
 
 .projects-table td {
-    padding: 16px;
-    color: #f8fafc;
-    border-bottom: 1px solid #334155;
+    padding: 20px;
+    color: var(--crm-text-primary);
+    border-bottom: 1px solid var(--crm-border);
     font-size: 14px;
 }
 
 .projects-table tr:hover {
-    background: rgba(51, 65, 85, 0.4);
+    background: rgba(255, 255, 255, 0.02);
 }
 
-/* Badges */
+/* Badges reuse global but can override here */
 .status-badge {
     padding: 4px 10px;
     border-radius: 20px;
     font-size: 12px;
     font-weight: 600;
     border: 1px solid transparent;
-}
-
-.status-planificacion {
-    background: rgba(100, 116, 139, 0.2);
-    color: #cbd5e1;
-    border-color: #475569;
-}
-
-.status-en_progreso {
-    background: rgba(59, 130, 246, 0.2);
-    color: #93c5fd;
-    border-color: #3b82f6;
-}
-
-.status-en_revision {
-    background: rgba(249, 115, 22, 0.2);
-    color: #fdba74;
-    border-color: #f97316;
-}
-
-.status-completado {
-    background: rgba(34, 197, 94, 0.2);
-    color: #86efac;
-    border-color: #22c55e;
-}
-
-.status-pausado {
-    background: rgba(113, 113, 122, 0.2);
-    color: #d4d4d8;
-    border-color: #71717a;
-}
-
-/* Media Queries */
-@media (max-width: 768px) {
-    .projects-page {
-        padding: 0 16px 16px 16px;
-    }
-
-    .kanban-board {
-        gap: 16px;
-    }
-
-    .kanban-column {
-        min-width: 280px;
-        width: 280px;
-    }
 }

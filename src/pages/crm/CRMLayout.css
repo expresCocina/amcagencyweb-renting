@@ -214,6 +214,58 @@
 }
 
 /* Global Button Styles */
+.crm-top-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 32px;
+    background: rgba(15, 23, 42, 0.9);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--crm-border);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    width: 100%;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-left: auto;
+}
+
+.user-menu {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.user-name {
+    color: var(--crm-text-secondary);
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.user-avatar {
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.crm-mobile-header {
+    display: none;
+    /* Default hidden on desktop */
+}
+
+/* Global Button Styles */
 .btn-primary {
     background-color: var(--crm-primary);
     color: white;
@@ -334,9 +386,13 @@ label {
 }
 
 /* Mobile Responsive */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
     .crm-mobile-header {
         display: flex;
+    }
+
+    .crm-top-header {
+        display: none !important;
     }
 
     .crm-sidebar {
@@ -350,13 +406,25 @@ label {
         box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
     }
 
+    /* ... existing sidebar styles ... */
+
     .crm-sidebar.mobile-open {
         transform: translateX(0);
     }
 
     .crm-main {
         padding-top: 60px;
-        /* Space for header */
+        /* Space for mobile header */
         width: 100%;
+    }
+}
+
+@media (min-width: 1025px) {
+    .crm-mobile-header {
+        display: none !important;
+    }
+
+    .crm-top-header {
+        display: flex !important;
     }
 }

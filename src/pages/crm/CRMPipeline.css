@@ -1,145 +1,180 @@
+/* Main Container */
 .pipeline-page {
-    /* Background comes from CRMLayout */
-    height: calc(100vh - 40px);
+    height: calc(100vh - 60px);
+    /* Adjust for header/navbar */
     display: flex;
     flex-direction: column;
+    padding: 0 24px 24px 24px;
+    background-color: transparent;
+    /* Let Layout bg show through */
 }
 
+/* Header */
 .pipeline-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 24px;
-    padding-right: 24px;
+    padding-top: 24px;
 }
 
 .pipeline-header h1 {
-    margin: 0 0 8px 0;
     font-size: 28px;
     font-weight: 700;
     color: #ffffff;
+    margin: 0 0 4px 0;
     text-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
 }
 
 .pipeline-header p {
+    color: #94a3b8;
     margin: 0;
-    color: #cbd5e1;
     font-size: 14px;
 }
 
+/* Kanban Board - Horizontal Layout */
 .pipeline-board {
     display: flex;
+    flex-direction: row;
     gap: 24px;
     overflow-x: auto;
-    padding-bottom: 24px;
+    overflow-y: hidden;
+    padding-bottom: 12px;
     flex: 1;
-    /* Custom Scrollbar for the board */
+    /* Fill remaining height */
+    align-items: flex-start;
+    /* Align columns to top */
+
+    /* Scrollbar styling */
     scrollbar-width: thin;
     scrollbar-color: #475569 #1e293b;
 }
 
 .pipeline-board::-webkit-scrollbar {
-    height: 8px;
+    height: 10px;
 }
 
 .pipeline-board::-webkit-scrollbar-track {
-    background: #1e293b;
+    background: #0f172a;
+    border-radius: 5px;
 }
 
 .pipeline-board::-webkit-scrollbar-thumb {
-    background-color: #475569;
-    border-radius: 4px;
+    background-color: #334155;
+    border-radius: 5px;
+    border: 2px solid #0f172a;
 }
 
+/* Columns */
 .pipeline-column {
     min-width: 320px;
+    width: 320px;
     max-width: 320px;
     flex-shrink: 0;
-    background: rgba(30, 41, 59, 0.5);
-    /* Semi-transparent dark bg */
+    /* Prevent shrinking */
+    background: #1e293b;
     border-radius: 12px;
     border: 1px solid #334155;
     display: flex;
     flex-direction: column;
     max-height: 100%;
+    /* Don't exceed board height */
 }
 
 .column-header {
     padding: 16px;
-    background: #1e293b;
-    border-top: 3px solid;
-    /* Color set inline */
+    background: #0f172a;
+    /* Darker header */
     border-bottom: 1px solid #334155;
     border-top-left-radius: 12px;
     border-top-right-radius: 12px;
+    /* Border top color is set inline creatively */
 }
 
 .column-header h3 {
     margin: 0 0 8px 0;
-    font-size: 16px;
-    font-weight: 700;
+    font-size: 15px;
+    font-weight: 600;
     color: #f8fafc;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
 
 .column-stats {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    font-size: 12px;
 }
 
 .deal-count {
     background: #334155;
-    color: #cbd5e1;
+    color: #e2e8f0;
     padding: 2px 8px;
     border-radius: 12px;
-    font-size: 12px;
     font-weight: 600;
 }
 
 .deal-value {
-    font-size: 13px;
-    font-weight: 600;
     color: #94a3b8;
+    font-weight: 500;
 }
 
+/* Column Content (Vertical Scroll) */
 .column-content {
-    padding: 16px;
+    padding: 12px;
     flex: 1;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
     gap: 12px;
-    /* Custom scrollbar for column vertical scroll */
+
     scrollbar-width: thin;
     scrollbar-color: #475569 transparent;
 }
 
-.empty-column {
-    text-align: center;
-    padding: 40px 20px;
-    color: #64748b;
-    font-size: 14px;
-    font-style: italic;
-    border: 2px dashed #334155;
-    border-radius: 8px;
-    margin-top: 20px;
+.column-content::-webkit-scrollbar {
+    width: 6px;
 }
 
+.column-content::-webkit-scrollbar-thumb {
+    background-color: #334155;
+    border-radius: 3px;
+}
+
+/* Empty State */
+.empty-column {
+    text-align: center;
+    padding: 32px 16px;
+    color: #64748b;
+    font-style: italic;
+    font-size: 13px;
+    border: 2px dashed #334155;
+    border-radius: 8px;
+    background: rgba(15, 23, 42, 0.3);
+}
+
+/* Deal Cards */
 .deal-card {
     background: #0f172a;
-    border-radius: 10px;
-    padding: 16px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     border: 1px solid #334155;
-    transition: all 0.2s;
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s ease;
     cursor: grab;
     position: relative;
 }
 
 .deal-card:hover {
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-    border-color: #4f46e5;
     transform: translateY(-2px);
+    border-color: #6366f1;
+    /* Indigo accent on hover */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+}
+
+.deal-card:active {
+    cursor: grabbing;
 }
 
 .deal-card h4 {
@@ -151,9 +186,10 @@
 }
 
 .deal-company {
-    margin: 0 0 12px 0;
-    font-size: 13px;
     color: #94a3b8;
+    font-size: 13px;
+    margin: 0 0 12px 0;
+    display: block;
 }
 
 .deal-info {
@@ -166,29 +202,29 @@
 }
 
 .deal-amount {
-    font-size: 14px;
     font-weight: 700;
     color: #e2e8f0;
+    font-size: 14px;
 }
 
 .deal-probability {
-    background: rgba(124, 58, 237, 0.2);
-    color: #a78bfa;
-    padding: 2px 8px;
-    border-radius: 6px;
+    background: rgba(99, 102, 241, 0.15);
+    color: #818cf8;
+    padding: 2px 6px;
+    border-radius: 4px;
     font-size: 11px;
-    font-weight: 700;
+    font-weight: 600;
 }
 
 .deal-assigned {
-    margin: 8px 0 0 0;
     font-size: 12px;
     color: #64748b;
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 6px;
 }
 
+/* Stage Navigation Buttons */
 .deal-actions {
     display: flex;
     gap: 8px;
@@ -203,62 +239,31 @@
     border: 1px solid #334155;
     color: #94a3b8;
     padding: 4px;
-    border-radius: 6px;
+    border-radius: 4px;
     cursor: pointer;
-    font-size: 14px;
-    transition: all 0.2s;
+    font-size: 16px;
+    line-height: 1;
+    transition: all 0.15s;
 }
 
 .btn-move:hover {
     background: #334155;
-    color: white;
-    border-color: #64748b;
+    color: #f8fafc;
+    border-color: #475569;
 }
 
-/* Modal form adjustments for dark mode - Reusing global modal styles if possible, but defining specifics here just in case */
-.modal-overlay {
-    backdrop-filter: blur(4px);
-    background: rgba(0, 0, 0, 0.7);
-}
+/* Media Queries */
+@media (max-width: 768px) {
+    .pipeline-page {
+        padding: 0 16px 16px 16px;
+    }
 
-.modal-content {
-    background: #1e293b;
-    color: white;
-    border: 1px solid #334155;
-}
-
-.modal-header {
-    border-bottom-color: #334155;
-}
-
-.modal-header h2 {
-    color: white;
-}
-
-.deal-form label {
-    color: #cbd5e1;
-}
-
-.deal-form input,
-.deal-form select,
-.deal-form textarea {
-    background: #0f172a !important;
-    border-color: #334155 !important;
-    color: white !important;
-}
-
-.deal-form input:focus,
-.deal-form select:focus,
-.deal-form textarea:focus {
-    border-color: #4f46e5 !important;
-}
-
-@media (max-width: 1024px) {
     .pipeline-board {
-        padding-bottom: 10px;
+        gap: 16px;
     }
 
     .pipeline-column {
         min-width: 280px;
+        width: 280px;
     }
 }

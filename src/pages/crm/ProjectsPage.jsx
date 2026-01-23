@@ -46,7 +46,7 @@ const ProjectsPage = () => {
                 .from('projects')
                 .select(`
                     *,
-                    clients:cliente_id (nombre_empresa),
+                    clients:cliente_id (nombre_negocio),
                     user_profiles:responsable (nombre_completo)
                 `)
                 .order('updated_at', { ascending: false });
@@ -61,7 +61,7 @@ const ProjectsPage = () => {
     };
 
     const loadClients = async () => {
-        const { data } = await supabase.from('clients').select('id, nombre_empresa');
+        const { data } = await supabase.from('clients').select('id, nombre_negocio');
         setClients(data || []);
     };
 
@@ -202,7 +202,7 @@ const ProjectsPage = () => {
                                             return (
                                                 <tr key={project.id}>
                                                     <td style={{ fontWeight: '600' }}>{project.nombre}</td>
-                                                    <td>{project.clients?.nombre_empresa || 'Sin Cliente'}</td>
+                                                    <td>{project.clients?.nombre_negocio || 'Sin Cliente'}</td>
                                                     <td>
                                                         <span className={`status-badge ${statusInfo.class}`}>
                                                             {statusInfo.label}
@@ -237,7 +237,7 @@ const ProjectsPage = () => {
                                         {projects.filter(p => p.estado === status.id).map(project => (
                                             <div key={project.id} className="kanban-card">
                                                 <h4>{project.nombre}</h4>
-                                                <p className="client-name">{project.clients?.nombre_empresa}</p>
+                                                <p className="client-name">{project.clients?.nombre_negocio}</p>
                                                 <div className="card-footer">
                                                     <span className="date">{project.fecha_fin}</span>
                                                     {project.user_profiles?.nombre_completo && (
@@ -307,7 +307,7 @@ const ProjectsPage = () => {
                                     >
                                         <option value="">Seleccionar Cliente</option>
                                         {clients.map(c => (
-                                            <option key={c.id} value={c.id}>{c.nombre_empresa}</option>
+                                            <option key={c.id} value={c.id}>{c.nombre_negocio}</option>
                                         ))}
                                     </select>
                                 </div>

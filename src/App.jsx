@@ -11,7 +11,6 @@ import AnnouncementBanner from './components/AnnouncementBanner';
 
 // Contexts
 import { LanguageProvider } from './contexts/LanguageContext';
-import { LanguageProvider } from './contexts/LanguageContext';
 import { CurrencyProvider } from './contexts/CurrencyContext';
 import { NotificationProvider } from './context/NotificationContext';
 

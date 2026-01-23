@@ -78,25 +78,13 @@ const RegistroPage = () => {
                 .insert([{
                     user_id: authData.user.id,
                     email: formData.email,
-                    company: formData.nombre_negocio,
-                    name: formData.nombre_representante,
+                    nombre_negocio: formData.nombre_negocio,
+                    nombre_representante: formData.nombre_representante,
                     domain: formData.dominio || null,
                     whatsapp: formData.whatsapp,
-                    phone: formData.whatsapp,
                     estado_pago: 'activo', // Active immediately for free trial
-                    status: 'active',      // Active immediately
                     plan: null,
-                    next_payment: nextPaymentDate.toISOString().split('T')[0], // Set next payment to 30 days
-                    services: {
-                        sitio_web: 'pending',
-                        hosting: 'pending',
-                        ssl: 'pending',
-                        responsive: 'pending',
-                        design: 'pending',
-                        analytics: 'pending',
-                        seo: 'pending',
-                        support: 'pending'
-                    }
+                    next_payment: nextPaymentDate.toISOString().split('T')[0] // Set next payment to 30 days
                 }]);
 
             if (insertError) {

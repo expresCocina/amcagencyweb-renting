@@ -19,8 +19,36 @@ const ContactForm = () => {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+
+        try {
+            // Save lead to CRM database
+            const { supabase } = await import('../supabaseClient');
+
+            const { error: leadError } = await supabase
+                .from('leads')
+                .insert([{
+                    name: formData.name,
+                    company: formData.company,
+                    phone: formData.phone,
+                    email: null, // No email in this form
+                    source: 'Formulario de Contacto Web',
+                    status: 'new',
+                    interested_service: formData.service,
+                    notes: `Servicio solicitado: ${formData.service}`
+                }]);
+
+            if (leadError) {
+                console.error('Error saving lead:', leadError);
+                // Don't block the WhatsApp flow if lead save fails
+            } else {
+                console.log('Lead saved successfully to CRM');
+            }
+        } catch (error) {
+            console.error('Error in lead creation:', error);
+            // Continue with WhatsApp even if lead save fails
+        }
 
         // Track form submission (Browser only)
         trackEvent('form_submission', {

@@ -18,7 +18,7 @@ const ProjectsPage = () => {
         cliente_id: '',
         estado: 'planificacion',
         fecha_entrega_estimada: '',
-        presupuesto: 0,
+        valor_proyecto: 0,
         responsable: ''
     });
     const [clients, setClients] = useState([]);
@@ -112,7 +112,7 @@ const ProjectsPage = () => {
             cliente_id: project.cliente_id,
             estado: project.estado,
             fecha_entrega_estimada: project.fecha_entrega_estimada,
-            presupuesto: project.presupuesto,
+            valor_proyecto: project.valor_proyecto,
             responsable: project.responsable
         });
         setShowModal(true);
@@ -125,7 +125,7 @@ const ProjectsPage = () => {
             cliente_id: '',
             estado: 'planificacion',
             fecha_entrega_estimada: '',
-            presupuesto: 0,
+            valor_proyecto: 0,
             responsable: ''
         });
     };
@@ -218,8 +218,8 @@ const ProjectsPage = () => {
                                                     </td>
                                                     <td>{project.fecha_entrega_estimada || '-'}</td>
                                                     <td>
-                                                        {project.presupuesto
-                                                            ? `$${project.presupuesto.toLocaleString()}`
+                                                        {project.valor_proyecto
+                                                            ? `$${project.valor_proyecto.toLocaleString()}`
                                                             : '-'}
                                                     </td>
                                                     <td>{project.user_profiles?.nombre_completo || 'Sin Asignar'}</td>
@@ -333,11 +333,11 @@ const ProjectsPage = () => {
                             </div>
                             <div className="form-row">
                                 <div className="form-group">
-                                    <label>Presupuesto</label>
+                                    <label>Valor Proyecto (Presupuesto)</label>
                                     <input
                                         type="number"
-                                        value={formData.presupuesto}
-                                        onChange={e => setFormData({ ...formData, presupuesto: e.target.value })}
+                                        value={formData.valor_proyecto}
+                                        onChange={e => setFormData({ ...formData, valor_proyecto: e.target.value })}
                                     />
                                 </div>
                                 <div className="form-group">

@@ -1,8 +1,9 @@
 .crm-layout {
     display: flex;
     min-height: 100vh;
-    background: #f8fafc;
+    background: radial-gradient(circle at top right, #1e293b 0%, #0f172a 100%);
     position: relative;
+    color: #f8fafc;
 }
 
 /* Mobile Header */

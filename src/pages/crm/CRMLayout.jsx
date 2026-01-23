@@ -62,29 +62,31 @@ const CRMLayout = () => {
                 <div className="sidebar-overlay" onClick={closeMobileMenu}></div>
             )}
 
+            {/* Sidebar */}
             <aside className={`crm-sidebar ${isMobileMenuOpen ? 'mobile-open' : ''}`}>
-                <div className="crm-sidebar-header">
-                    <h2>🚀 CRM</h2>
-                    <p className="crm-user-role">{userProfile?.rol || 'Usuario'}</p>
+                <div className="crm-header">
+                    <span className="crm-logo">🚀</span>
+                    <div>
+                        <div className="crm-title">CRM</div>
+                        <div className="crm-subtitle">{userProfile?.rol || 'Usuario'}</div>
+                    </div>
                 </div>
                 <nav className="crm-nav">
                     {navItems.map((item) => (
                         <Link
                             key={item.path}
                             to={item.path}
-                            className={`crm-nav-item ${location.pathname === item.path ? 'active' : ''}`}
+                            onClick={closeMobileMenu}
+                            className={`sidebar-item ${location.pathname === item.path ? 'active' : ''}`}
                         >
-                            <span className="crm-nav-icon">{item.icon}</span>
-                            <span className="crm-nav-label">{item.label}</span>
+                            <span className="sidebar-icon">{item.icon}</span>
+                            <span>{item.label}</span>
                         </Link>
                     ))}
                 </nav>
-                <div className="crm-sidebar-footer">
-                    <Link to="/dashboard" className="crm-back-link">
-                        ← Volver al Dashboard
-                    </Link>
-                </div>
             </aside>
+
+            {/* Main Content */}
             <main className="crm-main">
                 <Outlet />
             </main>

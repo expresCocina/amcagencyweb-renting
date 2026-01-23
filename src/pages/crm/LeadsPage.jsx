@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../../supabaseClient';
+import ActivityTimeline from '../../components/crm/ActivityTimeline';
 import './LeadsPage.css';
 
 const LeadsPage = () => {
@@ -8,6 +9,7 @@ const LeadsPage = () => {
     const [loading, setLoading] = useState(true);
     const [showModal, setShowModal] = useState(false);
     const [editingLead, setEditingLead] = useState(null);
+    const [activeTab, setActiveTab] = useState('details'); // 'details' or 'history'
     const [users, setUsers] = useState([]);
     const [filters, setFilters] = useState({
         estado: 'all',
@@ -294,108 +296,132 @@ const LeadsPage = () => {
                                 ✕
                             </button>
                         </div>
-                        <form onSubmit={handleSubmit} className="lead-form">
-                            <div className="form-row">
-                                <div className="form-group">
-                                    <label>Nombre *</label>
-                                    <input
-                                        type="text"
-                                        required
-                                        value={formData.nombre}
-                                        onChange={(e) => setFormData({ ...formData, nombre: e.target.value })}
-                                    />
-                                </div>
-                                <div className="form-group">
-                                    <label>Email</label>
-                                    <input
-                                        type="email"
-                                        value={formData.email}
-                                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                                    />
-                                </div>
-                            </div>
 
-                            <div className="form-row">
-                                <div className="form-group">
-                                    <label>Teléfono</label>
-                                    <input
-                                        type="tel"
-                                        value={formData.telefono}
-                                        onChange={(e) => setFormData({ ...formData, telefono: e.target.value })}
-                                    />
-                                </div>
-                                <div className="form-group">
-                                    <label>Empresa</label>
-                                    <input
-                                        type="text"
-                                        value={formData.empresa}
-                                        onChange={(e) => setFormData({ ...formData, empresa: e.target.value })}
-                                    />
-                                </div>
-                            </div>
-
-                            <div className="form-row">
-                                <div className="form-group">
-                                    <label>Fuente</label>
-                                    <select value={formData.fuente} onChange={(e) => setFormData({ ...formData, fuente: e.target.value })}>
-                                        <option value="web">Web</option>
-                                        <option value="referido">Referido</option>
-                                        <option value="redes_sociales">Redes Sociales</option>
-                                        <option value="llamada_fria">Llamada Fría</option>
-                                        <option value="evento">Evento</option>
-                                    </select>
-                                </div>
-                                <div className="form-group">
-                                    <label>Estado</label>
-                                    <select value={formData.estado} onChange={(e) => setFormData({ ...formData, estado: e.target.value })}>
-                                        <option value="nuevo">Nuevo</option>
-                                        <option value="contactado">Contactado</option>
-                                        <option value="calificado">Calificado</option>
-                                        <option value="propuesta">Propuesta</option>
-                                        <option value="ganado">Ganado</option>
-                                        <option value="perdido">Perdido</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div className="form-row">
-                                <div className="form-group">
-                                    <label>Valor Estimado (COP)</label>
-                                    <input
-                                        type="number"
-                                        value={formData.valor_estimado}
-                                        onChange={(e) => setFormData({ ...formData, valor_estimado: parseFloat(e.target.value) || 0 })}
-                                    />
-                                </div>
-                                <div className="form-group">
-                                    <label>Asignar a</label>
-                                    <select value={formData.asignado_a} onChange={(e) => setFormData({ ...formData, asignado_a: e.target.value })}>
-                                        <option value="">Sin asignar</option>
-                                        {users.map(user => (
-                                            <option key={user.id} value={user.id}>{user.nombre_completo}</option>
-                                        ))}
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div className="form-group">
-                                <label>Notas</label>
-                                <textarea
-                                    rows="3"
-                                    value={formData.notas}
-                                    onChange={(e) => setFormData({ ...formData, notas: e.target.value })}
-                                ></textarea>
-                            </div>
-
-                            <div className="modal-actions">
-                                <button type="button" onClick={() => { setShowModal(false); setEditingLead(null); resetForm(); }} className="btn-secondary">
-                                    Cancelar
+                        {editingLead ? (
+                            <div className="modal-tabs">
+                                <button
+                                    className={`tab-btn ${activeTab === 'details' ? 'active' : ''}`}
+                                    onClick={() => setActiveTab('details')}
+                                >
+                                    Detalles
                                 </button>
-                                <button type="submit" className="btn-primary">
-                                    {editingLead ? 'Actualizar' : 'Crear'} Lead
+                                <button
+                                    className={`tab-btn ${activeTab === 'history' ? 'active' : ''}`}
+                                    onClick={() => setActiveTab('history')}
+                                >
+                                    Historial
                                 </button>
                             </div>
-                        </form>
+                        ) : null}
+
+                        {activeTab === 'details' ? (
+                            <form onSubmit={handleSubmit} className="lead-form">
+                                <div className="form-row">
+                                    <div className="form-group">
+                                        <label>Nombre *</label>
+                                        <input
+                                            type="text"
+                                            required
+                                            value={formData.nombre}
+                                            onChange={(e) => setFormData({ ...formData, nombre: e.target.value })}
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <label>Email</label>
+                                        <input
+                                            type="email"
+                                            value={formData.email}
+                                            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="form-row">
+                                    <div className="form-group">
+                                        <label>Teléfono</label>
+                                        <input
+                                            type="tel"
+                                            value={formData.telefono}
+                                            onChange={(e) => setFormData({ ...formData, telefono: e.target.value })}
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <label>Empresa</label>
+                                        <input
+                                            type="text"
+                                            value={formData.empresa}
+                                            onChange={(e) => setFormData({ ...formData, empresa: e.target.value })}
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="form-row">
+                                    <div className="form-group">
+                                        <label>Fuente</label>
+                                        <select value={formData.fuente} onChange={(e) => setFormData({ ...formData, fuente: e.target.value })}>
+                                            <option value="web">Web</option>
+                                            <option value="referido">Referido</option>
+                                            <option value="redes_sociales">Redes Sociales</option>
+                                            <option value="llamada_fria">Llamada Fría</option>
+                                            <option value="evento">Evento</option>
+                                        </select>
+                                    </div>
+                                    <div className="form-group">
+                                        <label>Estado</label>
+                                        <select value={formData.estado} onChange={(e) => setFormData({ ...formData, estado: e.target.value })}>
+                                            <option value="nuevo">Nuevo</option>
+                                            <option value="contactado">Contactado</option>
+                                            <option value="calificado">Calificado</option>
+                                            <option value="propuesta">Propuesta</option>
+                                            <option value="ganado">Ganado</option>
+                                            <option value="perdido">Perdido</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div className="form-row">
+                                    <div className="form-group">
+                                        <label>Valor Estimado (COP)</label>
+                                        <input
+                                            type="number"
+                                            value={formData.valor_estimado}
+                                            onChange={(e) => setFormData({ ...formData, valor_estimado: parseFloat(e.target.value) || 0 })}
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <label>Asignar a</label>
+                                        <select value={formData.asignado_a} onChange={(e) => setFormData({ ...formData, asignado_a: e.target.value })}>
+                                            <option value="">Sin asignar</option>
+                                            {users.map(user => (
+                                                <option key={user.id} value={user.id}>{user.nombre_completo}</option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div className="form-group">
+                                    <label>Notas</label>
+                                    <textarea
+                                        rows="3"
+                                        value={formData.notas}
+                                        onChange={(e) => setFormData({ ...formData, notas: e.target.value })}
+                                    ></textarea>
+                                </div>
+
+                                <div className="modal-actions">
+                                    <button type="button" onClick={() => { setShowModal(false); setEditingLead(null); resetForm(); }} className="btn-secondary">
+                                        Cancelar
+                                    </button>
+                                    <button type="submit" className="btn-primary">
+                                        {editingLead ? 'Actualizar' : 'Crear'} Lead
+                                    </button>
+                                </div>
+                            </form>
+                        ) : (
+                            <div className="lead-history-panel">
+                                <ActivityTimeline relationType="lead" relationId={editingLead.id} />
+                            </div>
+                        )}
                     </div>
                 </div>
             )}

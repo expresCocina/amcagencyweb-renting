@@ -335,7 +335,43 @@
         min-width: 800px;
     }
 
-    .form-row {
-        grid-template-columns: 1fr;
+
+    /* Modal Tabs */
+    .modal-tabs {
+        display: flex;
+        gap: 2px;
+        background: #0f172a;
+        padding: 2px 2px 0 2px;
+        border-bottom: 1px solid #334155;
+        margin-bottom: 0;
     }
-}
+
+    .tab-btn {
+        flex: 1;
+        background: transparent;
+        border: none;
+        color: #94a3b8;
+        padding: 12px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 600;
+        border-bottom: 2px solid transparent;
+        transition: all 0.2s;
+    }
+
+    .tab-btn:hover {
+        color: #cbd5e1;
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+    .tab-btn.active {
+        color: #4f46e5;
+        border-bottom-color: #4f46e5;
+        background: rgba(79, 70, 229, 0.1);
+    }
+
+    .lead-history-panel {
+        padding: 24px;
+        height: 500px;
+        overflow-y: auto;
+    }

@@ -124,6 +124,10 @@ const CRMClientsPage = () => {
                             <div key={client.id} className="client-card">
                                 <div className="client-card-header">
                                     <div className="client-icon">🏢</div>
+                                    <div className="client-header-text">
+                                        <h3>{client.nombre_negocio}</h3>
+                                        <span className="client-rep">{client.nombre_representante}</span>
+                                    </div>
                                     <div className="client-badges">
                                         <span className={`badge ${estadoBadge.class}`}>
                                             {estadoBadge.label}
@@ -132,16 +136,14 @@ const CRMClientsPage = () => {
                                 </div>
 
                                 <div className="client-card-body">
-                                    <h3>{client.nombre_negocio}</h3>
-                                    <p className="client-rep">{client.nombre_representante}</p>
 
                                     <div className="client-info">
                                         <div className="info-item">
-                                            <span className="info-label">📧 Email:</span>
+                                            <span className="info-label">Email</span>
                                             <span className="info-value">{client.email || 'N/A'}</span>
                                         </div>
                                         <div className="info-item">
-                                            <span className="info-label">📱 WhatsApp:</span>
+                                            <span className="info-label">WhatsApp</span>
                                             {client.whatsapp ? (
                                                 <a
                                                     href={getWhatsAppUrl(client.whatsapp, getWhatsAppMessage('client', client.nombre_representante || ''))}
@@ -156,18 +158,18 @@ const CRMClientsPage = () => {
                                             )}
                                         </div>
                                         <div className="info-item">
-                                            <span className="info-label">🌐 Dominio:</span>
+                                            <span className="info-label">Dominio</span>
                                             <span className="info-value">{client.domain || 'N/A'}</span>
                                         </div>
                                         <div className="info-item">
-                                            <span className="info-label">📦 Plan:</span>
+                                            <span className="info-label">Plan</span>
                                             <span className={`badge ${planBadge.class}`}>
                                                 {planBadge.label}
                                             </span>
                                         </div>
                                         {client.next_payment && (
                                             <div className="info-item">
-                                                <span className="info-label">📅 Próximo Pago:</span>
+                                                <span className="info-label">Próximo Pago</span>
                                                 <span className="info-value">
                                                     {new Date(client.next_payment).toLocaleDateString('es-CO')}
                                                 </span>

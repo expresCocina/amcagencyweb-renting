@@ -33,9 +33,35 @@ const CRMLayout = () => {
         { path: '/crm/reports', label: 'Reportes', icon: '📈' },
     ];
 
+    const toggleMobileMenu = () => {
+        setIsMobileMenuOpen(!isMobileMenuOpen);
+    };
+
+    const closeMobileMenu = () => {
+        setIsMobileMenuOpen(false);
+    };
+
     return (
         <div className="crm-layout">
-            <aside className="crm-sidebar">
+            {/* Mobile Header with Hamburger */}
+            <div className="crm-mobile-header">
+                <button className="hamburger-btn" onClick={toggleMobileMenu} aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <div className="crm-mobile-logo">
+                    <span className="crm-icon">🚀</span>
+                    <span>CRM</span>
+                </div>
+            </div>
+
+            {/* Overlay for mobile */}
+            {isMobileMenuOpen && (
+                <div className="sidebar-overlay" onClick={closeMobileMenu}></div>
+            )}
+
+            <aside className={`crm-sidebar ${isMobileMenuOpen ? 'mobile-open' : ''}`}>
                 <div className="crm-sidebar-header">
                     <h2>🚀 CRM</h2>
                     <p className="crm-user-role">{userProfile?.rol || 'Usuario'}</p>

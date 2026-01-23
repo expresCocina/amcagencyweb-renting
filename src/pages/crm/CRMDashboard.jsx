@@ -46,20 +46,17 @@ const CRMDashboard = () => {
                 .not('etapa', 'in', '(cerrado_ganado,cerrado_perdido)');
             const valorPipeline = deals?.reduce((sum, deal) => sum + (parseFloat(deal.valor) || 0), 0) || 0;
 
-            // Tareas Hoy
-            const today = new Date().toISOString().split('T')[0];
+            // Tareas Pendientes (Todas)
             const { count: tareasHoy } = await supabase
                 .from('tasks')
                 .select('*', { count: 'exact', head: true })
-                .gte('fecha_vencimiento', `${today}T00:00:00`)
-                .lte('fecha_vencimiento', `${today}T23:59:59`)
                 .eq('estado', 'pendiente');
 
-            // Proyectos Activos
+            // Proyectos Activos (Corregido statuses)
             const { count: proyectosActivos } = await supabase
                 .from('projects')
                 .select('*', { count: 'exact', head: true })
-                .in('estado', ['planificacion', 'desarrollo', 'revision']);
+                .in('estado', ['planificacion', 'en_progreso', 'en_revision']);
 
             // Recent Activities
             const { data: activities } = await supabase
@@ -137,8 +134,8 @@ const CRMDashboard = () => {
                     </div>
                     <div className="crm-stat-content">
                         <h3>{stats.tareasHoy}</h3>
-                        <p>Tareas Hoy</p>
-                        <span className="crm-stat-badge warning">Pendientes</span>
+                        <p>Tareas Pendientes</p>
+                        <span className="crm-stat-badge warning">Por hacer</span>
                     </div>
                 </div>
 

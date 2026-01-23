@@ -9,6 +9,7 @@
     margin-left: 260px;
     padding: 40px;
     min-height: 100vh;
+    background: #f1f5f9 !important;
 }
 
 .admin-header {

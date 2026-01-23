@@ -6,17 +6,17 @@
 }
 
 .kpi-card {
-    background: rgba(30, 41, 59, 0.5);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(148, 163, 184, 0.1);
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
     border-radius: 16px;
     padding: 24px;
     transition: all 0.3s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .kpi-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
 }
 
 .kpi-header {
@@ -33,7 +33,7 @@
 .kpi-title {
     font-size: 0.875rem;
     font-weight: 600;
-    color: #94a3b8;
+    color: #64748b;
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
@@ -41,7 +41,7 @@
 .kpi-value {
     font-size: 2.5rem;
     font-weight: 700;
-    color: #fff;
+    color: #1e293b;
     margin-bottom: 8px;
     font-variant-numeric: tabular-nums;
 }

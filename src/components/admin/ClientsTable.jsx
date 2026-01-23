@@ -9,8 +9,8 @@ const ClientsTable = ({ clients, onUpdate }) => {
     const [updating, setUpdating] = useState(false);
 
     const filteredClients = clients.filter(client =>
-        client.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        client.company.toLowerCase().includes(searchTerm.toLowerCase())
+        (client.name?.toLowerCase() || '').includes(searchTerm.toLowerCase()) ||
+        (client.company?.toLowerCase() || '').includes(searchTerm.toLowerCase())
     );
 
     const getStatusBadge = (status) => {
@@ -32,7 +32,8 @@ const ClientsTable = ({ clients, onUpdate }) => {
     };
 
     const activatePayment = async (client) => {
-        if (!window.confirm(`¿Confirmas que el pago de ${client.name} por $80,000 COP ha sido recibido?`)) {
+        const clientName = client.name || client.nombre_representante || client.company || client.nombre_negocio || 'este cliente';
+        if (!window.confirm(`¿Confirmas que el pago de ${clientName} por $80,000 COP ha sido recibido?`)) {
             return;
         }
 
@@ -67,22 +68,37 @@ const ClientsTable = ({ clients, onUpdate }) => {
     };
 
     const getInitials = (name) => {
+        if (!name || typeof name !== 'string') return '??';
         return name
             .split(' ')
+            .filter(n => n.length > 0)
             .map(n => n[0])
             .join('')
             .toUpperCase()
-            .slice(0, 2);
+            .slice(0, 2) || '??';
     };
 
     const handleWhatsApp = (client) => {
-        const message = `Hola ${client.name}, te recordamos que tu próximo pago de $${parseInt(client.plan).toLocaleString('es-CO')} COP vence el ${client.next_payment}. ¡Gracias por confiar en nosotros!`;
-        const url = `https://wa.me/57${client.phone}?text=${encodeURIComponent(message)}`;
+        const clientName = client.name || client.nombre_representante || 'Cliente';
+        const plan = parseInt(client.plan) || 0;
+        const nextPayment = client.next_payment || 'próximamente';
+        const message = `Hola ${clientName}, te recordamos que tu próximo pago de $${plan.toLocaleString('es-CO')} COP vence el ${nextPayment}. ¡Gracias por confiar en nosotros!`;
+        const phone = (client.phone || client.whatsapp || '').replace(/\D/g, '');
+        if (!phone) {
+            alert('Este cliente no tiene un número de teléfono registrado');
+            return;
+        }
+        const url = `https://wa.me/57${phone}?text=${encodeURIComponent(message)}`;
         window.open(url, '_blank');
     };
 
     const handleEmailReminder = async (client) => {
-        if (!window.confirm(`¿Enviar recordatorio de pago por email a ${client.email}?`)) {
+        const email = client.email || '';
+        if (!email) {
+            alert('Este cliente no tiene un email registrado');
+            return;
+        }
+        if (!window.confirm(`¿Enviar recordatorio de pago por email a ${email}?`)) {
             return;
         }
 
@@ -138,8 +154,9 @@ const ClientsTable = ({ clients, onUpdate }) => {
         const isSuspended = client.estado_pago === 'suspendido';
         const action = isSuspended ? 'desbloquear' : 'bloquear';
         const newStatus = isSuspended ? 'activo' : 'suspendido';
+        const clientName = client.company || client.nombre_negocio || client.name || client.nombre_representante || 'este cliente';
 
-        if (!window.confirm(`¿Confirmas que deseas ${action} el sitio de ${client.company}?`)) {
+        if (!window.confirm(`¿Confirmas que deseas ${action} el sitio de ${clientName}?`)) {
             return;
         }
 
@@ -179,13 +196,13 @@ const ClientsTable = ({ clients, onUpdate }) => {
     const handleEditClick = (client) => {
         setEditingClient(client);
         setEditFormData({
-            name: client.name,
-            company: client.company,
-            domain: client.domain,
-            phone: client.phone,
-            plan: client.plan,
-            next_payment: client.next_payment,
-            status: client.status,
+            name: client.name || client.nombre_representante || '',
+            company: client.company || client.nombre_negocio || '',
+            domain: client.domain || '',
+            phone: client.phone || client.whatsapp || '',
+            plan: client.plan || 0,
+            next_payment: client.next_payment || '',
+            status: client.status || 'pending',
             estado_pago: client.estado_pago || 'pendiente',
             services: client.services || {
                 sitio_web: 'active',
@@ -287,28 +304,32 @@ const ClientsTable = ({ clients, onUpdate }) => {
                                     <td data-label="Cliente">
                                         <div className="client-info">
                                             <div className="client-avatar">
-                                                {getInitials(client.name)}
+                                                {getInitials(client.name || client.nombre_representante)}
                                             </div>
                                             <div className="client-details">
-                                                <div className="client-name">{client.name}</div>
-                                                <div className="client-company">{client.company}</div>
+                                                <div className="client-name">{client.name || client.nombre_representante || 'Sin nombre'}</div>
+                                                <div className="client-company">{client.company || client.nombre_negocio || 'Sin empresa'}</div>
                                             </div>
                                         </div>
                                     </td>
                                     <td data-label="Dominio">
-                                        <a
-                                            href={`https://${client.domain}`}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="domain-link"
-                                        >
-                                            {client.domain}
-                                            <span className="external-icon">↗</span>
-                                        </a>
+                                        {client.domain ? (
+                                            <a
+                                                href={`https://${client.domain}`}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="domain-link"
+                                            >
+                                                {client.domain}
+                                                <span className="external-icon">↗</span>
+                                            </a>
+                                        ) : (
+                                            <span style={{ color: '#94a3b8' }}>Sin dominio</span>
+                                        )}
                                     </td>
                                     <td data-label="Plan">
                                         <span className="plan-badge">
-                                            ${parseInt(client.plan).toLocaleString('es-CO')} COP
+                                            ${parseInt(client.plan || 0).toLocaleString('es-CO')} COP
                                         </span>
                                     </td>
                                     <td data-label="Estado">
@@ -326,7 +347,7 @@ const ClientsTable = ({ clients, onUpdate }) => {
                                             );
                                         })()}
                                     </td>
-                                    <td data-label="Próximo Pago" className="payment-date">{client.next_payment}</td>
+                                    <td data-label="Próximo Pago" className="payment-date">{client.next_payment || 'No definido'}</td>
                                     <td data-label="Acciones">
                                         <div className="action-buttons">
                                             {client.estado_pago === 'pendiente' && (

@@ -14,7 +14,7 @@
 
 .dashboard-page {
     min-height: 100vh;
-    background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+    background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%) !important;
     color: var(--text-primary);
 }
 
@@ -572,7 +572,9 @@
     .service-card h3 {
         font-size: 1.1rem;
     }
-}/* Add these elegant styles to ClientDashboard.css */
+}
+
+/* Add these elegant styles to ClientDashboard.css */
 
 /* Improved "Tu Sitio Web" Section */
 .dashboard-section {

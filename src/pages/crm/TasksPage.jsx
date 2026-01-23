@@ -74,7 +74,10 @@ const TasksPage = () => {
             const taskData = {
                 ...formData,
                 creado_por: user.id,
-                asignado_a: formData.asignado_a || user.id // Default to self if empty
+                asignado_a: formData.asignado_a || user.id, // Default to self if empty
+                fecha_vencimiento: formData.fecha_vencimiento || null, // Fix: send null if empty
+                relacionado_con: formData.relacionado_con || null,
+                relacionado_id: formData.relacionado_id || null
             };
 
             const { error } = await supabase

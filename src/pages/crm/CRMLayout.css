@@ -1,7 +1,7 @@
 :root {
     /* Design Tokens - Dark Elegant Theme */
     --crm-bg: #0f172a;
-    /* Skate 900 - Main Background */
+    /* Slate 900 - Main Background */
     --crm-panel-bg: #1e293b;
     /* Slate 800 - Cards/Sidebar Background */
     --crm-border: #334155;
@@ -37,27 +37,134 @@
     /* Subtle primary glow */
 }
 
+/* Global Layout Structure */
 .crm-layout {
     display: flex;
     min-height: 100vh;
     background-color: var(--crm-bg);
     color: var(--crm-text-primary);
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    position: relative;
+    overflow: hidden;
+    /* Prevent body scroll if sidebar pushes */
 }
 
-/* Sidebar Styling Override */
+/* Mobile Header */
+.crm-mobile-header {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: var(--crm-panel-bg);
+    border-bottom: 1px solid var(--crm-border);
+    z-index: 1000;
+    align-items: center;
+    padding: 0 16px;
+    gap: 16px;
+}
+
+.hamburger-btn {
+    background: none;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 32px;
+    height: 32px;
+    justify-content: center;
+}
+
+.hamburger-btn span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--crm-text-primary);
+    transition: all 0.3s;
+}
+
+.crm-mobile-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--crm-text-primary);
+    font-weight: 700;
+    font-size: 18px;
+}
+
+/* Sidebar Overlay */
+.sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    backdrop-filter: blur(2px);
+}
+
+/* Sidebar Styling */
 .crm-sidebar {
+    width: 260px;
     background-color: var(--crm-panel-bg);
     border-right: 1px solid var(--crm-border);
+    padding: 24px 0;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+    z-index: 100;
 }
 
-.crm-sidebar .crm-title {
+.crm-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 24px 24px;
+    border-bottom: 1px solid var(--crm-border);
+    margin-bottom: 24px;
+}
+
+.crm-logo {
+    font-size: 32px;
+}
+
+.crm-title {
     color: var(--crm-text-primary);
+    font-size: 24px;
+    font-weight: 700;
     text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
 }
 
-.sidebar-item {
+.crm-subtitle {
     color: var(--crm-text-secondary);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.crm-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 0 16px;
+}
+
+.sidebar-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    color: var(--crm-text-secondary);
+    text-decoration: none;
+    border-radius: var(--crm-radius-md);
+    transition: all 0.2s;
+    font-weight: 500;
+    border-left: 3px solid transparent;
 }
 
 .sidebar-item:hover {
@@ -68,7 +175,15 @@
 .sidebar-item.active {
     background: linear-gradient(90deg, var(--crm-primary-light), transparent);
     color: var(--crm-primary);
-    border-left: 3px solid var(--crm-primary);
+    border-left-color: var(--crm-primary);
+    font-weight: 600;
+}
+
+.sidebar-icon {
+    font-size: 20px;
+    width: 24px;
+    display: flex;
+    justify-content: center;
 }
 
 /* Main Content Area */
@@ -76,6 +191,10 @@
     flex: 1;
     overflow-y: auto;
     overflow-x: hidden;
+    padding: 0;
+    /* Pages handle their own padding */
+    height: 100vh;
+
     /* Custom Scrollbar */
     scrollbar-width: thin;
     scrollbar-color: var(--crm-border) var(--crm-bg);
@@ -108,6 +227,7 @@
     align-items: center;
     gap: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    text-decoration: none;
 }
 
 .btn-primary:hover {
@@ -134,8 +254,18 @@
 
 /* Global Modal Styles */
 .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     background: rgba(0, 0, 0, 0.75);
     backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 20px;
 }
 
 .modal-content {
@@ -144,15 +274,36 @@
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
     border-radius: var(--crm-radius-lg);
     color: var(--crm-text-primary);
+    width: 100%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
 }
 
 .modal-header {
+    padding: 24px;
     border-bottom: 1px solid var(--crm-border);
     background: rgba(15, 23, 42, 0.5);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .modal-header h2 {
     color: var(--crm-text-primary);
+    margin: 0;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: var(--crm-text-secondary);
+    cursor: pointer;
 }
 
 /* Global Form Element Styles */
@@ -163,6 +314,7 @@ textarea {
     border: 1px solid var(--crm-border) !important;
     color: var(--crm-text-primary) !important;
     border-radius: var(--crm-radius-md) !important;
+    padding: 10px 12px;
 }
 
 input:focus,
@@ -178,13 +330,33 @@ label {
     font-size: 0.875rem;
     margin-bottom: 0.5rem;
     display: block;
+    font-weight: 500;
 }
 
-/* Responsive */
+/* Mobile Responsive */
 @media (max-width: 768px) {
     .crm-mobile-header {
-        background: var(--crm-panel-bg);
-        border-bottom: 1px solid var(--crm-border);
         display: flex;
+    }
+
+    .crm-sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 280px;
+        z-index: 1000;
+        transform: translateX(-100%);
+        box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .crm-sidebar.mobile-open {
+        transform: translateX(0);
+    }
+
+    .crm-main {
+        padding-top: 60px;
+        /* Space for header */
+        width: 100%;
     }
 }

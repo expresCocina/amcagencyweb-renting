@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { supabase } from '../../supabaseClient';
 import ActivityTimeline from '../../components/crm/ActivityTimeline';
 import { getWhatsAppUrl, getWhatsAppMessage } from '../../utils/whatsappUtils';
@@ -32,10 +33,27 @@ const LeadsPage = () => {
         notas: '',
     });
 
+    const [searchParams] = useSearchParams();
+
     useEffect(() => {
         loadLeads();
         loadUsers();
     }, []);
+
+    // Check for ID in URL to open modal automatically
+    useEffect(() => {
+        if (!loading && leads.length > 0) {
+            const leadIdFromUrl = searchParams.get('id');
+            if (leadIdFromUrl) {
+                const leadToOpen = leads.find(l => l.id === leadIdFromUrl);
+                if (leadToOpen) {
+                    handleEdit(leadToOpen);
+                    // Optional: remove param from URL without refreshing
+                    window.history.replaceState({}, '', '/crm/leads');
+                }
+            }
+        }
+    }, [loading, leads, searchParams]);
 
     useEffect(() => {
         applyFilters();

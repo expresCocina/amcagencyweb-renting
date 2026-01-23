@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useNotifications } from '../../context/NotificationContext';
 import { FaBell, FaCheckDouble } from 'react-icons/fa';
 import './NotificationBell.css';
@@ -19,11 +20,16 @@ const NotificationBell = () => {
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, []);
 
+    const navigate = useNavigate();
+
     const handleItemClick = (notification) => {
         if (!notification.read) {
             markAsRead(notification.id);
         }
         setIsOpen(false);
+        if (notification.link) {
+            navigate(notification.link);
+        }
     };
 
     // Date formatter

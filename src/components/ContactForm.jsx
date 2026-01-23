@@ -6,6 +6,7 @@ const ContactForm = () => {
     const [formData, setFormData] = useState({
         name: '',
         company: '',
+        email: '',
         phone: '',
         service: 'seo'
     });
@@ -29,14 +30,13 @@ const ContactForm = () => {
             const { error: leadError } = await supabase
                 .from('leads')
                 .insert([{
-                    name: formData.name,
-                    company: formData.company,
-                    phone: formData.phone,
-                    email: null, // No email in this form
-                    source: 'Formulario de Contacto Web',
-                    status: 'new',
-                    interested_service: formData.service,
-                    notes: `Servicio solicitado: ${formData.service}`
+                    nombre: formData.name,
+                    empresa: formData.company,
+                    email: formData.email,
+                    telefono: formData.phone,
+                    fuente: 'Formulario de Contacto Web',
+                    estado: 'nuevo',
+                    notas: `Servicio solicitado: ${formData.service}`
                 }]);
 
             if (leadError) {
@@ -68,6 +68,7 @@ const ContactForm = () => {
 
 Nombre: ${formData.name}
 Empresa: ${formData.company}
+Email: ${formData.email}
 Teléfono: ${formData.phone}
 Servicio: ${formData.service}`;
 
@@ -88,6 +89,7 @@ Servicio: ${formData.service}`;
             setFormData({
                 name: '',
                 company: '',
+                email: '',
                 phone: '',
                 service: 'seo'
             });
@@ -178,6 +180,19 @@ Servicio: ${formData.service}`;
                                         onChange={handleChange}
                                         required
                                         placeholder="Mi Empresa S.A.S."
+                                    />
+                                </div>
+
+                                <div className="form-group">
+                                    <label htmlFor="email">Email *</label>
+                                    <input
+                                        type="email"
+                                        id="email"
+                                        name="email"
+                                        value={formData.email}
+                                        onChange={handleChange}
+                                        required
+                                        placeholder="contacto@empresa.com"
                                     />
                                 </div>
 

@@ -226,10 +226,10 @@ const ProjectsPage = () => {
                             </table>
                         </div>
                     ) : (
-                        <div className="kanban-board">
+                        <div className="kanban-board" style={{ display: 'flex', gap: '24px', overflowX: 'auto', paddingBottom: '24px' }}>
                             {statuses.map(status => (
-                                <div key={status.id} className="kanban-column">
-                                    <div className="column-header" style={{ borderTop: `3px solid ${status.color}` }}>
+                                <div key={status.id} className="kanban-column" style={{ minWidth: '320px', flexShrink: 0 }}>
+                                    <div className="column-header" style={{ borderTop: `3px solid ${status.color}`, background: '#1e293b' }}>
                                         <h3>{status.label}</h3>
                                         <span className="count">{projects.filter(p => p.estado === status.id).length}</span>
                                     </div>

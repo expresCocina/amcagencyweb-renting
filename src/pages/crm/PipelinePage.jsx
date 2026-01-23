@@ -141,14 +141,14 @@ const PipelinePage = () => {
                 </button>
             </div>
 
-            <div className="pipeline-board">
+            <div className="pipeline-board" style={{ display: 'flex', gap: '24px', overflowX: 'auto', paddingBottom: '24px' }}>
                 {stages.map((stage) => {
                     const stageDeals = getDealsByStage(stage.id);
                     const totalValue = getTotalValue(stageDeals);
 
                     return (
-                        <div key={stage.id} className="pipeline-column">
-                            <div className="column-header" style={{ borderTopColor: stage.color }}>
+                        <div key={stage.id} className="pipeline-column" style={{ minWidth: '320px', flexShrink: 0 }}>
+                            <div className="column-header" style={{ borderTop: `3px solid ${stage.color}`, background: '#1e293b' }}>
                                 <h3>{stage.label}</h3>
                                 <div className="column-stats">
                                     <span className="deal-count">{stageDeals.length}</span>

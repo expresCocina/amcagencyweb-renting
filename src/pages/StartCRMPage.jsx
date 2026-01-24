@@ -13,7 +13,7 @@ const StartCRMPage = () => {
                     <p>Gestiona leads, automatiza tus ventas y organiza tu empresa en un solo lugar.</p>
 
                     <div className="cta-container">
-                        <Link to="/onboarding" className="btn-primary-large">
+                        <Link to="/signup-saas" className="btn-primary-large">
                             🚀 Crear mi Espacio de Trabajo
                         </Link>
                         <p className="subtext">No requiere tarjeta de crédito • 14 días de prueba</p>

@@ -13,6 +13,14 @@ const ClientDashboard = () => {
         checkAuthAndFetchData();
     }, []);
 
+    useEffect(() => {
+        // Safety timeout
+        const timer = setTimeout(() => {
+            setIsLoading(false);
+        }, 5000);
+        return () => clearTimeout(timer);
+    }, []);
+
     const checkAuthAndFetchData = async () => {
         try {
             const { data: { session } } = await supabase.auth.getSession();
@@ -22,6 +30,20 @@ const ClientDashboard = () => {
                 return;
             }
 
+            // 1. Check if user is actually a SaaS Admin (Wrong place protection)
+            const { data: profile } = await supabase
+                .from('user_profiles')
+                .select('rol, organization_id')
+                .eq('id', session.user.id)
+                .single();
+
+            if (profile?.organization_id || profile?.rol === 'admin') {
+                // Redirect to CRM if they shouldn't be here
+                window.location.href = '/crm';
+                return;
+            }
+
+            // 2. Fetch Client Data
             const { data: client, error } = await supabase
                 .from('clients')
                 .select('*')
@@ -29,7 +51,7 @@ const ClientDashboard = () => {
                 .single();
 
             if (error) {
-                console.error('Error fetching client data:', error);
+                console.warn('Error fetching client data (normal for new users):', error);
             }
 
             if (client) {
@@ -40,7 +62,7 @@ const ClientDashboard = () => {
             }
         } catch (err) {
             console.error('Auth error:', err);
-            navigate('/login');
+            // Don't redirect to login on error, just show empty dashboard
         } finally {
             setIsLoading(false);
         }

@@ -32,25 +32,28 @@ const LoginPage = () => {
                 throw new Error('No se pudo iniciar sesión. Por favor intenta de nuevo.');
             }
 
-            // Fetch client data from clients table
-            const { data: clientData, error: clientError } = await supabase
-                .from('clients')
-                .select('*')
-                .eq('user_id', data.user.id)
+            // Fetch user profile to determine role and organization
+            const { data: profile, error: profileError } = await supabase
+                .from('user_profiles')
+                .select('rol, organization_id')
+                .eq('id', data.user.id)
                 .single();
-
-            if (clientError || !clientData) {
-                console.warn('No client data found:', clientError);
-            }
 
             // Store session info
             localStorage.setItem('isLoggedIn', 'true');
-            localStorage.setItem('userName', clientData?.name || data.user.email);
             localStorage.setItem('userEmail', data.user.email);
-            localStorage.setItem('clientId', clientData?.id || '');
 
-            // Redirect to dashboard
-            navigate('/dashboard');
+            // LOGIC: Where to send the user?
+            if (profile?.organization_id) {
+                // User belongs to an organization -> Go to CRM
+                navigate('/crm');
+            } else if (profile?.rol === 'admin' && !profile?.organization_id) {
+                // Admin pending organization -> Onboarding
+                navigate('/onboarding');
+            } else {
+                // Everything else (Clients) -> Client Dashboard
+                navigate('/dashboard');
+            }
 
         } catch (err) {
             console.error('Login error:', err);

@@ -145,8 +145,10 @@ function AppContent({ isDelayedLoaded, isPromoActive }) {
           <Route path="/registro" element={<RegistroPage />} />
           <Route path="/gratis" element={<FreeWebsiteLanding />} />
           <Route path="/gratis" element={<FreeWebsiteLanding />} />
-          <Route path="/start" element={<StartCRMPage />} />
-          <Route path="/signup-saas" element={<SaaSSignupPage />} />
+          <Route path="/gratis" element={<FreeWebsiteLanding />} />
+          {/* Public SaaS Routes Removed for Private Mode */}
+          {/* <Route path="/start" element={<StartCRMPage />} /> */}
+          {/* <Route path="/signup-saas" element={<SaaSSignupPage />} /> */}
 
           {/* Demo Pages */}
           <Route path="/demo/ecotienda" element={<EcoTiendaDemo />} />

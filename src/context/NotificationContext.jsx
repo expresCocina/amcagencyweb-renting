@@ -122,6 +122,7 @@ export const NotificationProvider = ({ children }) => {
     // Helper to manually create a notification (e.g. from client side actions)
     const createNotification = async (userId, title, message, type = 'info', link = null) => {
         try {
+            // 1. Insert into Database (In-App Notification)
             await supabase.from('notifications').insert({
                 user_id: userId,
                 title,
@@ -130,7 +131,32 @@ export const NotificationProvider = ({ children }) => {
                 link,
                 read: false
             });
-            // Realtime subscription will catch this and update local state
+
+            // 2. Send Email Notification (Direct Invoke for reliability)
+            // Fetch target user email first
+            const { data: profile } = await supabase
+                .from('user_profiles')
+                .select('email')
+                .eq('id', userId)
+                .single();
+
+            if (profile?.email) {
+                await supabase.functions.invoke('send-email', {
+                    body: {
+                        email: profile.email,
+                        subject: `🔔 ${title}`,
+                        html: `
+                            <h2>${title}</h2>
+                            <p>${message}</p>
+                            <hr />
+                            <a href="https://amcagencyweb.com${link || '/crm'}" style="background:#ec4899;color:white;padding:10px 20px;text-decoration:none;border-radius:5px;display:inline-block;margin-top:10px;">
+                                Ver en CRM
+                            </a>
+                        `
+                    }
+                });
+            }
+
         } catch (error) {
             console.error('Error creating notification:', error);
         }

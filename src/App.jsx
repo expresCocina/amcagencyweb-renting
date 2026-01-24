@@ -42,8 +42,6 @@ import SitioBloqueadoPage from './pages/SitioBloqueadoPage';
 import FreeWebsiteLanding from './pages/FreeWebsiteLanding';
 import ProtectedRoute from './components/admin/ProtectedRoute';
 import OrganizationOnboarding from './pages/auth/OrganizationOnboarding';
-import StartCRMPage from './pages/StartCRMPage';
-import SaaSSignupPage from './pages/auth/SaaSSignupPage';
 
 // Import Demo Pages normally for fast loading
 import EcoTiendaDemo from './pages/demos/EcoTiendaDemo';

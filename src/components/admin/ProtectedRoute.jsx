@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { supabase } from '../../supabaseClient';
 
-// Lista de emails de administradores autorizados
+// Lista de emails de administradores autorizados (Legacy)
 const ADMIN_EMAILS = [
     'info@amcagencyweb.com',
     'vidadigitalco11@gmail.com'
@@ -13,60 +13,86 @@ const ProtectedRoute = ({ children }) => {
     const [session, setSession] = useState(null);
     const [isAdmin, setIsAdmin] = useState(false);
 
-    useEffect(() => {
-        // Check current session
-        supabase.auth.getSession().then(async ({ data: { session } }) => {
-            setSession(session);
+    const checkUserRole = async (session) => {
+        if (!session?.user?.email) {
+            setIsAdmin(false);
+            return;
+        }
 
-            if (session?.user?.email) {
-                const isHardcodedAdmin = ADMIN_EMAILS.includes(session.user.email.toLowerCase());
-
-                if (isHardcodedAdmin) {
-                    setIsAdmin(true);
-                } else {
-                    // Check database role
-                    const { data: profile } = await supabase
-                        .from('user_profiles')
-                        .select('rol, organization_id')
-                        .eq('id', session.user.id)
-                        .single();
-
-                    setIsAdmin(profile?.rol === 'admin' || !!profile?.organization_id);
-                }
+        try {
+            // 1. Check Hardcoded Admins (Fastest)
+            const isHardcodedAdmin = ADMIN_EMAILS.includes(session.user.email.toLowerCase());
+            if (isHardcodedAdmin) {
+                setIsAdmin(true);
+                return;
             }
 
-            setLoading(false);
-        });
+            // 2. Check Database Role (SaaS Admin)
+            const { data: profile, error } = await supabase
+                .from('user_profiles')
+                .select('rol, organization_id')
+                .eq('id', session.user.id)
+                .maybeSingle(); // Use maybeSingle to avoid 406 errors if no rows
 
-        // Listen for auth changes
-        const {
-            data: { subscription },
-        } = supabase.auth.onAuthStateChange(async (_event, session) => {
-            setSession(session);
-
-            if (session?.user?.email) {
-                // Check hardcoded admins
-                const isHardcodedAdmin = ADMIN_EMAILS.includes(session.user.email.toLowerCase());
-
-                if (isHardcodedAdmin) {
-                    setIsAdmin(true);
-                } else {
-                    // Check database role for SaaS Admins
-                    const { data: profile } = await supabase
-                        .from('user_profiles')
-                        .select('rol, organization_id')
-                        .eq('id', session.user.id)
-                        .single();
-
-                    // Allow if they are admin or have an organization (implied admin for now)
-                    setIsAdmin(profile?.rol === 'admin' || !!profile?.organization_id);
-                }
-            } else {
+            if (error) {
+                console.warn('Error fetching profile:', error);
+                // Fail safe: If we can't read profile, assume not admin to avoid loops
                 setIsAdmin(false);
+                return;
+            }
+
+            // Allow if admin OR has organization (implied SaaS Admin)
+            const isSaaSAdmin = profile?.rol === 'admin' || !!profile?.organization_id;
+            setIsAdmin(isSaaSAdmin);
+
+        } catch (err) {
+            console.error('Unexpected auth check error:', err);
+            setIsAdmin(false);
+        }
+    };
+
+    useEffect(() => {
+        let mounted = true;
+
+        const initAuth = async () => {
+            try {
+                const { data: { session } } = await supabase.auth.getSession();
+                if (mounted) {
+                    setSession(session);
+                    if (session) {
+                        await checkUserRole(session);
+                    }
+                }
+            } catch (error) {
+                console.error('Session check failed', error);
+            } finally {
+                if (mounted) setLoading(false);
+            }
+        };
+
+        initAuth();
+
+        const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
+            if (mounted) {
+                setSession(session);
+                if (session) {
+                    // Reset loading to verify new user role if session changes
+                    // But don't block UI if just a token refresh
+                    if (_event === 'SIGNED_IN') {
+                        setLoading(true);
+                        await checkUserRole(session);
+                        setLoading(false);
+                    }
+                } else {
+                    setLoading(false);
+                }
             }
         });
 
-        return () => subscription.unsubscribe();
+        return () => {
+            mounted = false;
+            subscription.unsubscribe();
+        };
     }, []);
 
     if (loading) {

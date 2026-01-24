@@ -23,6 +23,12 @@ const CRMLayout = () => {
                 .eq('id', user.id)
                 .single();
             setUserProfile(data);
+
+            // SaaS Logic: If no organization, force onboarding
+            if (!data.organization_id) {
+                // Using window.location to force full reload/redirect cleanly
+                window.location.href = '/onboarding';
+            }
         }
     };
 

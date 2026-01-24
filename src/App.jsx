@@ -41,6 +41,7 @@ import RegistroPage from './pages/RegistroPage';
 import SitioBloqueadoPage from './pages/SitioBloqueadoPage';
 import FreeWebsiteLanding from './pages/FreeWebsiteLanding';
 import ProtectedRoute from './components/admin/ProtectedRoute';
+import OrganizationOnboarding from './pages/auth/OrganizationOnboarding';
 
 // Import Demo Pages normally for fast loading
 import EcoTiendaDemo from './pages/demos/EcoTiendaDemo';
@@ -157,6 +158,7 @@ function AppContent({ isDelayedLoaded, isPromoActive }) {
           <Route path="/dashboard" element={<ClientDashboard />} />
 
           {/* Admin Routes - Protected with Supabase Auth */}
+          <Route path="/onboarding" element={<OrganizationOnboarding />} />
           <Route path="/admin/login" element={<Login />} />
           <Route path="/admin" element={
             <ProtectedRoute>

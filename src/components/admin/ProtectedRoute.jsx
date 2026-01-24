@@ -7,7 +7,8 @@ const ADMIN_EMAILS = [
     'info@amcagencyweb.com',
     'vidadigitalco11@gmail.com',
     'camiyoutu6@gmail.com',
-    'pruebafinal@gmail.com'
+    'pruebafinal@gmail.com',
+    'majoramo.10@gmail.com'
 ];
 
 const ProtectedRoute = ({ children }) => {

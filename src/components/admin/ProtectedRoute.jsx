@@ -5,7 +5,9 @@ import { supabase } from '../../supabaseClient';
 // Lista de emails de administradores autorizados (Legacy)
 const ADMIN_EMAILS = [
     'info@amcagencyweb.com',
-    'vidadigitalco11@gmail.com'
+    'vidadigitalco11@gmail.com',
+    'camiyoutu6@gmail.com',
+    'pruebafinal@gmail.com'
 ];
 
 const ProtectedRoute = ({ children }) => {

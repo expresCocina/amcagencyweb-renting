@@ -18,6 +18,14 @@ const CRMDashboard = () => {
         loadDashboardData();
     }, []);
 
+    // Safety Net: Force stop loading after 5 seconds to prevent black screen
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setLoading(false);
+        }, 5000);
+        return () => clearTimeout(timer);
+    }, []);
+
     const loadDashboardData = async () => {
         try {
             // Total Leads

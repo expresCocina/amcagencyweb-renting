@@ -95,6 +95,14 @@ const ProtectedRoute = ({ children }) => {
         };
     }, []);
 
+    // Safety Net: Force stop loading after 5 seconds no matter what
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setLoading(false);
+        }, 5000);
+        return () => clearTimeout(timer);
+    }, []);
+
     if (loading) {
         return (
             <div style={{

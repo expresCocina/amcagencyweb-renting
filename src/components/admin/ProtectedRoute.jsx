@@ -15,13 +15,24 @@ const ProtectedRoute = ({ children }) => {
 
     useEffect(() => {
         // Check current session
-        supabase.auth.getSession().then(({ data: { session } }) => {
+        supabase.auth.getSession().then(async ({ data: { session } }) => {
             setSession(session);
 
-            // Check if user is admin
             if (session?.user?.email) {
-                const userIsAdmin = ADMIN_EMAILS.includes(session.user.email.toLowerCase());
-                setIsAdmin(userIsAdmin);
+                const isHardcodedAdmin = ADMIN_EMAILS.includes(session.user.email.toLowerCase());
+
+                if (isHardcodedAdmin) {
+                    setIsAdmin(true);
+                } else {
+                    // Check database role
+                    const { data: profile } = await supabase
+                        .from('user_profiles')
+                        .select('rol, organization_id')
+                        .eq('id', session.user.id)
+                        .single();
+
+                    setIsAdmin(profile?.rol === 'admin' || !!profile?.organization_id);
+                }
             }
 
             setLoading(false);
@@ -30,13 +41,26 @@ const ProtectedRoute = ({ children }) => {
         // Listen for auth changes
         const {
             data: { subscription },
-        } = supabase.auth.onAuthStateChange((_event, session) => {
+        } = supabase.auth.onAuthStateChange(async (_event, session) => {
             setSession(session);
 
-            // Check if user is admin
             if (session?.user?.email) {
-                const userIsAdmin = ADMIN_EMAILS.includes(session.user.email.toLowerCase());
-                setIsAdmin(userIsAdmin);
+                // Check hardcoded admins
+                const isHardcodedAdmin = ADMIN_EMAILS.includes(session.user.email.toLowerCase());
+
+                if (isHardcodedAdmin) {
+                    setIsAdmin(true);
+                } else {
+                    // Check database role for SaaS Admins
+                    const { data: profile } = await supabase
+                        .from('user_profiles')
+                        .select('rol, organization_id')
+                        .eq('id', session.user.id)
+                        .single();
+
+                    // Allow if they are admin or have an organization (implied admin for now)
+                    setIsAdmin(profile?.rol === 'admin' || !!profile?.organization_id);
+                }
             } else {
                 setIsAdmin(false);
             }

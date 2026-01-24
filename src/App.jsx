@@ -42,6 +42,7 @@ import SitioBloqueadoPage from './pages/SitioBloqueadoPage';
 import FreeWebsiteLanding from './pages/FreeWebsiteLanding';
 import ProtectedRoute from './components/admin/ProtectedRoute';
 import OrganizationOnboarding from './pages/auth/OrganizationOnboarding';
+import StartCRMPage from './pages/StartCRMPage';
 
 // Import Demo Pages normally for fast loading
 import EcoTiendaDemo from './pages/demos/EcoTiendaDemo';
@@ -142,6 +143,7 @@ function AppContent({ isDelayedLoaded, isPromoActive }) {
           <Route path="/agendar" element={<BookingPage />} />
           <Route path="/registro" element={<RegistroPage />} />
           <Route path="/gratis" element={<FreeWebsiteLanding />} />
+          <Route path="/start" element={<StartCRMPage />} />
 
           {/* Demo Pages */}
           <Route path="/demo/ecotienda" element={<EcoTiendaDemo />} />

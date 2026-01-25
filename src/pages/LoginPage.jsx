@@ -44,12 +44,15 @@ const LoginPage = () => {
             localStorage.setItem('userEmail', data.user.email);
 
             // LOGIC: Where to send the user?
-            if (profile?.organization_id) {
-                // User belongs to an organization -> Go to CRM
-                navigate('/crm');
-            } else if (profile?.rol === 'admin' && !profile?.organization_id) {
-                // Admin pending organization -> Onboarding
-                navigate('/onboarding');
+            // LOGIC: Where to send the user?
+            if (profile?.rol === 'admin') {
+                if (profile?.organization_id) {
+                    // Start CRM if admin has organization
+                    navigate('/crm');
+                } else {
+                    // Admin pending organization -> Onboarding
+                    navigate('/onboarding');
+                }
             } else {
                 // Everything else (Clients) -> Client Dashboard
                 navigate('/dashboard');

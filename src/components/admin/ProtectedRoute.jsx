@@ -44,8 +44,9 @@ const ProtectedRoute = ({ children }) => {
                 return;
             }
 
-            // Allow if admin OR has organization (implied SaaS Admin)
-            const isSaaSAdmin = profile?.rol === 'admin' || !!profile?.organization_id;
+            // Allow ONLY if admin
+            // Being part of an organization is NOT enough (clients have org_id too)
+            const isSaaSAdmin = profile?.rol === 'admin';
             setIsAdmin(isSaaSAdmin);
 
         } catch (err) {

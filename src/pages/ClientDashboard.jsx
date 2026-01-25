@@ -21,7 +21,7 @@ const ClientDashboard = () => {
         return () => clearTimeout(timer);
     }, []);
 
-    const checkAuthAndFetchData = async () => {
+    const checkAuthAndFetchData = async (retryCount = 0) => {
         try {
             const { data: { session } } = await supabase.auth.getSession();
 
@@ -29,6 +29,10 @@ const ClientDashboard = () => {
                 navigate('/login');
                 return;
             }
+
+            // OPTIMIZATION: Set basic identity immediately while data loads
+            // This prevents the "Hola, " (empty) issue if DB is slow
+            setUserName(session.user.user_metadata?.nombre_representante || session.user.email?.split('@')[0] || 'Cliente');
 
             // 1. Check if user is actually a SaaS Admin (Wrong place protection)
             const { data: profile } = await supabase
@@ -38,34 +42,49 @@ const ClientDashboard = () => {
                 .single();
 
             if (profile?.organization_id || profile?.rol === 'admin') {
-                // Redirect to CRM if they shouldn't be here
                 window.location.href = '/crm';
                 return;
             }
 
-            // 2. Fetch Client Data
+            // 2. Fetch Client Data with Retry Logic
+            // Newly created users might have a slight delay before the 'clients' row exists
             const { data: client, error } = await supabase
                 .from('clients')
                 .select('*')
                 .eq('user_id', session.user.id)
                 .single();
 
-            if (error) {
-                console.warn('Error fetching client data (normal for new users):', error);
+            if (error && error.code !== 'PGRST116') { // PGRST116 is "Row not found"
+                console.warn('Error fetching client data:', error);
             }
 
             if (client) {
                 setClientData(client);
-                setUserName(client.name || client.nombre_representante || session.user.email);
+                // Upgrade name if available, otherwise keep email
+                if (client.name || client.nombre_representante) {
+                    setUserName(client.name || client.nombre_representante);
+                }
+                setIsLoading(false);
             } else {
-                setUserName(session.user.email);
+                // If client not found, it might be a race condition from registration.
+                // Retry up to 5 times (5 seconds)
+                if (retryCount < 5) {
+                    console.log(`Client data not ready yet, retrying... (${retryCount + 1}/5)`);
+                    setTimeout(() => {
+                        checkAuthAndFetchData(retryCount + 1);
+                    }, 1000);
+                } else {
+                    // Give up after 5 retries
+                    console.warn('Client data never appeared after retries');
+                    setIsLoading(false);
+                }
             }
         } catch (err) {
             console.error('Auth error:', err);
             // Don't redirect to login on error, just show empty dashboard
-        } finally {
             setIsLoading(false);
         }
+        // Note: moved setIsLoading(false) inside the success/fail blocks to support retries
     };
 
     const handleLogout = async () => {
@@ -183,7 +202,7 @@ const ClientDashboard = () => {
             <div className="dashboard-page">
                 <div className="dashboard-loading">
                     <div className="spinner"></div>
-                    <p>Cargando tu panel...</p>
+                    <p>Estamos preparando tu panel...</p>
                 </div>
             </div>
         );

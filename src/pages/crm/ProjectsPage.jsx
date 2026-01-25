@@ -19,11 +19,13 @@ const ProjectsPage = () => {
         estado: 'planificacion',
         fecha_entrega_estimada: '',
         valor_proyecto: 0,
-        responsable: ''
+        responsable: '',
+        organization_id: '' // Add organization_id
     });
     const [clients, setClients] = useState([]);
     const [leads, setLeads] = useState([]);
     const [users, setUsers] = useState([]);
+    const [currentUserOrg, setCurrentUserOrg] = useState(null); // Store current user's org
     const [editingProject, setEditingProject] = useState(null);
 
     const statuses = [
@@ -35,11 +37,31 @@ const ProjectsPage = () => {
     ];
 
     useEffect(() => {
+        loadCurrentUserOrg(); // Load current user's org first
         loadProjects();
         loadClients();
         loadLeads();
         loadUsers();
     }, []);
+
+    const loadCurrentUserOrg = async () => {
+        try {
+            const { data: { user } } = await supabase.auth.getUser();
+            if (user) {
+                const { data: profile } = await supabase
+                    .from('user_profiles')
+                    .select('organization_id')
+                    .eq('id', user.id)
+                    .single();
+
+                if (profile) {
+                    setCurrentUserOrg(profile.organization_id);
+                }
+            }
+        } catch (error) {
+            console.error('Error loading user org:', error);
+        }
+    };
 
     const loadProjects = async () => {
         setLoading(true);
@@ -85,6 +107,11 @@ const ProjectsPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+            if (!currentUserOrg) {
+                alert('No se pudo identificar la organización del usuario. Recargue la página.');
+                return;
+            }
+
             // Parse selected entity
             let cliente_id = null;
             let lead_id = null;
@@ -105,12 +132,15 @@ const ProjectsPage = () => {
                 valor_proyecto: formData.valor_proyecto || 0,
                 responsable: formData.responsable || null,
                 fecha_entrega_estimada: formData.fecha_entrega_estimada || null,
+                organization_id: currentUserOrg // Include organization_id
             };
 
             if (editingProject) {
+                // Don't update organization_id on edit unless intended, usually stays same
+                const { organization_id, ...updatePayload } = payload;
                 const { error } = await supabase
                     .from('projects')
-                    .update(payload)
+                    .update(updatePayload)
                     .eq('id', editingProject.id);
                 if (error) throw error;
             } else {
@@ -126,7 +156,7 @@ const ProjectsPage = () => {
             loadProjects();
         } catch (error) {
             console.error('Error saving project:', error);
-            alert('Error al guardar el proyecto');
+            alert('Error al guardar el proyecto: ' + error.message);
         }
     };
 

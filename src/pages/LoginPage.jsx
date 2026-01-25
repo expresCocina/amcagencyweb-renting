@@ -47,8 +47,9 @@ const LoginPage = () => {
             // LOGIC: Where to send the user?
             if (profile?.rol === 'admin') {
                 if (profile?.organization_id) {
-                    // Start CRM if admin has organization
-                    navigate('/crm');
+                    // Start Admin Dashboard (WaaS Panel) default
+                    // They can access CRM from there
+                    navigate('/admin');
                 } else {
                     // Admin pending organization -> Onboarding
                     navigate('/onboarding');

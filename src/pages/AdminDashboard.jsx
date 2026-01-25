@@ -111,6 +111,17 @@ const AdminDashboard = () => {
                     </div>
                     <div className="header-actions">
                         <button
+                            onClick={() => navigate('/crm')}
+                            className="btn-crm-access"
+                            style={{
+                                backgroundColor: '#ec4899', // Pink/Magenta for differentiation
+                                color: 'white',
+                                marginRight: '10px'
+                            }}
+                        >
+                            🚀 Ir al CRM
+                        </button>
+                        <button
                             onClick={() => navigate('/admin/clientes/nuevo')}
                             className="btn-add-client"
                         >

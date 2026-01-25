@@ -34,7 +34,9 @@ const ClientDashboard = () => {
             // This prevents the "Hola, " (empty) issue if DB is slow
             setUserName(session.user.user_metadata?.nombre_representante || session.user.email?.split('@')[0] || 'Cliente');
 
-            // 1. Check if user is actually a SaaS Admin (Wrong place protection)
+            // 1. (Removed) Check if user is actually a SaaS Admin logic removed
+            // Users should stay on the Client Dashboard even if they are admins
+            /*
             const { data: profile } = await supabase
                 .from('user_profiles')
                 .select('rol, organization_id')
@@ -45,6 +47,7 @@ const ClientDashboard = () => {
                 window.location.href = '/crm';
                 return;
             }
+            */
 
             // 2. Fetch Client Data with Retry Logic
             // Newly created users might have a slight delay before the 'clients' row exists

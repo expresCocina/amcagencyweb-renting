@@ -15,13 +15,14 @@ const ProjectsPage = () => {
     const [formData, setFormData] = useState({
         nombre: '',
         descripcion: '',
-        cliente_id: '',
+        selected_entity: '', // Combined ID (prefix + id)
         estado: 'planificacion',
         fecha_entrega_estimada: '',
         valor_proyecto: 0,
         responsable: ''
     });
     const [clients, setClients] = useState([]);
+    const [leads, setLeads] = useState([]);
     const [users, setUsers] = useState([]);
     const [editingProject, setEditingProject] = useState(null);
 
@@ -36,6 +37,7 @@ const ProjectsPage = () => {
     useEffect(() => {
         loadProjects();
         loadClients();
+        loadLeads();
         loadUsers();
     }, []);
 
@@ -47,6 +49,7 @@ const ProjectsPage = () => {
                 .select(`
                     *,
                     clients:cliente_id (nombre_negocio),
+                    leads:lead_id (nombre, empresa),
                     user_profiles:responsable (nombre_completo)
                 `)
                 .order('updated_at', { ascending: false });
@@ -65,6 +68,11 @@ const ProjectsPage = () => {
         setClients(data || []);
     };
 
+    const loadLeads = async () => {
+        const { data } = await supabase.from('leads').select('id, nombre, empresa');
+        setLeads(data || []);
+    };
+
     const loadUsers = async () => {
         const { data } = await supabase
             .from('user_profiles')
@@ -77,12 +85,26 @@ const ProjectsPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+            // Parse selected entity
+            let cliente_id = null;
+            let lead_id = null;
+
+            if (formData.selected_entity) {
+                const [type, id] = formData.selected_entity.split(':');
+                if (type === 'client') cliente_id = id;
+                if (type === 'lead') lead_id = id;
+            }
+
             // Sanitize payload: valid UUID or null
             const payload = {
-                ...formData,
-                cliente_id: formData.cliente_id || null,
+                nombre: formData.nombre,
+                descripcion: formData.descripcion,
+                cliente_id: cliente_id,
+                lead_id: lead_id,
+                estado: formData.estado,
+                valor_proyecto: formData.valor_proyecto || 0,
                 responsable: formData.responsable || null,
-                fecha_entrega_estimada: formData.fecha_entrega_estimada || null
+                fecha_entrega_estimada: formData.fecha_entrega_estimada || null,
             };
 
             if (editingProject) {
@@ -110,10 +132,16 @@ const ProjectsPage = () => {
 
     const handleEdit = (project) => {
         setEditingProject(project);
+
+        // Determine selected entity string
+        let selected = '';
+        if (project.cliente_id) selected = `client:${project.cliente_id}`;
+        else if (project.lead_id) selected = `lead:${project.lead_id}`;
+
         setFormData({
             nombre: project.nombre,
             descripcion: project.descripcion,
-            cliente_id: project.cliente_id,
+            selected_entity: selected,
             estado: project.estado,
             fecha_entrega_estimada: project.fecha_entrega_estimada,
             valor_proyecto: project.valor_proyecto,
@@ -126,7 +154,7 @@ const ProjectsPage = () => {
         setFormData({
             nombre: '',
             descripcion: '',
-            cliente_id: '',
+            selected_entity: '',
             estado: 'planificacion',
             fecha_entrega_estimada: '',
             valor_proyecto: 0,
@@ -150,6 +178,14 @@ const ProjectsPage = () => {
     const getStatusParams = (status) => {
         const currentCheck = statuses.find(s => s.id === status);
         return currentCheck ? { label: currentCheck.label, class: `status-${status}` } : { label: status, class: 'status-default' };
+    };
+
+    // Helper to get display name
+    const getEntityName = (project) => {
+        if (project.clients?.nombre_negocio) return project.clients.nombre_negocio;
+        if (project.leads?.empresa) return `${project.leads.empresa} (Lead)`;
+        if (project.leads?.nombre) return `${project.leads.nombre} (Lead)`;
+        return 'Sin Asignar';
     };
 
     return (
@@ -195,7 +231,7 @@ const ProjectsPage = () => {
                                 <thead>
                                     <tr>
                                         <th>Nombre Proyecto</th>
-                                        <th>Cliente</th>
+                                        <th>Cliente / Lead</th>
                                         <th>Estado</th>
                                         <th>Fecha Fin (Est.)</th>
                                         <th>Presupuesto</th>
@@ -214,7 +250,7 @@ const ProjectsPage = () => {
                                             return (
                                                 <tr key={project.id}>
                                                     <td style={{ fontWeight: '600' }}>{project.nombre}</td>
-                                                    <td>{project.clients?.nombre_negocio || 'Sin Cliente'}</td>
+                                                    <td>{getEntityName(project)}</td>
                                                     <td>
                                                         <span className={`status-badge ${statusInfo.class}`}>
                                                             {statusInfo.label}
@@ -249,7 +285,7 @@ const ProjectsPage = () => {
                                         {projects.filter(p => p.estado === status.id).map(project => (
                                             <div key={project.id} className="kanban-card">
                                                 <h4>{project.nombre}</h4>
-                                                <p className="client-name">{project.clients?.nombre_negocio}</p>
+                                                <p className="client-name">{getEntityName(project)}</p>
                                                 <div className="card-footer">
                                                     <span className="date">{project.fecha_entrega_estimada}</span>
                                                     {project.user_profiles?.nombre_completo && (
@@ -286,8 +322,6 @@ const ProjectsPage = () => {
                     onClose={() => setShowImportModal(false)}
                     onImportComplete={() => {
                         loadProjects();
-                        // Optional: Keep modal open or close it? Close for now.
-                        // setShowImportModal(false); 
                     }}
                 />
             )}
@@ -312,15 +346,22 @@ const ProjectsPage = () => {
                             </div>
                             <div className="form-row">
                                 <div className="form-group">
-                                    <label>Cliente</label>
+                                    <label>Cliente / Lead</label>
                                     <select
-                                        value={formData.cliente_id}
-                                        onChange={e => setFormData({ ...formData, cliente_id: e.target.value })}
+                                        value={formData.selected_entity}
+                                        onChange={e => setFormData({ ...formData, selected_entity: e.target.value })}
                                     >
-                                        <option value="">Seleccionar Cliente</option>
-                                        {clients.map(c => (
-                                            <option key={c.id} value={c.id}>{c.nombre_negocio}</option>
-                                        ))}
+                                        <option value="">Seleccionar...</option>
+                                        <optgroup label="Clientes">
+                                            {clients.map(c => (
+                                                <option key={c.id} value={`client:${c.id}`}>{c.nombre_negocio}</option>
+                                            ))}
+                                        </optgroup>
+                                        <optgroup label="Leads">
+                                            {leads.map(l => (
+                                                <option key={l.id} value={`lead:${l.id}`}>{l.empresa || l.nombre} (Lead)</option>
+                                            ))}
+                                        </optgroup>
                                     </select>
                                 </div>
                                 <div className="form-group">

@@ -113,11 +113,6 @@ const AdminDashboard = () => {
                         <button
                             onClick={() => navigate('/crm')}
                             className="btn-crm-access"
-                            style={{
-                                backgroundColor: '#ec4899', // Pink/Magenta for differentiation
-                                color: 'white',
-                                marginRight: '10px'
-                            }}
                         >
                             🚀 Ir al CRM
                         </button>

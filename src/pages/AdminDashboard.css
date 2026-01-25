@@ -60,6 +60,27 @@
     box-shadow: 0 8px 24px rgba(16, 185, 129, 0.4);
 }
 
+.btn-crm-access {
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #ec4899, #db2777);
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-crm-access:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(236, 72, 153, 0.4);
+}
+
 .btn-logout {
     padding: 12px 24px;
     background: rgba(239, 68, 68, 0.1);
@@ -162,7 +183,8 @@
     }
 
     .btn-add-client,
-    .btn-logout {
+    .btn-logout,
+    .btn-crm-access {
         width: 100%;
         justify-content: center;
         display: flex;

@@ -82,7 +82,7 @@ const LoginPage = () => {
                 <div className="login-hero">
                     <div className="login-branding">
                         <h1>🔐 Portal de Clientes</h1>
-                        <p>AMC Agency & Vida Digital CO - Accede a tus proyectos, métricas y reportes</p>
+                        <p>Renting AMC Agency - Accede a tus proyectos, métricas y reportes</p>
                     </div>
                 </div>
 
